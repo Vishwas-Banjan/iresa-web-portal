@@ -1,0 +1,141 @@
+{
+  "version": 1,
+  "projects": {
+    "web-portal": {
+      "projectType": "application",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "apps/web-portal",
+      "sourceRoot": "apps/web-portal/src",
+      "prefix": "iresa-web-portal",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/web-portal",
+            "index": "apps/web-portal/src/index.html",
+            "main": "apps/web-portal/src/main.ts",
+            "polyfills": "apps/web-portal/src/polyfills.ts",
+            "tsConfig": "apps/web-portal/tsconfig.app.json",
+            "aot": false,
+            "assets": [
+              "apps/web-portal/src/favicon.ico",
+              "apps/web-portal/src/assets"
+            ],
+            "styles": ["apps/web-portal/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/web-portal/src/environments/environment.ts",
+                  "with": "apps/web-portal/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "web-portal:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "web-portal:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "web-portal:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "apps/web-portal/tsconfig.app.json",
+              "apps/web-portal/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!apps/web-portal/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/web-portal/jest.config.js",
+            "tsConfig": "apps/web-portal/tsconfig.spec.json",
+            "setupFile": "apps/web-portal/src/test-setup.ts"
+          }
+        }
+      }
+    },
+    "web-portal-e2e": {
+      "root": "apps/web-portal-e2e",
+      "sourceRoot": "apps/web-portal-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/web-portal-e2e/cypress.json",
+            "tsConfig": "apps/web-portal-e2e/tsconfig.e2e.json",
+            "devServerTarget": "web-portal:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "web-portal:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/web-portal-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/web-portal-e2e/**"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    }
+  },
+  "defaultProject": "web-portal"
+}
