@@ -15,7 +15,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@iresa-web-portal/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

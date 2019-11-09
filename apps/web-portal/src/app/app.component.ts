@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Message } from '@iresa-web-portal/api-interfaces';
 
 @Component({
   selector: 'iresa-web-portal-root',
@@ -6,5 +8,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'web-portal';
+  hello$ = this.http.get<Message>('/api/hello');
+  constructor(private http: HttpClient) {}
 }
