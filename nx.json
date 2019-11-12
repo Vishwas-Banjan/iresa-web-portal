@@ -13,12 +13,6 @@
     },
     "web-portal": {
       "tags": []
-    },
-    "api": {
-      "tags": []
-    },
-    "api-interfaces": {
-      "tags": []
     }
   }
 }
