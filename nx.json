@@ -13,6 +13,9 @@
     },
     "web-portal": {
       "tags": []
+    },
+    "ngx-spotify": {
+      "tags": []
     }
   }
 }

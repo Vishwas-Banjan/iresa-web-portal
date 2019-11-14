@@ -87,10 +87,7 @@
               "apps/web-portal/tsconfig.app.json",
               "apps/web-portal/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/web-portal/**"
-            ]
+            "exclude": ["**/node_modules/**", "!apps/web-portal/**"]
           }
         },
         "test": {
@@ -124,16 +121,38 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "apps/web-portal-e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**",
-              "!apps/web-portal-e2e/**"
-            ]
+            "tsConfig": ["apps/web-portal-e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**", "!apps/web-portal-e2e/**"]
           }
         }
       }
+    },
+    "ngx-spotify": {
+      "projectType": "library",
+      "root": "libs/ngx-spotify",
+      "sourceRoot": "libs/ngx-spotify/src",
+      "prefix": "iresa-web-portal",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "libs/ngx-spotify/tsconfig.lib.json",
+              "libs/ngx-spotify/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/ngx-spotify/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/ngx-spotify/jest.config.js",
+            "tsConfig": "libs/ngx-spotify/tsconfig.spec.json",
+            "setupFile": "libs/ngx-spotify/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {}
     }
   },
   "cli": {
