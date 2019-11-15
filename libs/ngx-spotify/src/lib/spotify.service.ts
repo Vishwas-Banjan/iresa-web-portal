@@ -3,7 +3,7 @@ import { SpotifyConfig } from './spotify-config';
 import { SpotifyOptions } from './spotify-options';
 import { HttpRequestOptions } from './http-request-options';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, from } from 'rxjs';
+import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 export const SpotifyConfigService = new InjectionToken<SpotifyConfig>(
@@ -667,12 +667,14 @@ export class SpotifyService {
 
   private toQueryString(obj: Object): HttpParams {
     let params = new HttpParams();
-    for (let key in obj) {
+    Object.keys(obj).forEach(key => {
       if (obj.hasOwnProperty(key)) {
-        params = params.append(encodeURIComponent(key), encodeURIComponent(obj[key])
+        params = params.append(
+          encodeURIComponent(key),
+          encodeURIComponent(obj[key])
         );
       }
-    }
+    });
     return params;
   }
 
@@ -693,7 +695,7 @@ export class SpotifyService {
     const headers = new Headers();
     headers.append('Authorization', `Bearer ${this.config.authToken}`);
     if (isJson) {
-      headers.append('Content-Type', 'application/json');;
+      headers.append('Content-Type', 'application/json');
     }
     return headers;
   }
@@ -716,14 +718,18 @@ export class SpotifyService {
 
   private handleError(error: Response) {
     console.error(error);
-    return Observable.throw(error.json() || 'Server error');
+    return throwError(error.json() || 'Server error');
   }
 
   private api(requestOptions: HttpRequestOptions): Observable<any> {
-    return this.http.request<any>(requestOptions.method || 'get', this.config.apiBase + requestOptions.url, {
+    return this.http.request<any>(
+      requestOptions.method || 'get',
+      this.config.apiBase + requestOptions.url,
+      {
         params: this.toQueryString(requestOptions.search),
         body: JSON.stringify(requestOptions.body),
         headers: requestOptions.headers
-      });
+      }
+    );
   }
 }
