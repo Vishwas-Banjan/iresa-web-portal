@@ -1,6 +1,8 @@
 language: node_js
 node_js:
   - "11.0"
+cache:
+  npm: false
 before_script:
   - npm install -g @angular/cli
 script:
