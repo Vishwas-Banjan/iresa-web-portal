@@ -4,7 +4,7 @@ node_js:
 before_script:
   - npm install -g @angular/cli
 script:
-  - npm ci
+  - rm -rf node_modules && rehash -r && npm install
   - npm run build:app
 deploy:
   skip_cleanup: true
