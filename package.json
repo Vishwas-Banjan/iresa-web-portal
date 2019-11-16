@@ -43,7 +43,6 @@
     "@angular/router": "^8.2.0",
     "@ngrx/effects": "^8.5.1",
     "@ngrx/store": "^8.5.1",
-    "@ngrx/store-devtools": "^8.5.1",
     "@nrwl/angular": "8.7.1",
     "core-js": "^2.5.4",
     "firebase": "^7.3.0",
@@ -75,6 +74,6 @@
     "tslint": "~5.11.0",
     "typescript": "~3.4.5",
     "@ngrx/schematics": "8.3.0",
-    "@ngrx/store-devtools": "8.3.0"
+    "@ngrx/store-devtools": "^8.5.1"
   }
 }
