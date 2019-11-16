@@ -1,0 +1,7 @@
+<iresa-header *ngIf="product$ | async as product" [product]="product">
+</iresa-header>
+<iresa-side-nav
+  *ngIf="menuItems$ | async as menu"
+  [menuItems]="menu.menuItems"
+  [activeItem]="menu.selectedItem"
+></iresa-side-nav>

@@ -1,1 +1,1 @@
-export * from './lib/web-portal-data.module';
+export * from './lib/dashboard';

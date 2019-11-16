@@ -1,5 +1,5 @@
 {
-  "npmScope": "iresa-web-portal",
+  "npmScope": "iresa",
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": "*",

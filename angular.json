@@ -10,7 +10,7 @@
       },
       "root": "apps/web-portal",
       "sourceRoot": "apps/web-portal/src",
-      "prefix": "iresa-web-portal",
+      "prefix": "iresa-portal",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -26,6 +26,7 @@
               "apps/web-portal/src/assets"
             ],
             "styles": [
+              "libs/shared/ui/scss/_variable.scss",
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "apps/web-portal/src/styles.scss"
             ],
@@ -131,7 +132,7 @@
       "projectType": "library",
       "root": "libs/ngx-spotify",
       "sourceRoot": "libs/ngx-spotify/src",
-      "prefix": "iresa-web-portal",
+      "prefix": "iresa",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
@@ -189,7 +190,7 @@
       "projectType": "library",
       "root": "libs/web-portal-data",
       "sourceRoot": "libs/web-portal-data/src",
-      "prefix": "iresa-web-portal",
+      "prefix": "iresa",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",

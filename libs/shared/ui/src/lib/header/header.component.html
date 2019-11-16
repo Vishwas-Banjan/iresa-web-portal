@@ -1,0 +1,9 @@
+<mat-toolbar>
+  <span class="logo-link">{{ product?.logoName }}</span>
+  <span class="product-link">{{ product?.productName }}</span>
+  <ng-content></ng-content>
+  <span class="fill-space"></span>
+  <button mat-icon-button aria-label="Sign Out">
+    <mat-icon>power_settings_new</mat-icon>
+  </button>
+</mat-toolbar>

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'iresa-web-portal-root',
+  selector: 'iresa-portal-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
