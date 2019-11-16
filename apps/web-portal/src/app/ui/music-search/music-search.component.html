@@ -1,1 +1,20 @@
-<p>music-search works!</p>
+<div
+  class="custom-wrapper-example"
+  matAutocompleteOrigin
+  #origin="matAutocompleteOrigin"
+>
+  <input
+    type="text"
+    placeholder="Search..."
+    matInput
+    [formControl]="searchInput"
+    [matAutocomplete]="auto"
+    [matAutocompleteConnectedTo]="origin"
+  />
+</div>
+
+<mat-autocomplete #auto="matAutocomplete">
+  <mat-option *ngFor="let option of options" [value]="option">{{
+    option
+  }}</mat-option>
+</mat-autocomplete>

@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'iresa-portal-music-search',
@@ -7,7 +8,9 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MusicSearchComponent implements OnInit {
-  constructor() {}
+  searchInput = new FormControl();
+
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {}
 }
