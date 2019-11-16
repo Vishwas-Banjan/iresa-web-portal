@@ -1,3 +1,18 @@
 export const environment = {
-  production: true
+  production: true,
+  firebaseConfig: {
+    apiKey: 'AIzaSyBIiVQtLEjGYBjE3vSY1xGZUMmrR6rbuRk',
+    authDomain: 'iresa-musicapp.firebaseapp.com',
+    databaseURL: 'https://iresa-musicapp.firebaseio.com',
+    projectId: 'iresa-musicapp',
+    storageBucket: 'iresa-musicapp.appspot.com',
+    messagingSenderId: '232341377587',
+    appId: '1:232341377587:web:eb9ebd3c4af61ec9388946',
+    measurementId: 'G-2J6CLMM0SG'
+  },
+  spotifyConfig: {
+    clientId: 'ABC123DEF456GHfddId789JKL',
+    redirectUri: 'http://localhost:4200/callback.html',
+    scope: 'user-follow-modify user-follow-read playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private user-library-read user-library-modify user-read-private',
+  }
 };

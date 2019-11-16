@@ -16,6 +16,12 @@
     },
     "ngx-spotify": {
       "tags": []
+    },
+    "shared-ui": {
+      "tags": ["ui"]
+    },
+    "web-portal-data": {
+      "tags": []
     }
   }
 }

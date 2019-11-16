@@ -16,7 +16,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@iresa/ngx-spotify": ["libs/ngx-spotify/src/index.ts"]
+      "@iresa/ngx-spotify": ["libs/ngx-spotify/src/index.ts"],
+      "@iresa-web-portal/shared/ui": ["libs/shared/ui/src/index.ts"],
+      "@iresa-web-portal/web-portal-data": ["libs/web-portal-data/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

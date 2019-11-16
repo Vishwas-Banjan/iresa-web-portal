@@ -1,0 +1,7 @@
+{
+  "extends": "../../tslint.json",
+  "rules": {
+    "directive-selector": [true, "attribute", "iresaWebPortal", "camelCase"],
+    "component-selector": [true, "element", "iresa-web-portal", "kebab-case"]
+  }
+}
