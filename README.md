@@ -1,4 +1,4 @@
-# IresaWebPortal
+# Iresa Web Portal [![Build Status](https://travis-ci.com/Vishwas-Banjan/iresa-web-portal.svg?branch=master)](https://travis-ci.com/Vishwas-Banjan/iresa-web-portal)
 
 This project was generated using [Nx](https://nx.dev).
 
