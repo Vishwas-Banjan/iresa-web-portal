@@ -20,13 +20,13 @@
     "affected": "nx affected",
     "format": "nx format:write",
     "format:write": "nx format:write",
-    "format:check": "nx format:check --base=master --head=HEAD",
+    "format:check": "nx format:check",
     "update": "ng update @nrwl/workspace",
     "update:check": "ng update",
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "build:app": "run-p format:check lint build"
+    "build:app": "run-p lint build"
   },
   "private": true,
   "dependencies": {
