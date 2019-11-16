@@ -26,7 +26,7 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "build:app": "run-p format:check lint build"
+    "build:app": "run-p lint build"
   },
   "private": true,
   "dependencies": {
