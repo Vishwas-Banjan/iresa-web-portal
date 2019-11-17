@@ -10,5 +10,11 @@ import { WindowRef } from '@iresa/shared/utilities';
 export class MusicPlayerComponent implements OnInit {
   constructor(private winRef: WindowRef) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.onSpotifyReady();
+  }
+
+  onSpotifyReady() {
+    this.winRef.nativeWindow.onSpotifyPlayerAPIReady = () => {};
+  }
 }

@@ -2,7 +2,7 @@ import { Injectable, Inject, InjectionToken } from '@angular/core';
 import { SpotifyConfig } from './spotify-config';
 import { SpotifyOptions } from './spotify-options';
 import { HttpRequestOptions } from './http-request-options';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
@@ -553,7 +553,8 @@ export class SpotifyService {
     return this.api({
       method: 'get',
       url: `/search`,
-      search: options
+      search: options,
+      headers: this.getHeaders()
     }).pipe(map(res => res.json()));
   }
 
@@ -625,7 +626,8 @@ export class SpotifyService {
       };
       let authCompleted = false;
       const authWindow = this.openDialog(
-        'https://accounts.spotify.com/authorize?' + this.toQueryString(params),
+        'https://accounts.spotify.com/authorize?' +
+          this.toQueryString(params).toString(),
         'Spotify',
         'menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width=' +
           w +
@@ -691,17 +693,20 @@ export class SpotifyService {
     return win;
   }
 
-  private auth(isJson?: boolean): Headers {
-    const headers = new Headers();
-    headers.append('Authorization', `Bearer ${this.config.authToken}`);
-    if (isJson) {
-      headers.append('Content-Type', 'application/json');
+  private auth(isJson?: boolean): HttpHeaders {
+    let headers = new HttpHeaders();
+    headers = headers.append(
+      'Authorization',
+      `Bearer ${this.config.authToken}`
+    );
+    if (!isJson) {
+      headers = headers.append('Content-Type', 'application/json');
     }
     return headers;
   }
 
-  private getHeaders(isJson?: boolean): any {
-    return new Headers(this.auth(isJson));
+  private getHeaders(isJson?): HttpHeaders {
+    return this.auth(isJson);
   }
 
   private getIdFromUri(uri: string) {

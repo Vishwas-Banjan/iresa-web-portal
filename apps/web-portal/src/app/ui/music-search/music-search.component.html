@@ -1,8 +1,4 @@
-<div
-  class="custom-wrapper-example"
-  matAutocompleteOrigin
-  #origin="matAutocompleteOrigin"
->
+<form class="search-form" matAutocompleteOrigin #origin="matAutocompleteOrigin">
   <input
     type="text"
     placeholder="Search..."
@@ -11,10 +7,18 @@
     [matAutocomplete]="auto"
     [matAutocompleteConnectedTo]="origin"
   />
-</div>
 
-<mat-autocomplete #auto="matAutocomplete">
-  <mat-option *ngFor="let option of options" [value]="option">{{
-    option
-  }}</mat-option>
-</mat-autocomplete>
+  <mat-autocomplete #auto="matAutocomplete">
+    <ng-container *ngIf="searchResults$ | async as s">
+      <mat-option *ngIf="s.loading" class="is-loading">
+        <mat-spinner diameter="50"></mat-spinner>
+      </mat-option>
+
+      <ng-container *ngIf="!s.loading">
+        <mat-option *ngFor="let option of s.items" [value]="option">{{
+          option
+        }}</mat-option>
+      </ng-container>
+    </ng-container>
+  </mat-autocomplete>
+</form>

@@ -31,7 +31,8 @@ import { WindowRef } from '@iresa/shared/utilities';
       clientId: environment.spotifyConfig.clientId,
       redirectUri: environment.spotifyConfig.redirectUri,
       scope: environment.spotifyConfig.scope,
-      authToken: localStorage.getItem('angular2-spotify-token')
+      // authToken: localStorage.getItem('angular2-spotify-token')
+      authToken: environment.spotifyConfig.authToken
     }),
     StoreModule.forRoot([], {
       runtimeChecks: {

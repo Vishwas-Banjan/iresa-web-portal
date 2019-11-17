@@ -11,10 +11,19 @@ const getDashboardState = createFeatureSelector<WebPlaybackState>(
 const getSearchResults = createSelector(
   getDashboardState,
   (state: WebPlaybackState) => {
-    return state.searchResults;
+    return {
+      items: state.searchItems,
+      loading: state.searchLoading
+    };
   }
 );
 
+const getLoggedIn = createSelector(
+  getDashboardState,
+  (state: WebPlaybackState) => state.loggedIn
+);
+
 export const webPlaybackQuery = {
-  getSearchResults
+  getSearchResults,
+  getLoggedIn
 };

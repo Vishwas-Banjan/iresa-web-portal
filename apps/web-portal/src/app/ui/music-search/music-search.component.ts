@@ -1,5 +1,13 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  OnDestroy
+} from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { debounceTime, tap, startWith, filter } from 'rxjs/operators';
+import { WebPlaybackFacade } from '@iresa/web-portal-data';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'iresa-portal-music-search',
@@ -7,10 +15,34 @@ import { FormBuilder, FormControl } from '@angular/forms';
   styleUrls: ['./music-search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MusicSearchComponent implements OnInit {
+export class MusicSearchComponent implements OnInit, OnDestroy {
   searchInput = new FormControl();
+  subs = new SubSink();
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private wpFacade: WebPlaybackFacade) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.onValueChange();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
+
+  get searchResults$() {
+    return this.wpFacade.searchResults$;
+  }
+
+  onValueChange() {
+    this.subs.add(
+      this.searchInput.valueChanges
+        .pipe(
+          debounceTime(500),
+          startWith(''),
+          filter(val => val && val.trim() !== ''),
+          tap(value => this.wpFacade.search(value))
+        )
+        .subscribe()
+    );
+  }
 }

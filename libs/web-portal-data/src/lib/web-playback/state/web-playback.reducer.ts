@@ -1,9 +1,14 @@
-import { WebPlaybackAction } from './web-playback.actions';
+import {
+  WebPlaybackAction,
+  WebPlaybackActionTypes
+} from './web-playback.actions';
 
 export const WEB_PLAYBACK_FEATURE_KEY = 'webPlayback';
 
 export interface WebPlaybackState {
-  searchResults: any[];
+  loggedIn: boolean;
+  searchItems: any[];
+  searchLoading: boolean;
 }
 
 export interface WebPlaybackPartialState {
@@ -11,24 +16,46 @@ export interface WebPlaybackPartialState {
 }
 
 export const initialState: WebPlaybackState = {
-  searchResults: []
+  loggedIn: false,
+  searchItems: [],
+  searchLoading: false
 };
 
 export function reducer(
   state: WebPlaybackState = initialState,
   action: WebPlaybackAction
 ): WebPlaybackState {
-  switch (
-    action.type
-    // case DashboardActionTypes.DashboardLoaded: {
-    // state = {
-    //   ...state,
-    //   list: action.payload,
-    //   loaded: true
-    // };
-    //   break;
-    // }
-  ) {
+  switch (action.type) {
+    case WebPlaybackActionTypes.SetLoggedIn: {
+      state = {
+        ...state,
+        loggedIn: action.payload
+      };
+      break;
+    }
+    case WebPlaybackActionTypes.Search: {
+      state = {
+        ...state,
+        searchLoading: true
+      };
+      break;
+    }
+    case WebPlaybackActionTypes.SearchSuccess: {
+      state = {
+        ...state,
+        searchLoading: false,
+        searchItems: action.payload
+      };
+      break;
+    }
+    case WebPlaybackActionTypes.SearchError: {
+      state = {
+        ...state,
+        searchLoading: false,
+        searchItems: []
+      };
+      break;
+    }
   }
   return state;
 }

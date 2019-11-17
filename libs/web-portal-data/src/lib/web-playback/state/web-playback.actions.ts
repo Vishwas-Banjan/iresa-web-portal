@@ -1,15 +1,41 @@
 import { Action } from '@ngrx/store';
 
 export enum WebPlaybackActionTypes {
-  LoadDashboard = '[WebPlayback] Load Dashboard'
+  SetLoggedIn = '[WebPlayback] Set Logged In',
+  Search = '[WebPlayback] Search',
+  SearchSuccess = '[WebPlayback] Search Success',
+  SearchError = '[WebPlayback] Search Error'
 }
 
-export class LoadDashboard implements Action {
-  readonly type = WebPlaybackActionTypes.LoadDashboard;
+export class SetLoggedIn implements Action {
+  readonly type = WebPlaybackActionTypes.SetLoggedIn;
+  constructor(public payload: any) {}
 }
 
-export type WebPlaybackAction = LoadDashboard;
+export class Search implements Action {
+  readonly type = WebPlaybackActionTypes.Search;
+  constructor(public payload: any) {}
+}
+
+export class SearchSuccess implements Action {
+  readonly type = WebPlaybackActionTypes.SearchSuccess;
+  constructor(public payload: any) {}
+}
+
+export class SearchError implements Action {
+  readonly type = WebPlaybackActionTypes.SearchError;
+  constructor() {}
+}
+
+export type WebPlaybackAction =
+  | SetLoggedIn
+  | Search
+  | SearchSuccess
+  | SearchError;
 
 export const fromWebPlaybackActions = {
-  LoadDashboard
+  SetLoggedIn,
+  Search,
+  SearchSuccess,
+  SearchError
 };

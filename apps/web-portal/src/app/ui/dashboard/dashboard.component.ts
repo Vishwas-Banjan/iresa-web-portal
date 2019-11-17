@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { DashboardFacade } from '@iresa/web-portal-data';
+import { DashboardFacade, WebPlaybackFacade } from '@iresa/web-portal-data';
 
 @Component({
   selector: 'iresa-portal-dashboard',
@@ -8,7 +8,10 @@ import { DashboardFacade } from '@iresa/web-portal-data';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit {
-  constructor(private dbFacade: DashboardFacade) {}
+  constructor(
+    private dbFacade: DashboardFacade,
+    private wpFacade: WebPlaybackFacade
+  ) {}
 
   ngOnInit() {}
 
@@ -18,5 +21,9 @@ export class DashboardComponent implements OnInit {
 
   get product$() {
     return this.dbFacade.product$;
+  }
+
+  get loggedIn$() {
+    return this.wpFacade.loggedIn$;
   }
 }
