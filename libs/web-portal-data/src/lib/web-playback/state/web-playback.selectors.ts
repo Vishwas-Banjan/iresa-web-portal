@@ -4,26 +4,15 @@ import {
   WebPlaybackState
 } from './web-playback.reducer';
 
-const getDashboardState = createFeatureSelector<WebPlaybackState>(
+const getWebPlaybackState = createFeatureSelector<WebPlaybackState>(
   WEB_PLAYBACK_FEATURE_KEY
 );
 
-const getSearchResults = createSelector(
-  getDashboardState,
-  (state: WebPlaybackState) => {
-    return {
-      items: state.searchItems,
-      loading: state.searchLoading
-    };
-  }
-);
-
 const getLoggedIn = createSelector(
-  getDashboardState,
+  getWebPlaybackState,
   (state: WebPlaybackState) => state.loggedIn
 );
 
 export const webPlaybackQuery = {
-  getSearchResults,
   getLoggedIn
 };

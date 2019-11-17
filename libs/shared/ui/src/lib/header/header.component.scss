@@ -1,6 +1,10 @@
 @import '../../../scss/variable';
 
 .mat-toolbar {
+  display: flex;
+  justify-content: space-between
+}
+.mat-toolbar {
   background: mat-color($mat-grey, 50);
 }
 
@@ -15,4 +19,8 @@
 
 .mat-icon {
   color: $primary;
+}
+
+.nav-center {
+  flex: 0 0 50vw;
 }

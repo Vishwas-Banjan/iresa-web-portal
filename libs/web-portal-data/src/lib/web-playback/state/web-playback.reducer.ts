@@ -7,8 +7,6 @@ export const WEB_PLAYBACK_FEATURE_KEY = 'webPlayback';
 
 export interface WebPlaybackState {
   loggedIn: boolean;
-  searchItems: any[];
-  searchLoading: boolean;
 }
 
 export interface WebPlaybackPartialState {
@@ -16,9 +14,7 @@ export interface WebPlaybackPartialState {
 }
 
 export const initialState: WebPlaybackState = {
-  loggedIn: false,
-  searchItems: [],
-  searchLoading: false
+  loggedIn: false
 };
 
 export function reducer(
@@ -30,29 +26,6 @@ export function reducer(
       state = {
         ...state,
         loggedIn: action.payload
-      };
-      break;
-    }
-    case WebPlaybackActionTypes.Search: {
-      state = {
-        ...state,
-        searchLoading: true
-      };
-      break;
-    }
-    case WebPlaybackActionTypes.SearchSuccess: {
-      state = {
-        ...state,
-        searchLoading: false,
-        searchItems: action.payload
-      };
-      break;
-    }
-    case WebPlaybackActionTypes.SearchError: {
-      state = {
-        ...state,
-        searchLoading: false,
-        searchItems: []
       };
       break;
     }

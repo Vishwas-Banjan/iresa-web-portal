@@ -16,6 +16,8 @@ export interface DashboardState {
   selectedMenuItems: string;
   logoName: string;
   productName: string;
+  searchItems: any[];
+  searchLoading: boolean;
 }
 
 export interface DashboardPartialState {
@@ -26,24 +28,39 @@ export const initialState: DashboardState = {
   menuItems: menuItems,
   selectedMenuItems: menuItems[0].title,
   logoName: 'Iresa',
-  productName: 'Portal'
+  productName: 'Portal',
+  searchItems: [],
+  searchLoading: false
 };
 
 export function reducer(
   state: DashboardState = initialState,
   action: DashboardAction
 ): DashboardState {
-  switch (
-    action.type
-    // case DashboardActionTypes.DashboardLoaded: {
-    // state = {
-    //   ...state,
-    //   list: action.payload,
-    //   loaded: true
-    // };
-    //   break;
-    // }
-  ) {
+  switch (action.type) {
+    case DashboardActionTypes.Search: {
+      state = {
+        ...state,
+        searchLoading: true
+      };
+      break;
+    }
+    case DashboardActionTypes.SearchSuccess: {
+      state = {
+        ...state,
+        searchLoading: false,
+        searchItems: action.payload
+      };
+      break;
+    }
+    case DashboardActionTypes.SearchError: {
+      state = {
+        ...state,
+        searchLoading: false,
+        searchItems: []
+      };
+      break;
+    }
   }
   return state;
 }

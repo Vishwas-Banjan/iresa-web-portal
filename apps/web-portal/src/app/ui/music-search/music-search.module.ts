@@ -8,9 +8,11 @@ import {
   MatAutocompleteModule,
   MatProgressSpinnerModule
 } from '@angular/material';
+import { SearchOptionComponent } from './search-option/search-option.component';
+import { LoadImageModule } from '@iresa/shared/utilities';
 
 @NgModule({
-  declarations: [MusicSearchComponent],
+  declarations: [MusicSearchComponent, SearchOptionComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,7 +20,8 @@ import {
     MatInputModule,
     MatAutocompleteModule,
     MatFormFieldModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    LoadImageModule
   ],
   exports: [MusicSearchComponent]
 })

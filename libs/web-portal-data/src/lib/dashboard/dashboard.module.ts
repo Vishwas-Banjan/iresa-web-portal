@@ -6,6 +6,7 @@ import * as fromDashboard from './state/dashboard.reducer';
 import { DashboardEffects } from './state/dashboard.effects';
 import { DashboardFacade } from './state/dashboard.facade';
 import { DataPersistence } from '@nrwl/angular';
+import { DashboardService } from './state/dashboard.service';
 
 @NgModule({
   declarations: [],
@@ -17,6 +18,6 @@ import { DataPersistence } from '@nrwl/angular';
     ),
     EffectsModule.forFeature([DashboardEffects])
   ],
-  providers: [DashboardFacade, DataPersistence]
+  providers: [DashboardFacade, DataPersistence, DashboardService]
 })
 export class DashboardDataModule {}

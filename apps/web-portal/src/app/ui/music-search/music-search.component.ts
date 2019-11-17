@@ -6,8 +6,9 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, tap, startWith, filter } from 'rxjs/operators';
-import { WebPlaybackFacade } from '@iresa/web-portal-data';
+import { DashboardFacade } from '@iresa/web-portal-data';
 import { SubSink } from 'subsink';
+import { MatAutocompleteSelectedEvent } from '@angular/material';
 
 @Component({
   selector: 'iresa-portal-music-search',
@@ -19,7 +20,7 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
   searchInput = new FormControl();
   subs = new SubSink();
 
-  constructor(private wpFacade: WebPlaybackFacade) {}
+  constructor(private dbFacade: DashboardFacade) {}
 
   ngOnInit() {
     this.onValueChange();
@@ -30,7 +31,7 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
   }
 
   get searchResults$() {
-    return this.wpFacade.searchResults$;
+    return this.dbFacade.searchResults$;
   }
 
   onValueChange() {
@@ -39,10 +40,21 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
         .pipe(
           debounceTime(500),
           startWith(''),
-          filter(val => val && val.trim() !== ''),
-          tap(value => this.wpFacade.search(value))
+          filter(val => val && typeof val === 'string' && val.trim() !== ''),
+          tap(value => this.dbFacade.search(value))
         )
         .subscribe()
     );
+  }
+
+  displayFn = (item) => {
+    if (item) { return item.name; }
+  }
+
+  onSelectionChanged(event: MatAutocompleteSelectedEvent) {
+    const val = event.option.value;
+    if (val.type === 'artist') {
+      
+    }
   }
 }

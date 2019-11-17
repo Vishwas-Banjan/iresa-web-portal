@@ -555,7 +555,7 @@ export class SpotifyService {
       url: `/search`,
       search: options,
       headers: this.getHeaders()
-    }).pipe(map(res => res.json()));
+    }, true).pipe(map(res => res.json()));
   }
 
   //#endregion
@@ -667,13 +667,14 @@ export class SpotifyService {
 
   //#region utils
 
-  private toQueryString(obj: Object): HttpParams {
+  private toQueryString(obj: Object, ignoreEncode?): HttpParams {
     let params = new HttpParams();
     Object.keys(obj).forEach(key => {
       if (obj.hasOwnProperty(key)) {
+        const val = ignoreEncode ? obj[key] : encodeURIComponent(obj[key]);
         params = params.append(
           encodeURIComponent(key),
-          encodeURIComponent(obj[key])
+          val
         );
       }
     });
@@ -726,12 +727,12 @@ export class SpotifyService {
     return throwError(error.json() || 'Server error');
   }
 
-  private api(requestOptions: HttpRequestOptions): Observable<any> {
+  private api(requestOptions: HttpRequestOptions, ignoreEncode?): Observable<any> {
     return this.http.request<any>(
       requestOptions.method || 'get',
       this.config.apiBase + requestOptions.url,
       {
-        params: this.toQueryString(requestOptions.search),
+        params: this.toQueryString(requestOptions.search, ignoreEncode),
         body: JSON.stringify(requestOptions.body),
         headers: requestOptions.headers
       }

@@ -20,7 +20,7 @@ export const environment = {
     scope:
       'user-follow-modify user-follow-read playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private user-library-read user-library-modify user-read-private',
     authToken:
-      'BQB6fLk2FZNPsssVV_4xh1wwPDzqli6x3mEbnUZuwWKIbtukdTeiwF210NcB21xpSvmR4Gh_JI0qK30UMnEy-Z6_dyD6UuHA1A0n5R7G3nDhzaOD8AhnF8ZdyFx4eUR-Xhcswr15IPpebfSyECcO3UUHfsnRz-fodD4-jVGg8PWHEYwpjw'
+      'BQCruf6-lZ7At1HH7kd1AyqggpSdQAen4M1fgLbME75olZfCjN7Yan2cCglK_ck9iAQpYijxlKsW-y1U1RFdr03x5RZ9_MQ9FwW07QmsuT5vMVl2dVcz2C6PqeESk8jSi-Kii2CZdOp4GorYDvLfar3-AhRm4DayT2biugAEjl3mIcyq1Q'
   }
 };
 

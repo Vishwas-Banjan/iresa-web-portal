@@ -4,16 +4,17 @@ import { select, Store } from '@ngrx/store';
 
 import { DashboardPartialState } from './dashboard.reducer';
 import { dashboardQuery } from './dashboard.selectors';
-import { LoadDashboard } from './dashboard.actions';
+import { fromDashboardActions } from './dashboard.actions';
 
 @Injectable()
 export class DashboardFacade {
   menuItems$ = this.store.pipe(select(dashboardQuery.getMenuItems));
   product$ = this.store.pipe(select(dashboardQuery.getProduct));
+  searchResults$ = this.store.pipe(select(dashboardQuery.getSearchResults));
 
   constructor(private store: Store<DashboardPartialState>) {}
 
-  loadAll() {
-    this.store.dispatch(new LoadDashboard());
+  search(val) {
+    this.store.dispatch(new fromDashboardActions.Search(val));
   }
 }

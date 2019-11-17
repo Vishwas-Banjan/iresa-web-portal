@@ -4,31 +4,44 @@ import { DataPersistence } from '@nrwl/angular';
 
 import { DashboardPartialState } from './dashboard.reducer';
 import {
-  LoadDashboard,
-  // DashboardLoaded,
-  // DashboardLoadError,
-  DashboardActionTypes
+  DashboardActionTypes,
+  Search,
+  fromDashboardActions
 } from './dashboard.actions';
+import { SpotifyService } from '@iresa/ngx-spotify';
+import { map } from 'rxjs/operators';
+import { timer, of } from 'rxjs';
+import { results } from './config/search-results';
+import { DashboardService } from './dashboard.service';
+
 
 @Injectable()
 export class DashboardEffects {
-  // @Effect() loadDashboard$ = this.dataPersistence.fetch(
-  //   DashboardActionTypes.LoadDashboard,
-  //   {
-  //     run: (action: LoadDashboard, state: DashboardPartialState) => {
-  //       // Your custom REST 'load' logic goes here. For now just return an empty list...
-  //       return new DashboardLoaded([]);
-  //     },
+  @Effect() search$ = this.dataPersistence.fetch(
+    DashboardActionTypes.Search,
+    {
+      run: (action: Search, state: DashboardPartialState) => {
+        // const type = 'track,artist,album';
+        // return this.spotifyService
+        //   .search(action.payload, type, { limit: 2 })
+        //   .pipe(map(val => new fromDashboardActions.SearchSuccess(val)));
+        return of(results).pipe(
+          map(val => {
+            return new fromDashboardActions.SearchSuccess(this.dbService.toSearchResult(val));
+          })
+        );
+      },
 
-  //     onError: (action: LoadDashboard, error) => {
-  //       console.error('Error', error);
-  //       return new DashboardLoadError(error);
-  //     }
-  //   }
-  // );
+      onError: (action: Search, error) => {
+        return new fromDashboardActions.SearchError();
+      }
+    }
+  );
 
   constructor(
     private actions$: Actions,
+    private spotifyService: SpotifyService,
+    private dbService: DashboardService,
     private dataPersistence: DataPersistence<DashboardPartialState>
   ) {}
 }

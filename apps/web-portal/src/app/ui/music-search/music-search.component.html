@@ -8,16 +8,17 @@
     [matAutocompleteConnectedTo]="origin"
   />
 
-  <mat-autocomplete #auto="matAutocomplete">
+  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" 
+  (optionSelected)="onSelectionChanged($event)">
     <ng-container *ngIf="searchResults$ | async as s">
       <mat-option *ngIf="s.loading" class="is-loading">
         <mat-spinner diameter="50"></mat-spinner>
       </mat-option>
 
       <ng-container *ngIf="!s.loading">
-        <mat-option *ngFor="let option of s.items" [value]="option">{{
-          option
-        }}</mat-option>
+        <mat-option *ngFor="let option of s.items" [value]="option">
+          <iresa-portal-search-option [item]="option"></iresa-portal-search-option>
+        </mat-option>
       </ng-container>
     </ng-container>
   </mat-autocomplete>

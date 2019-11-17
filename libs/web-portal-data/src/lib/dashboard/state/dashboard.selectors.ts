@@ -26,7 +26,18 @@ const getProduct = createSelector(
   }
 );
 
+const getSearchResults = createSelector(
+  getDashboardState,
+  (state: DashboardState) => {
+    return {
+      items: state.searchItems,
+      loading: state.searchLoading
+    };
+  }
+);
+
 export const dashboardQuery = {
   getMenuItems,
-  getProduct
+  getProduct,
+  getSearchResults
 };
