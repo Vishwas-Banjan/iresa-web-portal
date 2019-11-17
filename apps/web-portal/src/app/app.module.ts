@@ -14,6 +14,7 @@ import { DashboardModule } from './ui/dashboard/dashboard.module';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
+import { WindowRef } from '@iresa/shared/utilities';
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,7 +47,7 @@ import { EffectsModule } from '@ngrx/effects';
       : [],
     EffectsModule.forRoot([])
   ],
-  providers: [],
+  providers: [WindowRef],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

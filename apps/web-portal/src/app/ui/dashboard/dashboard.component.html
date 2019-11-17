@@ -5,4 +5,8 @@
   *ngIf="menuItems$ | async as menu"
   [menuItems]="menu.menuItems"
   [activeItem]="menu.selectedItem"
-></iresa-side-nav>
+>
+  <router-outlet></router-outlet>
+</iresa-side-nav>
+
+<iresa-portal-music-player></iresa-portal-music-player>

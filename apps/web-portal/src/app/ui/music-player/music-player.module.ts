@@ -8,6 +8,7 @@ import { MusicPlayerComponent } from './music-player.component';
   declarations: [MusicPlayerComponent],
   imports: [
     CommonModule
-  ]
+  ],
+  exports: [MusicPlayerComponent]
 })
 export class MusicPlayerModule { }
