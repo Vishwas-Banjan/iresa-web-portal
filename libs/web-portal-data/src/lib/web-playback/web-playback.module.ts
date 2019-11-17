@@ -5,8 +5,6 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { WebPlaybackEffects } from './state/web-playback.effects';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
@@ -18,4 +16,4 @@ import { WebPlaybackEffects } from './state/web-playback.effects';
     EffectsModule.forFeature([WebPlaybackEffects])
   ]
 })
-export class WebPlaybackModule { }
+export class WebPlaybackModule {}

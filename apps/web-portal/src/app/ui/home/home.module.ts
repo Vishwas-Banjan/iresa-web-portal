@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
 
-
-
 @NgModule({
   declarations: [HomeComponent],
   imports: [
@@ -17,4 +15,4 @@ import { RouterModule } from '@angular/router';
     ])
   ]
 })
-export class HomeModule { }
+export class HomeModule {}

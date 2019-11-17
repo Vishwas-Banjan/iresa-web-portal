@@ -8,10 +8,7 @@ import { WindowRef } from '@iresa/shared/utilities';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MusicPlayerComponent implements OnInit {
+  constructor(private winRef: WindowRef) {}
 
-  constructor(private winRef: WindowRef) { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

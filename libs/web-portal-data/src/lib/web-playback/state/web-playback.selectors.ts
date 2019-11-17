@@ -1,5 +1,8 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { WEB_PLAYBACK_FEATURE_KEY, WebPlaybackState } from './web-playback.reducer';
+import {
+  WEB_PLAYBACK_FEATURE_KEY,
+  WebPlaybackState
+} from './web-playback.reducer';
 
 const getDashboardState = createFeatureSelector<WebPlaybackState>(
   WEB_PLAYBACK_FEATURE_KEY
