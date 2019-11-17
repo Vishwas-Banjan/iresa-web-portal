@@ -21,9 +21,7 @@ export class SearchError implements Action {
   constructor() {}
 }
 
-export type DashboardAction = Search
-| SearchSuccess
-| SearchError;
+export type DashboardAction = Search | SearchSuccess | SearchError;
 
 export const fromDashboardActions = {
   Search,

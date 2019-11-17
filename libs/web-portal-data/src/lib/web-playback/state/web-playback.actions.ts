@@ -9,8 +9,7 @@ export class SetLoggedIn implements Action {
   constructor(public payload: any) {}
 }
 
-export type WebPlaybackAction =
-  | SetLoggedIn;
+export type WebPlaybackAction = SetLoggedIn;
 
 export const fromWebPlaybackActions = {
   SetLoggedIn

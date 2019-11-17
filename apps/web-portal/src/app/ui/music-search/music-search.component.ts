@@ -47,14 +47,15 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
     );
   }
 
-  displayFn = (item) => {
-    if (item) { return item.name; }
-  }
+  displayFn = item => {
+    if (item) {
+      return item.name;
+    }
+  };
 
   onSelectionChanged(event: MatAutocompleteSelectedEvent) {
     const val = event.option.value;
     if (val.type === 'artist') {
-      
     }
   }
 }

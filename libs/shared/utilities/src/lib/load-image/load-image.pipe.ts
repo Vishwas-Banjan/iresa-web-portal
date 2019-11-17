@@ -11,11 +11,10 @@ export class LoadImagePipe implements PipeTransform {
     } else if (value instanceof Array) {
       return this.getImageUrl(value[0]);
     }
-    return  this.getImageUrl(value);
+    return this.getImageUrl(value);
   }
 
   getImageUrl(val) {
     return val.url ? val.url : LoadImagePipe.MUSIC_PLACEHOLDER;
   }
-
 }

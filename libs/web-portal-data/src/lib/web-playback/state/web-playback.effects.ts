@@ -12,7 +12,6 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class WebPlaybackEffects {
-
   constructor(
     private actions$: Actions,
     private spotifyService: SpotifyService,
