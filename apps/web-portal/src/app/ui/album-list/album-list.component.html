@@ -19,7 +19,9 @@
     />
     <mat-card-content>
       <p>{{ album.name }}</p>
-      <small>{{ album.release_date }}</small>
+      <small
+        >{{ album.artists | loadArtists }} - {{ album.release_date }}</small
+      >
     </mat-card-content>
   </mat-card>
 </div>

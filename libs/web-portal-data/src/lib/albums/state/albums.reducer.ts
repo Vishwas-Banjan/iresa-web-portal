@@ -14,6 +14,9 @@ export interface AlbumsState {
   selectedId?: string | number; // which Albums record has been selected
   loaded: boolean; // has the Albums list been loaded
   error?: any; // last none error (if any)
+  trackList: any;
+  tracksLoaded: boolean;
+  trackPos: number;
 }
 
 export interface AlbumsPartialState {
@@ -22,7 +25,10 @@ export interface AlbumsPartialState {
 
 export const initialState: AlbumsState = {
   list: [],
-  loaded: false
+  loaded: false,
+  trackList: null,
+  tracksLoaded: false,
+  trackPos: -1
 };
 
 export function reducer(
@@ -46,9 +52,28 @@ export function reducer(
       };
       break;
     }
-    case AlbumsActionTypes.ResetStates: {
+    case AlbumsActionTypes.ResetAlbumsLoaded: {
       state = {
-        ...initialState
+        ...state,
+        loaded: false
+      };
+      break;
+    }
+    case AlbumsActionTypes.AlbumTracksLoaded: {
+      state = {
+        ...state,
+        trackList: action.payload.tracks,
+        tracksLoaded: true,
+        selectedId: action.payload.albumId
+      };
+      break;
+    }
+    case AlbumsActionTypes.SetAlbumTracks: {
+      state = {
+        ...state,
+        selectedId: action.payload.album.id,
+        trackList: action.payload.album,
+        tracksLoaded: true
       };
       break;
     }

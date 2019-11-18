@@ -1,10 +1,6 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  OnDestroy
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AlbumsFacade } from '@iresa/web-portal-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'iresa-portal-album-list',
@@ -12,18 +8,16 @@ import { AlbumsFacade } from '@iresa/web-portal-data';
   styleUrls: ['./album-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AlbumListComponent implements OnInit, OnDestroy {
-  constructor(private albumFacade: AlbumsFacade) {}
+export class AlbumListComponent implements OnInit {
+  constructor(private albumFacade: AlbumsFacade, private router: Router) {}
 
   ngOnInit() {}
-
-  ngOnDestroy(): void {
-    this.albumFacade.resetStates();
-  }
 
   get albums$() {
     return this.albumFacade.allAlbums$;
   }
 
-  onAlbumClick(album) {}
+  onAlbumClick(album) {
+    this.router.navigate(['/album', album.id, 'tracks']);
+  }
 }

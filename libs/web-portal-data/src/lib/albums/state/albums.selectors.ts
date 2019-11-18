@@ -8,6 +8,10 @@ const getLoaded = createSelector(
   getAlbumsState,
   (state: AlbumsState) => state.loaded
 );
+const getTracksLoaded = createSelector(
+  getAlbumsState,
+  (state: AlbumsState) => state.tracksLoaded
+);
 const getError = createSelector(
   getAlbumsState,
   (state: AlbumsState) => state.error
@@ -20,22 +24,19 @@ const getAllAlbums = createSelector(
     return isLoaded ? state.list : [];
   }
 );
-const getSelectedId = createSelector(
+
+const getAlbumTracks = createSelector(
   getAlbumsState,
-  (state: AlbumsState) => state.selectedId
-);
-const getSelectedAlbums = createSelector(
-  getAllAlbums,
-  getSelectedId,
-  (albums, id) => {
-    const result = albums.find(it => it['id'] === id);
-    return result ? Object.assign({}, result) : undefined;
+  getLoaded,
+  (state: AlbumsState, isLoaded) => {
+    return isLoaded ? state.trackList : null;
   }
 );
 
 export const albumsQuery = {
   getLoaded,
+  getTracksLoaded,
   getError,
   getAllAlbums,
-  getSelectedAlbums
+  getAlbumTracks
 };

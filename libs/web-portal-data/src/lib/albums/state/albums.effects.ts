@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/angular';
 
-import { AlbumsPartialState } from './albums.reducer';
+import { AlbumsPartialState, ALBUMS_FEATURE_KEY } from './albums.reducer';
 import {
   LoadAlbums,
   AlbumsActionTypes,
   LoadAlbum,
-  fromAlbumsActions
+  fromAlbumsActions,
+  LoadAlbumTracks
 } from './albums.actions';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -48,6 +49,28 @@ export class AlbumsEffects {
       }
     }
   );
+
+  @Effect() loadAlbumTracks$ = this.dataPersistence.fetch(
+    AlbumsActionTypes.LoadAlbumTracks,
+    {
+      run: (action: LoadAlbumTracks, state: AlbumsPartialState) => {
+        const albumId = action.payload.albumId;
+        const album = this.findAlbum(state[ALBUMS_FEATURE_KEY].list, albumId);
+        if (album) {
+          return new fromAlbumsActions.SetAlbumTracks({ album });
+        }
+      },
+
+      onError: (action: LoadAlbumTracks, error) => {
+        console.error('Error', error);
+        return new fromAlbumsActions.AlbumLoadError(error);
+      }
+    }
+  );
+
+  findAlbum(list: any[], albumId) {
+    return list.find(al => al.id === albumId);
+  }
 
   constructor(
     private actions$: Actions,

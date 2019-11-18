@@ -9,8 +9,9 @@ import { fromAlbumsActions } from './albums.actions';
 @Injectable()
 export class AlbumsFacade {
   loaded$ = this.store.pipe(select(albumsQuery.getLoaded));
+  tracksLoaded$ = this.store.pipe(select(albumsQuery.getTracksLoaded));
   allAlbums$ = this.store.pipe(select(albumsQuery.getAllAlbums));
-  selectedAlbums$ = this.store.pipe(select(albumsQuery.getSelectedAlbums));
+  albumTracks$ = this.store.pipe(select(albumsQuery.getAlbumTracks));
 
   constructor(private store: Store<AlbumsPartialState>) {}
 
@@ -22,7 +23,11 @@ export class AlbumsFacade {
     this.store.dispatch(new fromAlbumsActions.LoadAlbum(albumId));
   }
 
-  resetStates() {
-    this.store.dispatch(new fromAlbumsActions.ResetStates());
+  loadAlbumTracks(data) {
+    this.store.dispatch(new fromAlbumsActions.LoadAlbumTracks(data));
+  }
+
+  resetAlbumsLoaded() {
+    this.store.dispatch(new fromAlbumsActions.ResetAlbumsLoaded());
   }
 }

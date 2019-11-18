@@ -23,16 +23,27 @@ const routes: Routes = [
       },
       {
         path: 'album/:albumId',
+        pathMatch: 'full',
         loadChildren: () =>
           import('../album-list/album-list.module').then(m => m.AlbumListModule)
       },
       {
         path: 'artist/:artistId/albums',
+        pathMatch: 'full',
         loadChildren: () =>
           import('../album-list/album-list.module').then(m => m.AlbumListModule)
       },
       {
-        path: 'album-tracks/:albumId',
+        path: 'album/:albumId/:trackPos',
+        pathMatch: 'full',
+        loadChildren: () =>
+          import('../album-track-list/album-track-list.module').then(
+            m => m.AlbumTrackListModule
+          )
+      },
+      {
+        path: 'album/:albumId/tracks',
+        pathMatch: 'full',
         loadChildren: () =>
           import('../album-track-list/album-track-list.module').then(
             m => m.AlbumTrackListModule
