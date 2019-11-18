@@ -10,8 +10,8 @@
       <a
         href="#"
         mat-list-item
-        [class.item-active]="activeItem === menu.title ? 'active' : null"
-        (click)="onMenuClick(menu)"
+        [class.item-active]="activeItem === menu.value ? 'active' : null"
+        (click)="onMenuClick(menu); (false)"
         *ngFor="let menu of menuItems"
       >
         <mat-icon>{{ menu.icon }}</mat-icon>

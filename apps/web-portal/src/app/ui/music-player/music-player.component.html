@@ -1,1 +1,52 @@
-<p>music-player works!</p>
+<mat-card fxLayout="row" fxLayoutAlign="space-between center">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="20px"
+    class="player-current-song-info"
+  >
+    <div class="song-image">
+      <img
+        src="https://images.unsplash.com/photo-1440549770084-4b381ce9d988?dpr=1&amp;auto=compress,format&amp;fit=crop&amp;w=2850&amp;h=&amp;q=80&amp;cs=tinysrgb&amp;crop="
+        alt="The_Remixin_Blues"
+        title="The_Remixin_Blues"
+      />
+    </div>
+    <div class="song-name">The_Remixin_Blues</div>
+  </div>
+
+  <div class="player-controls" fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button>
+      <mat-icon color="accent" role="img">fast_rewind</mat-icon>
+    </button>
+    <button class="player-button mat-primary" mat-mini-fab color="primary">
+      <mat-icon aria-label="Resume / Play">play_arrow</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon aria-label="Next" color="accent" aria-hidden="true"
+        >fast_forward</mat-icon
+      >
+    </button>
+  </div>
+
+  <div
+    class="player-secondary-controls"
+    fxLayoutGap="10px"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+  >
+    <div class="show-queue">
+      <button mat-icon-button>
+        <mat-icon aria-label="Queue list">playlist_play</mat-icon>
+      </button>
+    </div>
+    <div class="player-volume">
+      <button mat-icon-button>
+        <mat-icon aria-label="Volume">volume_up</mat-icon>
+      </button>
+    </div>
+    <div class="player-volume-control">
+      <mat-slider min="1" max="5" step="0.5" value="1.5"></mat-slider>
+    </div>
+  </div>
+</mat-card>

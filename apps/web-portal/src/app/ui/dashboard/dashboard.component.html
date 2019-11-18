@@ -5,6 +5,7 @@
   *ngIf="menuItems$ | async as menu"
   [menuItems]="menu.menuItems"
   [activeItem]="menu.selectedItem"
+  (menuClick)="onMenuClick($event)"
 >
   <router-outlet></router-outlet>
 </iresa-side-nav>

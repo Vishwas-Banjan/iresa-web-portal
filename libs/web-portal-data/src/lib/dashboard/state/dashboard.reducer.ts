@@ -26,7 +26,7 @@ export interface DashboardPartialState {
 
 export const initialState: DashboardState = {
   menuItems: menuItems,
-  selectedMenuItems: menuItems[0].title,
+  selectedMenuItems: menuItems[0].value,
   logoName: 'Iresa',
   productName: 'Portal',
   searchItems: [],
