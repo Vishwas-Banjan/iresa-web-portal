@@ -17,4 +17,8 @@ export class DashboardFacade {
   search(val) {
     this.store.dispatch(new fromDashboardActions.Search(val));
   }
+
+  setSelectedMenuItems(val) {
+    this.store.dispatch(new fromDashboardActions.SetSelectedMenuItems(val));
+  }
 }

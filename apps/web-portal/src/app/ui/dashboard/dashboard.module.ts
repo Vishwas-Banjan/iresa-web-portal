@@ -19,7 +19,24 @@ const routes: Routes = [
       {
         path: 'home',
         loadChildren: () =>
-          import('.././home/home.module').then(m => m.HomeModule)
+          import('../home/home.module').then(m => m.HomeModule)
+      },
+      {
+        path: 'album/:albumId',
+        loadChildren: () =>
+          import('../album-list/album-list.module').then(m => m.AlbumListModule)
+      },
+      {
+        path: 'artist/:artistId/albums',
+        loadChildren: () =>
+          import('../album-list/album-list.module').then(m => m.AlbumListModule)
+      },
+      {
+        path: 'album-tracks/:albumId',
+        loadChildren: () =>
+          import('../album-track-list/album-track-list.module').then(
+            m => m.AlbumTrackListModule
+          )
       },
       { path: '', redirectTo: '/home', pathMatch: 'full' }
     ]

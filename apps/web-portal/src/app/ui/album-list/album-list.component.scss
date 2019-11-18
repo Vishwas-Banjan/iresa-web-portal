@@ -1,0 +1,17 @@
+.container {
+  max-height: 75vh;
+  overflow: hidden;
+  overflow-y: auto;
+  cursor: pointer;
+}
+
+.album {
+  max-width: 150px;
+  text-align: left;
+  margin-bottom: 20px; /* same as fxLayoutGap for even distribution */
+}
+
+.album img {
+  height: 150px;
+  object-fit: contain;
+}

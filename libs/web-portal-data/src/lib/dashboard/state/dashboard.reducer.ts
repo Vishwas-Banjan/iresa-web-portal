@@ -61,6 +61,13 @@ export function reducer(
       };
       break;
     }
+    case DashboardActionTypes.SetSelectedMenuItems: {
+      state = {
+        ...state,
+        selectedMenuItems: action.payload
+      };
+      break;
+    }
   }
   return state;
 }

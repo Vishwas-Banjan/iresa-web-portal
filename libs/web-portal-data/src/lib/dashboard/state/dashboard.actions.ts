@@ -3,7 +3,8 @@ import { Action } from '@ngrx/store';
 export enum DashboardActionTypes {
   Search = '[Dashboard] Search',
   SearchSuccess = '[Dashboard] Search Success',
-  SearchError = '[Dashboard] Search Error'
+  SearchError = '[Dashboard] Search Error',
+  SetSelectedMenuItems = '[Dashboard] Set Selected Menu Items'
 }
 
 export class Search implements Action {
@@ -21,10 +22,20 @@ export class SearchError implements Action {
   constructor() {}
 }
 
-export type DashboardAction = Search | SearchSuccess | SearchError;
+export class SetSelectedMenuItems implements Action {
+  readonly type = DashboardActionTypes.SetSelectedMenuItems;
+  constructor(public payload: any) {}
+}
+
+export type DashboardAction =
+  | Search
+  | SearchSuccess
+  | SearchError
+  | SetSelectedMenuItems;
 
 export const fromDashboardActions = {
   Search,
   SearchSuccess,
-  SearchError
+  SearchError,
+  SetSelectedMenuItems
 };

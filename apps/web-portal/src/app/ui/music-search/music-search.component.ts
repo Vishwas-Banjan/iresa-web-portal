@@ -9,6 +9,7 @@ import { debounceTime, tap, startWith, filter } from 'rxjs/operators';
 import { DashboardFacade } from '@iresa/web-portal-data';
 import { SubSink } from 'subsink';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'iresa-portal-music-search',
@@ -20,7 +21,7 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
   searchInput = new FormControl();
   subs = new SubSink();
 
-  constructor(private dbFacade: DashboardFacade) {}
+  constructor(private dbFacade: DashboardFacade, private router: Router) {}
 
   ngOnInit() {
     this.onValueChange();
@@ -41,7 +42,7 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
           debounceTime(500),
           startWith(''),
           filter(val => val && typeof val === 'string' && val.trim() !== ''),
-          tap(value => this.dbFacade.search(value))
+          tap(value => this.dbFacade.search(value.trim()))
         )
         .subscribe()
     );
@@ -55,7 +56,24 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
 
   onSelectionChanged(event: MatAutocompleteSelectedEvent) {
     const val = event.option.value;
-    if (val.type === 'artist') {
+    const mapFn = {
+      artist: this.fetchArtistAlbums,
+      album: this.fetchAlbum,
+      track: this.fetchAlbumTracks
+    };
+    if (val.type in mapFn) {
+      mapFn[val.type](val.id);
+      this.dbFacade.setSelectedMenuItems('');
     }
   }
+  fetchAlbumTracks = (id: string) => {
+    throw new Error('Method not implemented.');
+  };
+  fetchAlbum = (id: string) => {
+    this.router.navigate(['/album', id]);
+  };
+
+  fetchArtistAlbums = (id: string) => {
+    throw new Error('Method not implemented.');
+  };
 }
