@@ -5,7 +5,11 @@ import { AlbumListComponent } from './album-list.component';
 import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material';
 import { AlbumsDataModule, AlbumsResolver } from '@iresa/web-portal-data';
-import { LoadImageModule, LoadArtistsModule } from '@iresa/shared/utilities';
+import {
+  LoadImageModule,
+  LoadArtistsModule,
+  LoadReleaseYearModule
+} from '@iresa/shared/utilities';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
@@ -17,6 +21,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AlbumsDataModule,
     LoadImageModule,
     LoadArtistsModule,
+    LoadReleaseYearModule,
     RouterModule.forChild([
       {
         path: '',

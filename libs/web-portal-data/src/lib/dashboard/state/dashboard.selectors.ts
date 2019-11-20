@@ -41,9 +41,16 @@ const getLoading = createSelector(
   (state: DashboardState) => state.loading
 );
 
+const getAlbumFromSearch = createSelector(
+  getDashboardState,
+  (state: DashboardState, props) =>
+    state.searchItems.find(item => item.id === props.albumId)
+);
+
 export const dashboardQuery = {
   getMenuItems,
   getProduct,
   getSearchResults,
-  getLoading
+  getLoading,
+  getAlbumFromSearch
 };

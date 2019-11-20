@@ -10,6 +10,7 @@ export const ALBUMS_FEATURE_KEY = 'albums';
  */
 
 export interface AlbumsState {
+  useSample: boolean;
   list: any[]; // list of Albums; analogous to a sql normalized table
   selectedId?: string | number; // which Albums record has been selected
   loaded: boolean; // has the Albums list been loaded
@@ -24,6 +25,7 @@ export interface AlbumsPartialState {
 }
 
 export const initialState: AlbumsState = {
+  useSample: false,
   list: [],
   loaded: false,
   trackList: null,
@@ -73,7 +75,15 @@ export function reducer(
         ...state,
         selectedId: action.payload.album.id,
         trackList: action.payload.album,
-        tracksLoaded: true
+        tracksLoaded: true,
+        trackPos: action.payload.trackPos ? action.payload.trackPos : -1
+      };
+      break;
+    }
+    case AlbumsActionTypes.LoadAlbumTracks: {
+      state = {
+        ...state,
+        tracksLoaded: false
       };
       break;
     }

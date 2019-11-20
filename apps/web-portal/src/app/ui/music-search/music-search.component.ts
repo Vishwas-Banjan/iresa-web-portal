@@ -63,18 +63,18 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
       track: this.fetchAlbumTracks
     };
     if (val.type in mapFn) {
-      mapFn[val.type](val.id);
+      mapFn[val.type](val);
       this.dbFacade.setSelectedMenuItems('');
     }
   }
-  fetchAlbumTracks = (id: string) => {
-    throw new Error('Method not implemented.');
+  fetchAlbumTracks = track => {
+    this.router.navigate(['/album', track.album.id, track.track_number]);
   };
-  fetchAlbum = (id: string) => {
-    this.router.navigate(['/album', id]);
+  fetchAlbum = album => {
+    this.router.navigate(['/album', album.id]);
   };
 
-  fetchArtistAlbums = (id: string) => {
-    throw new Error('Method not implemented.');
+  fetchArtistAlbums = artist => {
+    this.router.navigate(['/artist', artist.id, 'albums']);
   };
 }

@@ -19,7 +19,7 @@ export const environment = {
     redirectUri: 'http://localhost:8080',
     useSample: false,
     authToken:
-      'BQBg7gRfz41Dm2aTy7Yd5ZBfZZVX9OOdDAcDz3MCpinZDfOA6p3gdaV52y3dLS4Yi7INd1U4voM60d6KNPTlzWEO24y43EUYexDCrFbUh_uhB3W9mSbDyMR2PMpOseDOvRfIM6vp9IShIqUHkDQTl7UGuPLQWPmQB0NURIBrM-EQgbz3v39iXKgSmA'
+      'BQCD2guWNYTNb8_r3qf-8ejuAA_LIXugEURtoc4jB6aQ6IYgZ17wuuZ9m7WZglJrc93lEscdOacjaZTeh36uiBHpjbCxOHcBGkMA7x1oqlSYMo8u4WNwiLPJftGFmfnW96QfOkKITqYKspFJcDjD7qT9TNymUnzGbhoaUKo7cUiLvCSc41fbUleFRw'
   }
 };
 

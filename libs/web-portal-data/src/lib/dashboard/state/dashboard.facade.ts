@@ -26,4 +26,10 @@ export class DashboardFacade {
   setLoading(val) {
     this.store.dispatch(new fromDashboardActions.SetLoading(val));
   }
+
+  getAlbumFromSearch(albumId) {
+    return this.store.pipe(
+      select(dashboardQuery.getAlbumFromSearch, { albumId })
+    );
+  }
 }

@@ -10,10 +10,11 @@ import {
   fromAlbumsActions,
   LoadAlbumTracks
 } from './albums.actions';
-import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { of, forkJoin, combineLatest } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 import { albumResult } from './config/album-result';
 import { SpotifyService } from '@iresa/ngx-spotify';
+import { DashboardFacade } from '../../dashboard';
 
 @Injectable()
 export class AlbumsEffects {
@@ -21,8 +22,12 @@ export class AlbumsEffects {
     AlbumsActionTypes.LoadAlbums,
     {
       run: (action: LoadAlbums, state: AlbumsPartialState) => {
-        // Your custom REST 'load' logic goes here. For now just return an empty list...
-        return new fromAlbumsActions.AlbumsLoaded([]);
+        const useSample = action.payload.useSample;
+        if (!useSample) {
+          return this.spotifyService
+            .getArtistAlbums(action.payload)
+            .pipe(map(val => new fromAlbumsActions.AlbumsLoaded(val.items)));
+        }
       },
 
       onError: (action: LoadAlbums, error) => {
@@ -64,9 +69,34 @@ export class AlbumsEffects {
       run: (action: LoadAlbumTracks, state: AlbumsPartialState) => {
         const albumId = action.payload.albumId;
         const album = this.findAlbum(state[ALBUMS_FEATURE_KEY].list, albumId);
-        if (album) {
-          return new fromAlbumsActions.SetAlbumTracks({ album });
+        if (album && album.tracks) {
+          if (album.tracks) {
+            return new fromAlbumsActions.SetAlbumTracks({ album });
+          } else {
+            return this.spotifyService
+              .getAlbumTracks(albumId)
+              .pipe(
+                map(
+                  data =>
+                    new fromAlbumsActions.SetAlbumTracks({
+                      album: { ...album, tracks: { items: data.items } }
+                    })
+                )
+              );
+          }
         }
+
+        return this.spotifyService
+          .getAlbum(albumId)
+          .pipe(
+            map(
+              data =>
+                new fromAlbumsActions.SetAlbumTracks({
+                  album: data,
+                  trackPos: action.payload.trackPos
+                })
+            )
+          );
       },
 
       onError: (action: LoadAlbumTracks, error) => {
@@ -83,6 +113,7 @@ export class AlbumsEffects {
   constructor(
     private actions$: Actions,
     private spotifyService: SpotifyService,
+    private dbFacade: DashboardFacade,
     private dataPersistence: DataPersistence<AlbumsPartialState>
   ) {}
 }

@@ -24,7 +24,7 @@ export class AlbumTracksResolver implements Resolve<any> {
   }
 
   waitForDataToLoad(): Observable<any> {
-    return this.albumFacade.loaded$.pipe(
+    return this.albumFacade.tracksLoaded$.pipe(
       filter(tracksLoaded => !!tracksLoaded),
       take(1)
     );
