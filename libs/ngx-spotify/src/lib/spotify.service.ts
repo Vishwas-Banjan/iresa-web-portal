@@ -5,6 +5,7 @@ import { HttpRequestOptions } from './http-request-options';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { spotifyScopes } from './spotify-scopes';
 
 export const SpotifyConfigService = new InjectionToken<SpotifyConfig>(
   'SpotifyConfig'
@@ -27,8 +28,9 @@ export class SpotifyService {
     album = this.getIdFromUri(album);
     return this.api({
       method: 'get',
-      url: `/albums/${album}`
-    }).pipe(map(res => res.json()));
+      url: `/albums/${album}`,
+      headers: this.getHeaders()
+    });
   }
 
   /**
@@ -558,7 +560,7 @@ export class SpotifyService {
         headers: this.getHeaders()
       },
       true
-    ).pipe(map(res => res.json()));
+    ).pipe();
   }
 
   //#endregion
@@ -624,7 +626,7 @@ export class SpotifyService {
       const params = {
         client_id: this.config.clientId,
         redirect_uri: this.config.redirectUri,
-        scope: this.config.scope || '',
+        scope: spotifyScopes.join(' ') || '',
         response_type: 'token'
       };
       let authCompleted = false;
@@ -666,6 +668,9 @@ export class SpotifyService {
     return from(promise).pipe(catchError(this.handleError));
   }
 
+  getAuthToken() {
+    return this.config.authToken;
+  }
   //#endregion
 
   //#region utils
@@ -735,7 +740,7 @@ export class SpotifyService {
       requestOptions.method || 'get',
       this.config.apiBase + requestOptions.url,
       {
-        params: this.toQueryString(requestOptions.search, ignoreEncode),
+        params: this.toQueryString(requestOptions.search || {}, ignoreEncode),
         body: JSON.stringify(requestOptions.body),
         headers: requestOptions.headers
       }

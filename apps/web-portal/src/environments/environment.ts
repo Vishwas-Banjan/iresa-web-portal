@@ -17,10 +17,9 @@ export const environment = {
   spotifyConfig: {
     clientId: 'cfe874852c4144c1972bcb30484356e1',
     redirectUri: 'http://localhost:8080',
-    scope:
-      'user-follow-modify user-follow-read playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private user-library-read user-library-modify user-read-private',
+    useSample: false,
     authToken:
-      'BQCruf6-lZ7At1HH7kd1AyqggpSdQAen4M1fgLbME75olZfCjN7Yan2cCglK_ck9iAQpYijxlKsW-y1U1RFdr03x5RZ9_MQ9FwW07QmsuT5vMVl2dVcz2C6PqeESk8jSi-Kii2CZdOp4GorYDvLfar3-AhRm4DayT2biugAEjl3mIcyq1Q'
+      'BQBKeK9vlx1pyFZYgxp50602kaDgVOqO8EFBOiVgYeLTCvOYQr7BCqAoYA33_IIrj8u78rmPsDEBpKki7_HU1kZGgpN_a1XdAe1u07s-Tfuiz8ejxaZaJlFX81AgCE7eTo88rmh-AVyfgq769wjbJ2eZFFG6f39bSysn5TPb8KAWfA4v0xnnH38Htw'
   }
 };
 

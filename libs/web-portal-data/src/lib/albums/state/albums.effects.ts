@@ -13,6 +13,7 @@ import {
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { albumResult } from './config/album-result';
+import { SpotifyService } from '@iresa/ngx-spotify';
 
 @Injectable()
 export class AlbumsEffects {
@@ -34,6 +35,13 @@ export class AlbumsEffects {
     AlbumsActionTypes.LoadAlbum,
     {
       run: (action: LoadAlbum, state: AlbumsPartialState) => {
+        const useSample = action.payload.useSample;
+        if (!useSample) {
+          return this.spotifyService
+            .getAlbum(action.payload)
+            .pipe(map(val => new fromAlbumsActions.AlbumLoaded([val])));
+        }
+
         const arr = [];
         arr.push(albumResult);
         return of(arr).pipe(
@@ -74,6 +82,7 @@ export class AlbumsEffects {
 
   constructor(
     private actions$: Actions,
+    private spotifyService: SpotifyService,
     private dataPersistence: DataPersistence<AlbumsPartialState>
   ) {}
 }

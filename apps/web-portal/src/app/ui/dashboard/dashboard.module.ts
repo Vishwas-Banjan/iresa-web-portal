@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
-import { SideNavModule, HeaderModule } from '@iresa/shared/ui';
+import { SideNavModule, HeaderModule, LoaderModule } from '@iresa/shared/ui';
 import {
   DashboardDataModule,
   WebPlaybackDataModule
@@ -65,6 +65,7 @@ const routes: Routes = [
     MusicPlayerModule,
     PlaybackConnectModule,
     WebPlaybackDataModule,
+    LoaderModule,
     RouterModule.forChild(routes)
   ]
 })

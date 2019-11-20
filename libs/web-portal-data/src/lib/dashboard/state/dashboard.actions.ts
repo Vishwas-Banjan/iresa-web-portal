@@ -4,7 +4,9 @@ export enum DashboardActionTypes {
   Search = '[Dashboard] Search',
   SearchSuccess = '[Dashboard] Search Success',
   SearchError = '[Dashboard] Search Error',
-  SetSelectedMenuItems = '[Dashboard] Set Selected Menu Items'
+  SetSelectedMenuItems = '[Dashboard] Set Selected Menu Items',
+  SetLoading = '[Dashboard] Set Loading',
+  SetUseSample = '[Dashboard] Set Use Sample'
 }
 
 export class Search implements Action {
@@ -27,15 +29,29 @@ export class SetSelectedMenuItems implements Action {
   constructor(public payload: any) {}
 }
 
+export class SetLoading implements Action {
+  readonly type = DashboardActionTypes.SetLoading;
+  constructor(public payload: any) {}
+}
+
+export class SetUseSample implements Action {
+  readonly type = DashboardActionTypes.SetUseSample;
+  constructor(public payload: any) {}
+}
+
 export type DashboardAction =
   | Search
   | SearchSuccess
   | SearchError
-  | SetSelectedMenuItems;
+  | SetSelectedMenuItems
+  | SetLoading
+  | SetUseSample;
 
 export const fromDashboardActions = {
   Search,
   SearchSuccess,
   SearchError,
-  SetSelectedMenuItems
+  SetSelectedMenuItems,
+  SetLoading,
+  SetUseSample
 };

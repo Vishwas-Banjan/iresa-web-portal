@@ -13,6 +13,19 @@ const getLoggedIn = createSelector(
   (state: WebPlaybackState) => state.loggedIn
 );
 
+const getQueue = createSelector(
+  getWebPlaybackState,
+  (state: WebPlaybackState) => state.queue
+);
+
+const getCurrPlayingTrack = createSelector(
+  getWebPlaybackState,
+  (state: WebPlaybackState) =>
+    state.queue[state.position] ? state.queue[state.position] : {}
+);
+
 export const webPlaybackQuery = {
-  getLoggedIn
+  getLoggedIn,
+  getQueue,
+  getCurrPlayingTrack
 };

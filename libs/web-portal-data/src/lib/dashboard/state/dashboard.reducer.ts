@@ -12,12 +12,14 @@ export const DASHBOARD_FEATURE_KEY = 'dashboard';
  */
 
 export interface DashboardState {
+  useSample: boolean;
   menuItems: MenuItem[];
   selectedMenuItems: string;
   logoName: string;
   productName: string;
   searchItems: any[];
   searchLoading: boolean;
+  loading: boolean;
 }
 
 export interface DashboardPartialState {
@@ -25,12 +27,14 @@ export interface DashboardPartialState {
 }
 
 export const initialState: DashboardState = {
+  useSample: false,
   menuItems: menuItems,
   selectedMenuItems: menuItems[0].value,
   logoName: 'Iresa',
   productName: 'Portal',
   searchItems: [],
-  searchLoading: false
+  searchLoading: false,
+  loading: false
 };
 
 export function reducer(
@@ -65,6 +69,20 @@ export function reducer(
       state = {
         ...state,
         selectedMenuItems: action.payload
+      };
+      break;
+    }
+    case DashboardActionTypes.SetLoading: {
+      state = {
+        ...state,
+        loading: action.payload
+      };
+      break;
+    }
+    case DashboardActionTypes.SetUseSample: {
+      state = {
+        ...state,
+        useSample: action.payload
       };
       break;
     }

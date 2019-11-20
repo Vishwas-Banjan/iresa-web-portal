@@ -49,7 +49,9 @@
     "@nrwl/angular": "8.7.1",
     "core-js": "^2.5.4",
     "firebase": "^7.3.0",
+    "hammerjs": "^2.0.8",
     "rxjs": "~6.4.0",
+    "spotify-player": "file:ext_lib/spotify-player-1.0.0.tgz",
     "subsink": "^1.0.0",
     "zone.js": "^0.9.1"
   },

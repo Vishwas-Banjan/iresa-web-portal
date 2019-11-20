@@ -7,6 +7,9 @@ export const WEB_PLAYBACK_FEATURE_KEY = 'webPlayback';
 
 export interface WebPlaybackState {
   loggedIn: boolean;
+  playing: boolean;
+  queue: any[];
+  position: number;
 }
 
 export interface WebPlaybackPartialState {
@@ -14,7 +17,10 @@ export interface WebPlaybackPartialState {
 }
 
 export const initialState: WebPlaybackState = {
-  loggedIn: false
+  loggedIn: false,
+  playing: false,
+  queue: [],
+  position: 0
 };
 
 export function reducer(
@@ -26,6 +32,14 @@ export function reducer(
       state = {
         ...state,
         loggedIn: action.payload
+      };
+      break;
+    }
+    case WebPlaybackActionTypes.SetQueue: {
+      state = {
+        ...state,
+        queue: action.payload,
+        position: 0
       };
       break;
     }

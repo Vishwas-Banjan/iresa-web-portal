@@ -10,6 +10,7 @@ import { DashboardFacade } from '@iresa/web-portal-data';
 import { SubSink } from 'subsink';
 import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { Router } from '@angular/router';
+import { environment } from '@iresa/web-portal/env';
 
 @Component({
   selector: 'iresa-portal-music-search',

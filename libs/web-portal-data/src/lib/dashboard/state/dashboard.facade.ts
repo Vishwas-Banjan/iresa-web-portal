@@ -11,6 +11,7 @@ export class DashboardFacade {
   menuItems$ = this.store.pipe(select(dashboardQuery.getMenuItems));
   product$ = this.store.pipe(select(dashboardQuery.getProduct));
   searchResults$ = this.store.pipe(select(dashboardQuery.getSearchResults));
+  loading$ = this.store.pipe(select(dashboardQuery.getLoading));
 
   constructor(private store: Store<DashboardPartialState>) {}
 
@@ -20,5 +21,9 @@ export class DashboardFacade {
 
   setSelectedMenuItems(val) {
     this.store.dispatch(new fromDashboardActions.SetSelectedMenuItems(val));
+  }
+
+  setLoading(val) {
+    this.store.dispatch(new fromDashboardActions.SetLoading(val));
   }
 }

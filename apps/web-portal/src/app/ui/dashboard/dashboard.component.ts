@@ -1,6 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DashboardFacade, WebPlaybackFacade } from '@iresa/web-portal-data';
-import { Router } from '@angular/router';
+import {
+  Router,
+  Event,
+  NavigationStart,
+  NavigationEnd,
+  NavigationCancel,
+  NavigationError
+} from '@angular/router';
 
 @Component({
   selector: 'iresa-portal-dashboard',
@@ -15,7 +22,9 @@ export class DashboardComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.handleRouterEvent();
+  }
 
   get menuItems$() {
     return this.dbFacade.menuItems$;
@@ -29,8 +38,32 @@ export class DashboardComponent implements OnInit {
     return this.wpFacade.loggedIn$;
   }
 
+  get loading$() {
+    return this.dbFacade.loading$;
+  }
+
   onMenuClick(menu) {
     this.dbFacade.setSelectedMenuItems(menu.value);
     this.router.navigate([menu.value]);
+  }
+
+  handleRouterEvent() {
+    this.router.events.subscribe((routerEvent: Event) => {
+      this.checkRouterEvent(routerEvent);
+    });
+  }
+
+  checkRouterEvent(routerEvent: Event) {
+    if (routerEvent instanceof NavigationStart) {
+      this.dbFacade.setLoading(true);
+    }
+
+    if (
+      routerEvent instanceof NavigationEnd ||
+      routerEvent instanceof NavigationCancel ||
+      routerEvent instanceof NavigationError
+    ) {
+      this.dbFacade.setLoading(false);
+    }
   }
 }

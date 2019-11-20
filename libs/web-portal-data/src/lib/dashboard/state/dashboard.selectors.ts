@@ -36,8 +36,14 @@ const getSearchResults = createSelector(
   }
 );
 
+const getLoading = createSelector(
+  getDashboardState,
+  (state: DashboardState) => state.loading
+);
+
 export const dashboardQuery = {
   getMenuItems,
   getProduct,
-  getSearchResults
+  getSearchResults,
+  getLoading
 };

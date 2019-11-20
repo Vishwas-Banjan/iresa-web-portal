@@ -30,7 +30,6 @@ import { WindowRef } from '@iresa/shared/utilities';
     NgxSpotifyModule.forRoot({
       clientId: environment.spotifyConfig.clientId,
       redirectUri: environment.spotifyConfig.redirectUri,
-      scope: environment.spotifyConfig.scope,
       // authToken: localStorage.getItem('angular2-spotify-token')
       authToken: environment.spotifyConfig.authToken
     }),

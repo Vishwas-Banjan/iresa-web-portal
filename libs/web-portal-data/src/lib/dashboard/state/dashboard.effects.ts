@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/angular';
 
-import { DashboardPartialState } from './dashboard.reducer';
+import {
+  DashboardPartialState,
+  DASHBOARD_FEATURE_KEY
+} from './dashboard.reducer';
 import {
   DashboardActionTypes,
   Search,
@@ -18,16 +21,26 @@ import { DashboardService } from './dashboard.service';
 export class DashboardEffects {
   @Effect() search$ = this.dataPersistence.fetch(DashboardActionTypes.Search, {
     run: (action: Search, state: DashboardPartialState) => {
-      // const type = 'track,artist,album';
-      // return this.spotifyService
-      //   .search(action.payload, type, { limit: 2 })
-      //   .pipe(map(val => new fromDashboardActions.SearchSuccess(val)));
-      return of(results).pipe(
-        map(val => {
-          return new fromDashboardActions.SearchSuccess(
-            this.dbService.toSearchResult(val)
+      if (!state[DASHBOARD_FEATURE_KEY].useSample) {
+        const type = 'track,artist,album';
+        return this.spotifyService
+          .search(action.payload, type, { limit: 5 })
+          .pipe(
+            map(
+              val =>
+                new fromDashboardActions.SearchSuccess(
+                  this.dbService.toSearchResult(val)
+                )
+            )
           );
-        })
+      }
+      return of(results).pipe(
+        map(
+          val =>
+            new fromDashboardActions.SearchSuccess(
+              this.dbService.toSearchResult(val)
+            )
+        )
       );
     },
 
