@@ -27,7 +27,7 @@ const getAllAlbums = createSelector(
 
 const getAlbumTracks = createSelector(
   getAlbumsState,
-  getLoaded,
+  getTracksLoaded,
   (state: AlbumsState, isLoaded) => {
     return isLoaded ? state.trackList : null;
   }

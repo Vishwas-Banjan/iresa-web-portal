@@ -55,8 +55,9 @@ export class SpotifyService {
     return this.api({
       method: 'get',
       url: `/albums/${album}/tracks`,
-      search: options
-    }).pipe(map(res => res.json()));
+      search: options,
+      headers: this.getHeaders()
+    });
   }
 
   //#endregion
@@ -92,8 +93,9 @@ export class SpotifyService {
     return this.api({
       method: 'get',
       url: `/artists/${artist}/albums`,
-      search: options
-    }).pipe(map(res => res.json()));
+      search: options,
+      headers: this.getHeaders()
+    });
   }
 
   /**
