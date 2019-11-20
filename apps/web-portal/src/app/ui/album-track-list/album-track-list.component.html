@@ -1,0 +1,50 @@
+<mat-card *ngIf="albumTracks$ | async as album">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="25px"
+    class="header"
+  >
+    <div class="header-image">
+      <img [src]="album.images | loadImage" alt="{{ album.name }}" />
+    </div>
+    <div class="header-info">
+      <h3 class="title">{{ album.name }}</h3>
+      <small>{{ album.artists | loadArtists }}</small>
+    </div>
+  </div>
+  <div class="song-list">
+    <div
+      *ngFor="let track of album.tracks.items"
+      fxLayout="row"
+      fxLayoutAlign="start center"
+      class="song-item"
+    >
+      <div class="play-song">
+        <button (click)="playSong(track, album)">
+          <mat-icon>play_circle_outline</mat-icon>
+        </button>
+      </div>
+      <div fxFlex="75" class="song-title">
+        {{ track.name }}
+      </div>
+      <div fxFlex="25" class="song-time">
+        {{ track.duration_ms | songTime }}
+      </div>
+      <div class="song-menu"></div>
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        aria-label="Example icon-button with a menu"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>library_music</mat-icon>
+          <span>Add To Music Library</span>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+</mat-card>

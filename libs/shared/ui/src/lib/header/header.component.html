@@ -1,0 +1,16 @@
+<mat-toolbar>
+  <div>
+    <span class="logo-link">{{ product?.logoName }}</span>
+    <span class="product-link">{{ product?.productName }}</span>
+  </div>
+
+  <div class="nav-center">
+    <ng-content></ng-content>
+  </div>
+
+  <div>
+    <button mat-icon-button aria-label="Sign Out">
+      <mat-icon>power_settings_new</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>

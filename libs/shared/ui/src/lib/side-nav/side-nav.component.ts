@@ -1,7 +1,11 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
+import { MenuItem } from './side-nav.config';
 
 @Component({
   selector: 'iresa-side-nav',
@@ -10,13 +14,18 @@ import { map, shareReplay } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SideNavComponent {
+  @Input()
+  menuItems: MenuItem[];
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+  @Input()
+  activeItem: string;
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  @Output()
+  menuClick = new EventEmitter<MenuItem>();
 
+  constructor() {}
+
+  onMenuClick(item) {
+    this.menuClick.emit(item);
+  }
 }

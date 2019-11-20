@@ -11,8 +11,9 @@ export const environment = {
     measurementId: 'G-2J6CLMM0SG'
   },
   spotifyConfig: {
-    clientId: 'ABC123DEF456GHfddId789JKL',
-    redirectUri: 'http://localhost:4200/callback.html',
-    scope: 'user-follow-modify user-follow-read playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private user-library-read user-library-modify user-read-private',
+    clientId: 'cfe874852c4144c1972bcb30484356e1',
+    redirectUri: 'https://iresa-musicapp.firebaseapp.com',
+    useSample: false,
+    authToken: ''
   }
 };

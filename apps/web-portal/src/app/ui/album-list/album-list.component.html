@@ -1,0 +1,27 @@
+<div
+  class="container"
+  fxLayout="row wrap"
+  fxLayoutAlign="start"
+  fxLayoutGap="10px"
+>
+  <mat-card
+    tabindex="0"
+    *ngFor="let album of albums$ | async"
+    class="album"
+    fxLayout="column"
+    (click)="onAlbumClick(album)"
+  >
+    <img
+      class="image"
+      mat-card-image
+      [src]="album.images | loadImage"
+      alt="album-cover"
+    />
+    <mat-card-content>
+      <p>{{ album.name }}</p>
+      <small
+        >{{ album.artists | loadArtists }} - {{ album.release_date }}</small
+      >
+    </mat-card-content>
+  </mat-card>
+</div>

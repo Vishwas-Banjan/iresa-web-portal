@@ -2,9 +2,10 @@ import { Injectable, Inject, InjectionToken } from '@angular/core';
 import { SpotifyConfig } from './spotify-config';
 import { SpotifyOptions } from './spotify-options';
 import { HttpRequestOptions } from './http-request-options';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable, from, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { spotifyScopes } from './spotify-scopes';
 
 export const SpotifyConfigService = new InjectionToken<SpotifyConfig>(
   'SpotifyConfig'
@@ -27,8 +28,9 @@ export class SpotifyService {
     album = this.getIdFromUri(album);
     return this.api({
       method: 'get',
-      url: `/albums/${album}`
-    }).pipe(map(res => res.json()));
+      url: `/albums/${album}`,
+      headers: this.getHeaders()
+    });
   }
 
   /**
@@ -550,11 +552,15 @@ export class SpotifyService {
     options.q = q;
     options.type = type;
 
-    return this.api({
-      method: 'get',
-      url: `/search`,
-      search: options
-    }).pipe(map(res => res.json()));
+    return this.api(
+      {
+        method: 'get',
+        url: `/search`,
+        search: options,
+        headers: this.getHeaders()
+      },
+      true
+    ).pipe();
   }
 
   //#endregion
@@ -620,12 +626,13 @@ export class SpotifyService {
       const params = {
         client_id: this.config.clientId,
         redirect_uri: this.config.redirectUri,
-        scope: this.config.scope || '',
+        scope: spotifyScopes.join(' ') || '',
         response_type: 'token'
       };
       let authCompleted = false;
       const authWindow = this.openDialog(
-        'https://accounts.spotify.com/authorize?' + this.toQueryString(params),
+        'https://accounts.spotify.com/authorize?' +
+          this.toQueryString(params).toString(),
         'Spotify',
         'menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width=' +
           w +
@@ -661,18 +668,19 @@ export class SpotifyService {
     return from(promise).pipe(catchError(this.handleError));
   }
 
+  getAuthToken() {
+    return this.config.authToken;
+  }
   //#endregion
 
   //#region utils
 
-  private toQueryString(obj: Object): HttpParams {
+  private toQueryString(obj: Object, ignoreEncode?): HttpParams {
     let params = new HttpParams();
     Object.keys(obj).forEach(key => {
       if (obj.hasOwnProperty(key)) {
-        params = params.append(
-          encodeURIComponent(key),
-          encodeURIComponent(obj[key])
-        );
+        const val = ignoreEncode ? obj[key] : encodeURIComponent(obj[key]);
+        params = params.append(encodeURIComponent(key), val);
       }
     });
     return params;
@@ -691,17 +699,20 @@ export class SpotifyService {
     return win;
   }
 
-  private auth(isJson?: boolean): Headers {
-    const headers = new Headers();
-    headers.append('Authorization', `Bearer ${this.config.authToken}`);
-    if (isJson) {
-      headers.append('Content-Type', 'application/json');
+  private auth(isJson?: boolean): HttpHeaders {
+    let headers = new HttpHeaders();
+    headers = headers.append(
+      'Authorization',
+      `Bearer ${this.config.authToken}`
+    );
+    if (!isJson) {
+      headers = headers.append('Content-Type', 'application/json');
     }
     return headers;
   }
 
-  private getHeaders(isJson?: boolean): any {
-    return new Headers(this.auth(isJson));
+  private getHeaders(isJson?): HttpHeaders {
+    return this.auth(isJson);
   }
 
   private getIdFromUri(uri: string) {
@@ -721,12 +732,15 @@ export class SpotifyService {
     return throwError(error.json() || 'Server error');
   }
 
-  private api(requestOptions: HttpRequestOptions): Observable<any> {
+  private api(
+    requestOptions: HttpRequestOptions,
+    ignoreEncode?
+  ): Observable<any> {
     return this.http.request<any>(
       requestOptions.method || 'get',
       this.config.apiBase + requestOptions.url,
       {
-        params: this.toQueryString(requestOptions.search),
+        params: this.toQueryString(requestOptions.search || {}, ignoreEncode),
         body: JSON.stringify(requestOptions.body),
         headers: requestOptions.headers
       }

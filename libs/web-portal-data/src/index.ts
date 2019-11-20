@@ -1,1 +1,3 @@
-export * from './lib/web-portal-data.module';
+export * from './lib/dashboard';
+export * from './lib/web-playback';
+export * from './lib/albums';

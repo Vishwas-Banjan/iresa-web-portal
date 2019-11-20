@@ -1,5 +1,5 @@
 {
-  "npmScope": "iresa-web-portal",
+  "npmScope": "iresa",
   "implicitDependencies": {
     "angular.json": "*",
     "package.json": "*",
@@ -21,6 +21,9 @@
       "tags": ["ui"]
     },
     "web-portal-data": {
+      "tags": []
+    },
+    "shared-utilities": {
       "tags": []
     }
   }

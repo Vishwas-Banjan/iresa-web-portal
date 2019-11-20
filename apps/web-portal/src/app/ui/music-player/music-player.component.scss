@@ -1,0 +1,23 @@
+@import '../../../../../../libs/shared/ui/scss/variable';
+
+.mat-card {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: mat-color($mat-grey, 200);
+}
+
+button {
+  background: 0 0;
+  border: none;
+  cursor: pointer;
+}
+
+.player-current-song-info {
+  img {
+    max-width: 60px;
+    border-radius: 2px;
+  }
+}

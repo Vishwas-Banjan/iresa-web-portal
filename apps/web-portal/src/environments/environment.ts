@@ -15,9 +15,11 @@ export const environment = {
     measurementId: 'G-2J6CLMM0SG'
   },
   spotifyConfig: {
-    clientId: 'ABC123DEF456GHfddId789JKL',
-    redirectUri: 'http://localhost:4200/callback.html',
-    scope: 'user-follow-modify user-follow-read playlist-read-private playlist-read-collaborative playlist-modify-public playlist-modify-private user-library-read user-library-modify user-read-private',
+    clientId: 'cfe874852c4144c1972bcb30484356e1',
+    redirectUri: 'http://localhost:8080',
+    useSample: false,
+    authToken:
+      'BQBKeK9vlx1pyFZYgxp50602kaDgVOqO8EFBOiVgYeLTCvOYQr7BCqAoYA33_IIrj8u78rmPsDEBpKki7_HU1kZGgpN_a1XdAe1u07s-Tfuiz8ejxaZaJlFX81AgCE7eTo88rmh-AVyfgq769wjbJ2eZFFG6f39bSysn5TPb8KAWfA4v0xnnH38Htw'
   }
 };
 

@@ -3,6 +3,7 @@ node_js:
   - "11.0"
 before_script:
   - npm install -g @angular/cli
+  - git fetch origin master
 script:
   - npm install
   - npm run build:app
