@@ -12,7 +12,7 @@ export const environment = {
   },
   spotifyConfig: {
     clientId: 'cfe874852c4144c1972bcb30484356e1',
-    redirectUri: 'https://iresa-musicapp.firebaseapp.com',
+    redirectUri: 'http://iresa-musicapp.firebaseapp.com',
     useSample: false,
     authToken: ''
   }
