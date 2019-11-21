@@ -21,7 +21,7 @@ export class PlaybackConnectComponent implements OnInit {
   }
 
   login() {
-    this.spotifyServie.login();
+    this.spotifyServie.login().subscribe();
   }
 
   onLogin() {
