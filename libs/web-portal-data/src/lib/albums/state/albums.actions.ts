@@ -4,7 +4,6 @@ export enum AlbumsActionTypes {
   LoadAlbums = '[Albums] Load Albums',
   AlbumsLoaded = '[Albums] Albums Loaded',
   AlbumsLoadError = '[Albums] Albums Load Error',
-  ResetAlbumsLoaded = '[Albums] Reset Albums Loaded',
   LoadAlbum = '[Albums] Load Album',
   AlbumLoaded = '[Albums] Album Loaded',
   AlbumLoadError = '[Albums] Album Load Error',
@@ -27,11 +26,6 @@ export class AlbumsLoadError implements Action {
 export class AlbumsLoaded implements Action {
   readonly type = AlbumsActionTypes.AlbumsLoaded;
   constructor(public payload: any) {}
-}
-
-export class ResetAlbumsLoaded implements Action {
-  readonly type = AlbumsActionTypes.ResetAlbumsLoaded;
-  constructor() {}
 }
 
 export class LoadAlbum implements Action {
@@ -73,7 +67,6 @@ export type AlbumsAction =
   | LoadAlbums
   | AlbumsLoaded
   | AlbumsLoadError
-  | ResetAlbumsLoaded
   | LoadAlbum
   | AlbumLoaded
   | AlbumLoadError
@@ -86,7 +79,6 @@ export const fromAlbumsActions = {
   LoadAlbums,
   AlbumsLoaded,
   AlbumsLoadError,
-  ResetAlbumsLoaded,
   LoadAlbum,
   AlbumLoaded,
   AlbumLoadError,

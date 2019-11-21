@@ -38,11 +38,25 @@ export function reducer(
   action: AlbumsAction
 ): AlbumsState {
   switch (action.type) {
+    case AlbumsActionTypes.LoadAlbums: {
+      state = {
+        ...state,
+        loaded: false
+      };
+      break;
+    }
     case AlbumsActionTypes.AlbumsLoaded: {
       state = {
         ...state,
         list: action.payload,
         loaded: true
+      };
+      break;
+    }
+    case AlbumsActionTypes.LoadAlbum: {
+      state = {
+        ...state,
+        loaded: false
       };
       break;
     }
@@ -54,10 +68,10 @@ export function reducer(
       };
       break;
     }
-    case AlbumsActionTypes.ResetAlbumsLoaded: {
+    case AlbumsActionTypes.LoadAlbumTracks: {
       state = {
         ...state,
-        loaded: false
+        tracksLoaded: false,
       };
       break;
     }

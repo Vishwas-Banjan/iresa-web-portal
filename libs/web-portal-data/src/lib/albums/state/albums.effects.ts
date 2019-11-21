@@ -10,8 +10,8 @@ import {
   fromAlbumsActions,
   LoadAlbumTracks
 } from './albums.actions';
-import { of, forkJoin, combineLatest } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { albumResult } from './config/album-result';
 import { SpotifyService } from '@iresa/ngx-spotify';
 import { DashboardFacade } from '../../dashboard';

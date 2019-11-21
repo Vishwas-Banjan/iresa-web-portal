@@ -26,8 +26,4 @@ export class AlbumsFacade {
   loadAlbumTracks(data) {
     this.store.dispatch(new fromAlbumsActions.LoadAlbumTracks(data));
   }
-
-  resetAlbumsLoaded() {
-    this.store.dispatch(new fromAlbumsActions.ResetAlbumsLoaded());
-  }
 }
