@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { DashboardFacade, WebPlaybackFacade } from '@iresa/web-portal-data';
+import { DashboardFacade } from '@iresa/web-portal-data';
 import {
   Router,
   Event,
@@ -16,11 +16,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit {
-  constructor(
-    private dbFacade: DashboardFacade,
-    private wpFacade: WebPlaybackFacade,
-    private router: Router
-  ) {}
+  constructor(private dbFacade: DashboardFacade, private router: Router) {}
 
   ngOnInit() {
     this.handleRouterEvent();
@@ -32,10 +28,6 @@ export class DashboardComponent implements OnInit {
 
   get product$() {
     return this.dbFacade.product$;
-  }
-
-  get loggedIn$() {
-    return this.wpFacade.loggedIn$;
   }
 
   get loading$() {

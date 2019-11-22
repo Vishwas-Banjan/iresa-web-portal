@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlaybackConnectComponent } from './playback-connect.component';
+import { AuthorizeComponent } from './authorize.component';
 
-describe('PlaybackConnectComponent', () => {
-  let component: PlaybackConnectComponent;
-  let fixture: ComponentFixture<PlaybackConnectComponent>;
+describe('AuthorizeComponent', () => {
+  let component: AuthorizeComponent;
+  let fixture: ComponentFixture<AuthorizeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [PlaybackConnectComponent]
+      declarations: [AuthorizeComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PlaybackConnectComponent);
+    fixture = TestBed.createComponent(AuthorizeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

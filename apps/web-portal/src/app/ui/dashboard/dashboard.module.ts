@@ -4,17 +4,18 @@ import { DashboardComponent } from './dashboard.component';
 import { SideNavModule, HeaderModule, LoaderModule } from '@iresa/shared/ui';
 import {
   DashboardDataModule,
-  WebPlaybackDataModule
+  WebPlaybackDataModule,
+  AuthGuardServiceGuard
 } from '@iresa/web-portal-data';
 import { MusicSearchModule } from '../music-search/music-search.module';
 import { RouterModule, Routes } from '@angular/router';
 import { MusicPlayerModule } from '../music-player/music-player.module';
-import { PlaybackConnectModule } from '../playback-connect/playback-connect.module';
 
 const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
+    canActivate: [AuthGuardServiceGuard],
     children: [
       {
         path: 'home',
@@ -63,10 +64,10 @@ const routes: Routes = [
     HeaderModule,
     MusicSearchModule,
     MusicPlayerModule,
-    PlaybackConnectModule,
     WebPlaybackDataModule,
     LoaderModule,
     RouterModule.forChild(routes)
-  ]
+  ],
+  providers: [AuthGuardServiceGuard]
 })
 export class DashboardModule {}

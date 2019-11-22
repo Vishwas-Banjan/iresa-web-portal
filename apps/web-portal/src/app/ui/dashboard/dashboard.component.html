@@ -1,4 +1,4 @@
-<!--iresa-loader *ngIf="loading$ | async"></iresa-loader>
+<iresa-loader *ngIf="loading$ | async"></iresa-loader>
 <iresa-header *ngIf="product$ | async as product" [product]="product">
   <iresa-portal-music-search></iresa-portal-music-search>
 </iresa-header>
@@ -11,6 +11,4 @@
   <router-outlet></router-outlet>
 </iresa-side-nav>
 
-<iresa-portal-music-player></iresa-portal-music-player-->
-
-<iresa-portal-playback-connect></iresa-portal-playback-connect>
+<iresa-portal-music-player></iresa-portal-music-player>

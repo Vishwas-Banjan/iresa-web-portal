@@ -7,7 +7,6 @@ import {
   fromWebPlaybackActions,
   Play
 } from './web-playback.actions';
-import { of } from 'rxjs';
 import { SpotifyService, SpotifyPlaybackService } from '@iresa/ngx-spotify';
 import { map } from 'rxjs/operators';
 

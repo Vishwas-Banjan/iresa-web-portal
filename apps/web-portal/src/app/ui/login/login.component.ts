@@ -1,9 +1,5 @@
-import {
-  Component,
-  OnInit,
-  ViewEncapsulation,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { SpotifyService } from '@iresa/ngx-spotify';
 
 @Component({
   selector: 'iresa-portal-login',
@@ -12,7 +8,11 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
-  constructor() {}
+  constructor(private spotifyService: SpotifyService) {}
 
   ngOnInit() {}
+
+  get authURL() {
+    return this.spotifyService.authURL();
+  }
 }

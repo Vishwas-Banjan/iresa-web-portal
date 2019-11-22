@@ -28,13 +28,6 @@ export function reducer(
   action: WebPlaybackAction
 ): WebPlaybackState {
   switch (action.type) {
-    case WebPlaybackActionTypes.SetLoggedIn: {
-      state = {
-        ...state,
-        loggedIn: action.payload
-      };
-      break;
-    }
     case WebPlaybackActionTypes.SetQueue: {
       state = {
         ...state,

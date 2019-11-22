@@ -618,60 +618,29 @@ export class SpotifyService {
 
   //#region login
 
-  login() {
-    const promise = new Promise((resolve, reject) => {
-      const w = 400,
-        h = 500,
-        left = screen.width / 2 - w / 2,
-        top = screen.height / 2 - h / 2;
+  authURL() {
+    const ps = {
+      client_id: this.config.clientId,
+      redirect_uri: encodeURIComponent(this.config.redirectUri),
+      scope: spotifyScopes.join(' ') || '',
+      response_type: 'token',
+      state: ''
+    };
+    const params = Object.keys(ps)
+      .map(param => `${param}=${ps[param]}`)
+      .join('&');
 
-      const params = {
-        client_id: this.config.clientId,
-        redirect_uri: this.config.redirectUri,
-        scope: spotifyScopes.join(' ') || '',
-        response_type: 'token'
-      };
-      let authCompleted = false;
-      const authWindow = this.openDialog(
-        'https://accounts.spotify.com/authorize?' +
-          this.toQueryString(params).toString(),
-        'Spotify',
-        'menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width=' +
-          w +
-          ',height=' +
-          h +
-          ',top=' +
-          top +
-          ',left=' +
-          left,
-        () => {
-          if (!authCompleted) {
-            return reject('Login rejected error');
-          }
-        }
-      );
-
-      const storageChanged = e => {
-        if (e.key === 'angular2-spotify-token') {
-          if (authWindow) {
-            authWindow.close();
-          }
-          authCompleted = true;
-
-          this.config.authToken = e.newValue;
-          window.removeEventListener('storage', storageChanged, false);
-
-          return resolve(e.newValue);
-        }
-      };
-      window.addEventListener('storage', storageChanged, false);
-    });
-
-    return from(promise).pipe(catchError(this.handleError));
+    return `https://accounts.spotify.com/authorize?${params}`;
   }
 
   getAuthToken() {
     return this.config.authToken;
+  }
+
+  setAuthToken(authorizationMap) {
+    if (authorizationMap.access_token) {
+      this.config.authToken = authorizationMap.access_token;
+    }
   }
   //#endregion
 
@@ -686,19 +655,6 @@ export class SpotifyService {
       }
     });
     return params;
-  }
-
-  private openDialog(uri, name, options, cb) {
-    const win = window.open(uri, name, options);
-    const interval = window.setInterval(() => {
-      try {
-        if (!win || win.closed) {
-          window.clearInterval(interval);
-          cb(win);
-        }
-      } catch (e) {}
-    }, 1000000);
-    return win;
   }
 
   private auth(isJson?: boolean): HttpHeaders {
