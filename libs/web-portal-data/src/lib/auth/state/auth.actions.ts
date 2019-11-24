@@ -3,7 +3,8 @@ import { Action } from '@ngrx/store';
 export enum AuthActionTypes {
   Login = '[Auth] Login',
   LoginSuccess = '[Auth] Login Success',
-  LoginError = '[Auth] Login Error'
+  LoginError = '[Auth] Login Error',
+  SetSelectedStationId = '[Auth] Set Selected Station Id'
 }
 
 export class Login implements Action {
@@ -21,10 +22,16 @@ export class LoginError implements Action {
   constructor(public payload: any) {}
 }
 
-export type AuthAction = Login | LoginSuccess | LoginError;
+export class SetSelectedStationId implements Action {
+  readonly type = AuthActionTypes.SetSelectedStationId;
+  constructor(public payload: any) {}
+}
+
+export type AuthAction = Login | LoginSuccess | SetSelectedStationId;
 
 export const fromAuthActions = {
   Login,
   LoginSuccess,
-  LoginError
+  LoginError,
+  SetSelectedStationId
 };

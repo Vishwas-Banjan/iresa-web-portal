@@ -17,4 +17,8 @@ export class AuthFacade {
   login({ email, password }) {
     this.store.dispatch(new fromAuthActions.Login({ email, password }));
   }
+
+  setSelectedStationId(data) {
+    this.store.dispatch(new fromAuthActions.SetSelectedStationId(data));
+  }
 }

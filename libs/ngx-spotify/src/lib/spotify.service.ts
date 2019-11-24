@@ -618,13 +618,13 @@ export class SpotifyService {
 
   //#region login
 
-  authURL() {
+  authURL(state) {
     const ps = {
       client_id: this.config.clientId,
       redirect_uri: encodeURIComponent(this.config.redirectUri),
       scope: spotifyScopes.join(' ') || '',
       response_type: 'token',
-      state: ''
+      state
     };
     const params = Object.keys(ps)
       .map(param => `${param}=${ps[param]}`)

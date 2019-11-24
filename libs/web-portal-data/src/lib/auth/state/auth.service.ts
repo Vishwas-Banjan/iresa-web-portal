@@ -27,9 +27,16 @@ export class AuthService {
   getStationsByUser({ email, uid }) {
     return this.db
       .collection('stations', ref => ref.where('uid', '==', uid))
-      .valueChanges()
+      .snapshotChanges()
       .pipe(
         take(1),
+        map((actions: any) => {
+          return actions.map(a => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
+        }),
         map(stations => {
           return {
             stations,

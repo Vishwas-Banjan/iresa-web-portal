@@ -5,7 +5,6 @@ import {
   ViewEncapsulation,
   ViewChild
 } from '@angular/core';
-import { SpotifyService } from '@iresa/ngx-spotify';
 import { MatTabGroup } from '@angular/material';
 import { FormGroup } from '@angular/forms';
 
@@ -20,15 +19,11 @@ export class LoginComponent implements OnInit {
   @ViewChild('tabs', { static: false }) tabGroup: MatTabGroup;
 
   userForm: FormGroup;
-  constructor(private spotifyService: SpotifyService) {}
+  constructor() {}
 
   ngOnInit() {}
 
   onLoginSuccess() {
     this.tabGroup.selectedIndex = 1;
-  }
-
-  get authURL() {
-    return this.spotifyService.authURL();
   }
 }

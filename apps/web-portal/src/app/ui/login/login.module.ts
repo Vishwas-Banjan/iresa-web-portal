@@ -14,6 +14,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AuthDataModule } from '@iresa/web-portal-data';
 import { FormComponent } from './form/form.component';
 import { StationListComponent } from './station-list/station-list.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [LoginComponent, FormComponent, StationListComponent],
@@ -28,6 +29,7 @@ import { StationListComponent } from './station-list/station-list.component';
     ReactiveFormsModule,
     FormsModule,
     AuthDataModule,
+    FlexLayoutModule,
     RouterModule.forChild([
       {
         path: '',

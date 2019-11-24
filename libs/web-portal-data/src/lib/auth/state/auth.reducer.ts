@@ -16,6 +16,7 @@ export interface AuthState {
   loggedIn: boolean;
   user: any;
   stations: any[];
+  selectedStationId: string;
   loading: boolean;
 }
 
@@ -27,6 +28,7 @@ export const initialState: AuthState = {
   loggedIn: false,
   user: null,
   stations: [],
+  selectedStationId: null,
   loading: false
 };
 
@@ -49,6 +51,13 @@ export function reducer(
         user: action.payload.user,
         stations: action.payload.stations,
         loading: false
+      };
+      break;
+    }
+    case AuthActionTypes.SetSelectedStationId: {
+      state = {
+        ...state,
+        selectedStationId: action.payload
       };
       break;
     }
