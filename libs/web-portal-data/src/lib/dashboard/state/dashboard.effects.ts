@@ -13,7 +13,7 @@ import {
 } from './dashboard.actions';
 import { SpotifyService } from '@iresa/ngx-spotify';
 import { map } from 'rxjs/operators';
-import { timer, of } from 'rxjs';
+import { of } from 'rxjs';
 import { results } from './config/search-results';
 import { DashboardService } from './dashboard.service';
 
@@ -24,7 +24,7 @@ export class DashboardEffects {
       if (!state[DASHBOARD_FEATURE_KEY].useSample) {
         const type = 'track,artist,album';
         return this.spotifyService
-          .search(action.payload, type, { limit: 5 })
+          .search(action.payload, type, { limit: 5, market: 'from_token' })
           .pipe(
             map(
               val =>

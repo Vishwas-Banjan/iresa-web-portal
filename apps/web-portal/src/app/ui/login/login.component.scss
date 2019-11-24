@@ -1,0 +1,36 @@
+.login-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.login-card {
+  width: 400px;
+  height: 400px;
+}
+
+.mat-tab-body-content {
+  overflow: hidden !important;
+}
+
+.hidden-tabs {
+  > .mat-tab-header {
+    display: none;
+  }
+}
+
+.service-container {
+  top: 2rem;
+  height: 5rem;
+  vertical-align: middle;
+}
+
+.btn-spotify {
+  color: #fff;
+  background-color: #1db954;
+
+  &.mat-raised-button {
+    border-radius: 20px;
+  }
+}

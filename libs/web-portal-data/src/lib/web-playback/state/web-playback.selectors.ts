@@ -24,8 +24,14 @@ const getCurrPlayingTrack = createSelector(
     state.queue[state.position] ? state.queue[state.position] : {}
 );
 
+const getPLaying = createSelector(
+  getWebPlaybackState,
+  (state: WebPlaybackState) => state.playing
+);
+
 export const webPlaybackQuery = {
   getLoggedIn,
   getQueue,
-  getCurrPlayingTrack
+  getCurrPlayingTrack,
+  getPLaying
 };

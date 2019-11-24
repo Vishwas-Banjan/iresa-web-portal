@@ -4,7 +4,8 @@ export enum WebPlaybackActionTypes {
   SetQueue = '[WebPlayback] Set Queue',
   Play = '[WebPlayback] Play',
   PlaySuccess = '[WebPlayback] Play Success',
-  PlayError = '[WebPlayback] Play Error'
+  PlayError = '[WebPlayback] Play Error',
+  SetPlaying = '[WebPlayback] Set Playing'
 }
 
 export class SetQueue implements Action {
@@ -27,11 +28,22 @@ export class PlayError implements Action {
   constructor() {}
 }
 
-export type WebPlaybackAction = SetQueue | Play | PlaySuccess | PlayError;
+export class SetPlaying implements Action {
+  readonly type = WebPlaybackActionTypes.SetPlaying;
+  constructor(public payload: any) {}
+}
+
+export type WebPlaybackAction =
+  | SetQueue
+  | Play
+  | PlaySuccess
+  | PlayError
+  | SetPlaying;
 
 export const fromWebPlaybackActions = {
   SetQueue,
   Play,
   PlaySuccess,
-  PlayError
+  PlayError,
+  SetPlaying
 };

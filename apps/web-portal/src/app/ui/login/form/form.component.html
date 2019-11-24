@@ -1,0 +1,30 @@
+<mat-card-title>Login</mat-card-title>
+<mat-card-subtitle
+  >Use your Iresa account information to login below</mat-card-subtitle
+>
+<mat-divider></mat-divider>
+<form class="login-form" [formGroup]="userForm">
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input type="email" matInput formControlName="email" />
+    <mat-hint>Hint: admin@iresa.com</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Password</mat-label>
+    <input type="password" matInput formControlName="password" />
+    <mat-hint>Hint: test1234</mat-hint>
+  </mat-form-field>
+
+  <button
+    mat-raised-button
+    color="primary"
+    [class.spinner]="loading$ | async"
+    [disabled]="loading$ | async"
+    (click)="login()"
+  >
+    Login</button
+  ><br />
+
+  <button mat-button color="primary">Don't have an account?</button>
+</form>

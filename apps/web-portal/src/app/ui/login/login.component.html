@@ -1,1 +1,18 @@
-<a [href]="authURL">Connect to Spotify</a>
+<!--a [href]="authURL">Connect to Spotify</a-->
+
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-content>
+      <mat-tab-group #tabs class="hidden-tabs">
+        <mat-tab label="First">
+          <iresa-portal-form
+            (loginSuccess)="onLoginSuccess()"
+          ></iresa-portal-form>
+        </mat-tab>
+        <mat-tab label="Second">
+          <iresa-portal-station-list></iresa-portal-station-list>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
+</div>

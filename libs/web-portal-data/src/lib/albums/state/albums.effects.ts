@@ -25,7 +25,7 @@ export class AlbumsEffects {
         const useSample = action.payload.useSample;
         if (!useSample) {
           return this.spotifyService
-            .getArtistAlbums(action.payload)
+            .getArtistAlbums(action.payload, { market: 'from_token' })
             .pipe(map(val => new fromAlbumsActions.AlbumsLoaded(val.items)));
         }
       },
@@ -74,7 +74,7 @@ export class AlbumsEffects {
             return new fromAlbumsActions.SetAlbumTracks({ album });
           } else {
             return this.spotifyService
-              .getAlbumTracks(albumId)
+              .getAlbumTracks(albumId, { market: 'from_token' })
               .pipe(
                 map(
                   data =>
@@ -86,17 +86,15 @@ export class AlbumsEffects {
           }
         }
 
-        return this.spotifyService
-          .getAlbum(albumId)
-          .pipe(
-            map(
-              data =>
-                new fromAlbumsActions.SetAlbumTracks({
-                  album: data,
-                  trackPos: action.payload.trackPos
-                })
-            )
-          );
+        return this.spotifyService.getAlbum(albumId).pipe(
+          map(
+            data =>
+              new fromAlbumsActions.SetAlbumTracks({
+                album: data,
+                trackPos: action.payload.trackPos
+              })
+          )
+        );
       },
 
       onError: (action: LoadAlbumTracks, error) => {
