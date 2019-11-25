@@ -2,7 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlbumTrackListComponent } from './album-track-list.component';
 import { RouterModule } from '@angular/router';
-import { AlbumsDataModule, AlbumTracksResolver } from '@iresa/web-portal-data';
+import {
+  AlbumsDataModule,
+  AlbumTracksResolver,
+  PlaylistDataModule
+} from '@iresa/web-portal-data';
 import {
   MatCardModule,
   MatIconModule,
@@ -21,6 +25,7 @@ import {
   imports: [
     CommonModule,
     AlbumsDataModule,
+    PlaylistDataModule,
     MatCardModule,
     MatIconModule,
     MatMenuModule,

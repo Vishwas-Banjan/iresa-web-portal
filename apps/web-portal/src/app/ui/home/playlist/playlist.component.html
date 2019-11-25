@@ -1,0 +1,39 @@
+<h2>
+  <span
+    *ngIf="items.length > 0"
+    [matBadge]="items.length"
+    matBadgeOverlap="false"
+    >{{ title }}</span
+  >
+  <span *ngIf="items.length === 0">{{ title }}</span>
+</h2>
+<mat-divider></mat-divider>
+<div
+  *ngIf="items.length > 0"
+  class="container"
+  fxLayout="row wrap"
+  fxLayoutAlign="start"
+  fxLayoutGap="10px"
+>
+  <mat-card
+    tabindex="0"
+    *ngFor="let item of items"
+    class="playlist"
+    fxLayout="column"
+    (click)="onPlaylistClick(item)"
+  >
+    <img
+      class="image"
+      mat-card-image
+      [src]="item.images | loadImage"
+      alt="album-cover"
+    />
+    <mat-card-content>
+      <p>{{ item.name }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div *ngIf="items.length === 0">
+  <p>No playlist found</p>
+</div>

@@ -1,5 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { AlbumsFacade, WebPlaybackFacade } from '@iresa/web-portal-data';
+import {
+  AlbumsFacade,
+  WebPlaybackFacade,
+  PlaylistsFacade
+} from '@iresa/web-portal-data';
 
 @Component({
   selector: 'iresa-portal-album-track-list',
@@ -11,7 +15,8 @@ export class AlbumTrackListComponent implements OnInit {
   showSavePlaylist: boolean;
   constructor(
     private albumFacade: AlbumsFacade,
-    private wpFacade: WebPlaybackFacade
+    private wpFacade: WebPlaybackFacade,
+    private playlistFacade: PlaylistsFacade
   ) {}
 
   ngOnInit() {}
@@ -26,6 +31,6 @@ export class AlbumTrackListComponent implements OnInit {
   }
 
   savePlaylist(playlist) {
-    this.albumFacade.savePlaylist(playlist);
+    this.playlistFacade.savePlaylist(playlist);
   }
 }

@@ -9,35 +9,15 @@ import {
   LoadAlbum,
   fromAlbumsActions,
   LoadAlbumTracks,
-  LoadPlaylistTracks,
-  SavePlaylist,
-  SavePlaylistSuccess
+  LoadPlaylistTracks
 } from './albums.actions';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { albumResult } from './config/album-result';
 import { SpotifyService } from '@iresa/ngx-spotify';
-import { AUTH_FEATURE_KEY } from '../../auth/state/auth.reducer';
-import { AlbumsService } from './albums.service';
 
 @Injectable()
 export class AlbumsEffects {
-  @Effect() savePlaylist$ = this.dataPersistence.optimisticUpdate(
-    AlbumsActionTypes.SavePlaylist,
-    {
-      run: (action: SavePlaylist, state: AlbumsPartialState) => {
-        const stationId = state[AUTH_FEATURE_KEY].selectedStationId;
-        return this.albumsService
-          .savePlaylist(stationId, action.payload)
-          .pipe(map((data: any) => new SavePlaylistSuccess()));
-      },
-
-      undoAction: (action: SavePlaylist, error) => {
-        return new fromAlbumsActions.SavePlaylistError(error);
-      }
-    }
-  );
-
   @Effect() loadAlbums$ = this.dataPersistence.fetch(
     AlbumsActionTypes.LoadAlbums,
     {
@@ -157,7 +137,6 @@ export class AlbumsEffects {
   constructor(
     private actions$: Actions,
     private spotifyService: SpotifyService,
-    private albumsService: AlbumsService,
     private dataPersistence: DataPersistence<AlbumsPartialState>
   ) {}
 }
