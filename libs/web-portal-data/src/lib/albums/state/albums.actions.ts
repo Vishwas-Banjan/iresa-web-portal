@@ -10,7 +10,13 @@ export enum AlbumsActionTypes {
   LoadAlbumTracks = '[Albums] Load Album Tracks',
   AlbumTracksLoaded = '[Albums] Album Tracks Loaded',
   AlbumTracksLoadError = '[Albums] Album Tracks Load Error',
-  SetAlbumTracks = '[Albums] Set Album Tracks'
+  SetAlbumTracks = '[Albums] Set Album Tracks',
+  LoadPlaylistTracks = '[Albums] Load Playlist Tracks',
+  PlaylistLoaded = '[Albums] Playlist Loaded',
+  PlaylistLoadError = '[Albums] Playlist Load Error',
+  SavePlaylist = '[Albums] Save Playlist',
+  SavePlaylistSuccess = '[Albums] Save Playlist Success',
+  SavePlaylistError = '[Albums] Save Playlist Error'
 }
 
 export class LoadAlbums implements Action {
@@ -63,6 +69,36 @@ export class SetAlbumTracks implements Action {
   constructor(public payload: any) {}
 }
 
+export class LoadPlaylistTracks implements Action {
+  readonly type = AlbumsActionTypes.LoadPlaylistTracks;
+  constructor(public payload: any) {}
+}
+
+export class PlaylistLoaded implements Action {
+  readonly type = AlbumsActionTypes.PlaylistLoaded;
+  constructor(public payload: any) {}
+}
+
+export class PlaylistLoadError implements Action {
+  readonly type = AlbumsActionTypes.PlaylistLoadError;
+  constructor(public payload: any) {}
+}
+
+export class SavePlaylist implements Action {
+  readonly type = AlbumsActionTypes.SavePlaylist;
+  constructor(public payload: any) {}
+}
+
+export class SavePlaylistSuccess implements Action {
+  readonly type = AlbumsActionTypes.SavePlaylistSuccess;
+  constructor() {}
+}
+
+export class SavePlaylistError implements Action {
+  readonly type = AlbumsActionTypes.SavePlaylistError;
+  constructor(public payload: any) {}
+}
+
 export type AlbumsAction =
   | LoadAlbums
   | AlbumsLoaded
@@ -73,7 +109,13 @@ export type AlbumsAction =
   | LoadAlbumTracks
   | AlbumTracksLoadError
   | AlbumTracksLoaded
-  | SetAlbumTracks;
+  | SetAlbumTracks
+  | LoadPlaylistTracks
+  | PlaylistLoaded
+  | PlaylistLoadError
+  | SavePlaylist
+  | SavePlaylistSuccess
+  | SavePlaylistError;
 
 export const fromAlbumsActions = {
   LoadAlbums,
@@ -85,5 +127,11 @@ export const fromAlbumsActions = {
   LoadAlbumTracks,
   AlbumTracksLoadError,
   AlbumTracksLoaded,
-  SetAlbumTracks
+  SetAlbumTracks,
+  LoadPlaylistTracks,
+  PlaylistLoaded,
+  PlaylistLoadError,
+  SavePlaylist,
+  SavePlaylistSuccess,
+  SavePlaylistError
 };

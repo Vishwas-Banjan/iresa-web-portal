@@ -3,7 +3,12 @@ import { CommonModule } from '@angular/common';
 import { AlbumTrackListComponent } from './album-track-list.component';
 import { RouterModule } from '@angular/router';
 import { AlbumsDataModule, AlbumTracksResolver } from '@iresa/web-portal-data';
-import { MatCardModule, MatIconModule, MatMenuModule } from '@angular/material';
+import {
+  MatCardModule,
+  MatIconModule,
+  MatMenuModule,
+  MatButtonModule
+} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   LoadArtistsModule,
@@ -19,6 +24,7 @@ import {
     MatCardModule,
     MatIconModule,
     MatMenuModule,
+    MatButtonModule,
     FlexLayoutModule,
     LoadArtistsModule,
     LoadImageModule,

@@ -8,6 +8,7 @@ import { AlbumsFacade, WebPlaybackFacade } from '@iresa/web-portal-data';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlbumTrackListComponent implements OnInit {
+  showSavePlaylist: boolean;
   constructor(
     private albumFacade: AlbumsFacade,
     private wpFacade: WebPlaybackFacade
@@ -22,5 +23,9 @@ export class AlbumTrackListComponent implements OnInit {
   playSong(track, album) {
     const data = { ...track, images: album.images };
     this.wpFacade.setQueue([data]);
+  }
+
+  savePlaylist(playlist) {
+    this.albumFacade.savePlaylist(playlist);
   }
 }

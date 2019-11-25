@@ -8,16 +8,36 @@ import {
   AlbumsActionTypes,
   LoadAlbum,
   fromAlbumsActions,
-  LoadAlbumTracks
+  LoadAlbumTracks,
+  LoadPlaylistTracks,
+  SavePlaylist,
+  SavePlaylistSuccess
 } from './albums.actions';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { albumResult } from './config/album-result';
 import { SpotifyService } from '@iresa/ngx-spotify';
-import { DashboardFacade } from '../../dashboard';
+import { AUTH_FEATURE_KEY } from '../../auth/state/auth.reducer';
+import { AlbumsService } from './albums.service';
 
 @Injectable()
 export class AlbumsEffects {
+  @Effect() savePlaylist$ = this.dataPersistence.optimisticUpdate(
+    AlbumsActionTypes.SavePlaylist,
+    {
+      run: (action: SavePlaylist, state: AlbumsPartialState) => {
+        const stationId = state[AUTH_FEATURE_KEY].selectedStationId;
+        return this.albumsService
+          .savePlaylist(stationId, action.payload)
+          .pipe(map((data: any) => new SavePlaylistSuccess()));
+      },
+
+      undoAction: (action: SavePlaylist, error) => {
+        return new fromAlbumsActions.SavePlaylistError(error);
+      }
+    }
+  );
+
   @Effect() loadAlbums$ = this.dataPersistence.fetch(
     AlbumsActionTypes.LoadAlbums,
     {
@@ -69,7 +89,7 @@ export class AlbumsEffects {
       run: (action: LoadAlbumTracks, state: AlbumsPartialState) => {
         const albumId = action.payload.albumId;
         const album = this.findAlbum(state[ALBUMS_FEATURE_KEY].list, albumId);
-        if (album && album.tracks) {
+        if (album) {
           if (album.tracks) {
             return new fromAlbumsActions.SetAlbumTracks({ album });
           } else {
@@ -104,6 +124,32 @@ export class AlbumsEffects {
     }
   );
 
+  @Effect() loadPlaylistTracks$ = this.dataPersistence.fetch(
+    AlbumsActionTypes.LoadPlaylistTracks,
+    {
+      run: (action: LoadPlaylistTracks, state: AlbumsPartialState) => {
+        const playlistId = action.payload.playlistId;
+        return this.spotifyService.getPlaylist(playlistId).pipe(
+          map(data => {
+            data.artists = [{ name: `Added by ${data.owner.display_name}` }];
+            data.tracks.items = data.tracks.items.map(item => {
+              return { ...item, ...item.track };
+            });
+
+            return new fromAlbumsActions.SetAlbumTracks({
+              album: data
+            });
+          })
+        );
+      },
+
+      onError: (action: LoadPlaylistTracks, error) => {
+        console.error('Error', error);
+        return new fromAlbumsActions.PlaylistLoadError(error);
+      }
+    }
+  );
+
   findAlbum(list: any[], albumId) {
     return list.find(al => al.id === albumId);
   }
@@ -111,7 +157,7 @@ export class AlbumsEffects {
   constructor(
     private actions$: Actions,
     private spotifyService: SpotifyService,
-    private dbFacade: DashboardFacade,
+    private albumsService: AlbumsService,
     private dataPersistence: DataPersistence<AlbumsPartialState>
   ) {}
 }

@@ -6,6 +6,7 @@ import * as fromAlbums from './state/albums.reducer';
 import { AlbumsEffects } from './state/albums.effects';
 import { AlbumsFacade } from './state/albums.facade';
 import { DataPersistence } from '@nrwl/angular';
+import { AlbumsService } from './state/albums.service';
 
 @NgModule({
   declarations: [],
@@ -14,6 +15,6 @@ import { DataPersistence } from '@nrwl/angular';
     StoreModule.forFeature(fromAlbums.ALBUMS_FEATURE_KEY, fromAlbums.reducer),
     EffectsModule.forFeature([AlbumsEffects])
   ],
-  providers: [AlbumsFacade, DataPersistence]
+  providers: [AlbumsFacade, DataPersistence, AlbumsService]
 })
 export class AlbumsDataModule {}

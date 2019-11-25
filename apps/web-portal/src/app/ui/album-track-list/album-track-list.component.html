@@ -11,6 +11,16 @@
     <div class="header-info">
       <h3 class="title">{{ album.name }}</h3>
       <small>{{ album.artists | loadArtists }}</small>
+
+      <button
+        *ngIf="album.type === 'playlist'"
+        mat-mini-fab
+        class="save-playlist-link"
+        title="Save this playlist"
+        (click)="savePlaylist(album)"
+      >
+        <mat-icon>favorite</mat-icon>
+      </button>
     </div>
   </div>
   <div class="song-list">

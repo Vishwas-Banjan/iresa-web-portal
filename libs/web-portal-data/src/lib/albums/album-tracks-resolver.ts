@@ -14,13 +14,22 @@ export class AlbumTracksResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const albumId = route.paramMap.get('albumId');
     const trackPos = route.paramMap.get('trackPos');
+    const playlistId = route.paramMap.get('playlistId');
 
-    this.fetchAlbumTracks(albumId, trackPos);
+    const result = playlistId
+      ? this.fetchPlaylistTracks(playlistId)
+      : this.fetchAlbumTracks(albumId, trackPos);
     return this.waitForDataToLoad();
   }
 
   fetchAlbumTracks(albumId, trackPos) {
     this.albumFacade.loadAlbumTracks({ albumId, trackPos });
+    return true;
+  }
+
+  fetchPlaylistTracks(playlistId) {
+    this.albumFacade.loadPlaylistTracks({ playlistId });
+    return true;
   }
 
   waitForDataToLoad(): Observable<any> {
