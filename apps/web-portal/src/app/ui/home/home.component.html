@@ -1,1 +1,11 @@
-<p>home works!</p>
+<iresa-portal-playlist
+  [items]="customPlaylist$ | async"
+  title="Your Custom Playlists"
+></iresa-portal-playlist>
+
+<br />
+
+<iresa-portal-playlist
+  [items]="favPlaylist$ | async"
+  title="Saved Playlists"
+></iresa-portal-playlist>

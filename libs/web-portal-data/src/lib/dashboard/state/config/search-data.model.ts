@@ -1,7 +1,8 @@
 export interface SearchDataModel {
-  tracks: { items: Item[] };
-  artists: { items: Item[] };
-  albums: { items: Item[] };
+  tracks?: { items: Item[] };
+  artists?: { items: Item[] };
+  albums?: { items: Item[] };
+  playlists?: { items: Item[] };
 }
 
 export interface Item {

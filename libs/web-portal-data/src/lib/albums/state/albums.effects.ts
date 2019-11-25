@@ -8,13 +8,13 @@ import {
   AlbumsActionTypes,
   LoadAlbum,
   fromAlbumsActions,
-  LoadAlbumTracks
+  LoadAlbumTracks,
+  LoadPlaylistTracks
 } from './albums.actions';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { albumResult } from './config/album-result';
 import { SpotifyService } from '@iresa/ngx-spotify';
-import { DashboardFacade } from '../../dashboard';
 
 @Injectable()
 export class AlbumsEffects {
@@ -25,7 +25,7 @@ export class AlbumsEffects {
         const useSample = action.payload.useSample;
         if (!useSample) {
           return this.spotifyService
-            .getArtistAlbums(action.payload)
+            .getArtistAlbums(action.payload, { market: 'from_token' })
             .pipe(map(val => new fromAlbumsActions.AlbumsLoaded(val.items)));
         }
       },
@@ -69,12 +69,12 @@ export class AlbumsEffects {
       run: (action: LoadAlbumTracks, state: AlbumsPartialState) => {
         const albumId = action.payload.albumId;
         const album = this.findAlbum(state[ALBUMS_FEATURE_KEY].list, albumId);
-        if (album && album.tracks) {
+        if (album) {
           if (album.tracks) {
             return new fromAlbumsActions.SetAlbumTracks({ album });
           } else {
             return this.spotifyService
-              .getAlbumTracks(albumId)
+              .getAlbumTracks(albumId, { market: 'from_token' })
               .pipe(
                 map(
                   data =>
@@ -86,22 +86,46 @@ export class AlbumsEffects {
           }
         }
 
-        return this.spotifyService
-          .getAlbum(albumId)
-          .pipe(
-            map(
-              data =>
-                new fromAlbumsActions.SetAlbumTracks({
-                  album: data,
-                  trackPos: action.payload.trackPos
-                })
-            )
-          );
+        return this.spotifyService.getAlbum(albumId).pipe(
+          map(
+            data =>
+              new fromAlbumsActions.SetAlbumTracks({
+                album: data,
+                trackPos: action.payload.trackPos
+              })
+          )
+        );
       },
 
       onError: (action: LoadAlbumTracks, error) => {
         console.error('Error', error);
         return new fromAlbumsActions.AlbumLoadError(error);
+      }
+    }
+  );
+
+  @Effect() loadPlaylistTracks$ = this.dataPersistence.fetch(
+    AlbumsActionTypes.LoadPlaylistTracks,
+    {
+      run: (action: LoadPlaylistTracks, state: AlbumsPartialState) => {
+        const playlistId = action.payload.playlistId;
+        return this.spotifyService.getPlaylist(playlistId).pipe(
+          map(data => {
+            data.artists = [{ name: `Added by ${data.owner.display_name}` }];
+            data.tracks.items = data.tracks.items.map(item => {
+              return { ...item, ...item.track };
+            });
+
+            return new fromAlbumsActions.SetAlbumTracks({
+              album: data
+            });
+          })
+        );
+      },
+
+      onError: (action: LoadPlaylistTracks, error) => {
+        console.error('Error', error);
+        return new fromAlbumsActions.PlaylistLoadError(error);
       }
     }
   );
@@ -113,7 +137,6 @@ export class AlbumsEffects {
   constructor(
     private actions$: Actions,
     private spotifyService: SpotifyService,
-    private dbFacade: DashboardFacade,
     private dataPersistence: DataPersistence<AlbumsPartialState>
   ) {}
 }

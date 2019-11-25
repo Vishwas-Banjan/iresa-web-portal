@@ -8,6 +8,7 @@ import { fromWebPlaybackActions } from './web-playback.actions';
 @Injectable()
 export class WebPlaybackFacade {
   queue$ = this.store.pipe(select(webPlaybackQuery.getQueue));
+  playing$ = this.store.pipe(select(webPlaybackQuery.getPLaying));
   currPlayingTrack$ = this.store.pipe(
     select(webPlaybackQuery.getCurrPlayingTrack)
   );
@@ -20,5 +21,9 @@ export class WebPlaybackFacade {
 
   play(data) {
     this.store.dispatch(new fromWebPlaybackActions.Play(data));
+  }
+
+  setPlaying(val) {
+    this.store.dispatch(new fromWebPlaybackActions.SetPlaying(val));
   }
 }

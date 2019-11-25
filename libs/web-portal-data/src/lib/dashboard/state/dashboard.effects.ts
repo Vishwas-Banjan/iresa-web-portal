@@ -13,7 +13,7 @@ import {
 } from './dashboard.actions';
 import { SpotifyService } from '@iresa/ngx-spotify';
 import { map } from 'rxjs/operators';
-import { timer, of } from 'rxjs';
+import { of } from 'rxjs';
 import { results } from './config/search-results';
 import { DashboardService } from './dashboard.service';
 
@@ -22,9 +22,9 @@ export class DashboardEffects {
   @Effect() search$ = this.dataPersistence.fetch(DashboardActionTypes.Search, {
     run: (action: Search, state: DashboardPartialState) => {
       if (!state[DASHBOARD_FEATURE_KEY].useSample) {
-        const type = 'track,artist,album';
+        const type = 'track,artist,album,playlist';
         return this.spotifyService
-          .search(action.payload, type, { limit: 5 })
+          .search(action.payload, type, { limit: 2, market: 'from_token' })
           .pipe(
             map(
               val =>

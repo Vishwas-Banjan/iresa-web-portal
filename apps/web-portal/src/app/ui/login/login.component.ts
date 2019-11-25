@@ -1,18 +1,29 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { SpotifyService } from '@iresa/ngx-spotify';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ViewEncapsulation,
+  ViewChild
+} from '@angular/core';
+import { MatTabGroup } from '@angular/material';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'iresa-portal-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit {
-  constructor(private spotifyService: SpotifyService) {}
+  @ViewChild('tabs', { static: false }) tabGroup: MatTabGroup;
+
+  userForm: FormGroup;
+  constructor() {}
 
   ngOnInit() {}
 
-  get authURL() {
-    return this.spotifyService.authURL();
+  onLoginSuccess() {
+    this.tabGroup.selectedIndex = 1;
   }
 }

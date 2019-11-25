@@ -1,0 +1,23 @@
+<mat-card-title>Station List</mat-card-title>
+<mat-card-subtitle>Select one of the stations below</mat-card-subtitle>
+<mat-divider></mat-divider>
+
+<div class="station-list-container" *ngIf="stations$ | async as stations">
+  <div
+    *ngFor="let station of stations"
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+  >
+    <div>{{ station.name }}</div>
+    <div>
+      <a mat-flat-button href="{{ getAuthURL(station.id) }}">
+        <img
+          width="30"
+          height="30"
+          src="assets/Spotify_Icon_CMYK_Green.png"
+          alt="spotify-logo"
+        />
+      </a>
+    </div>
+  </div>
+</div>

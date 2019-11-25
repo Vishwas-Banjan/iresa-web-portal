@@ -50,6 +50,14 @@ const routes: Routes = [
             m => m.AlbumTrackListModule
           )
       },
+      {
+        path: 'playlist/:playlistId/tracks',
+        pathMatch: 'full',
+        loadChildren: () =>
+          import('../album-track-list/album-track-list.module').then(
+            m => m.AlbumTrackListModule
+          )
+      },
       { path: '', redirectTo: '/home', pathMatch: 'full' }
     ]
   }

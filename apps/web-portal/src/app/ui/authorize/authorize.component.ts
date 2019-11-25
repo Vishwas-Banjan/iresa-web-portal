@@ -7,7 +7,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { SubSink } from 'subsink';
 import { SpotifyService } from '@iresa/ngx-spotify';
-import { WebPlaybackFacade } from '@iresa/web-portal-data';
+import { WebPlaybackFacade, AuthFacade } from '@iresa/web-portal-data';
 
 @Component({
   selector: 'iresa-portal-authorize',
@@ -21,6 +21,7 @@ export class AuthorizeComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private wpFacade: WebPlaybackFacade,
+    private authFacase: AuthFacade,
     private spotifyService: SpotifyService
   ) {}
 
@@ -42,6 +43,7 @@ export class AuthorizeComponent implements OnInit, OnDestroy {
           });
 
           this.spotifyService.setAuthToken(paramsMap);
+          this.authFacase.setSelectedStationId(paramsMap['state']);
           this.router.navigateByUrl('/home');
         }
       })

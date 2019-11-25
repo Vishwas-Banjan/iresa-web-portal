@@ -8,10 +8,11 @@ import {
 } from '@angular/core';
 import { WindowRef } from '@iresa/shared/utilities';
 import { SpotifyService, SpotifyPlaybackService } from '@iresa/ngx-spotify';
-import { MusicPlayer } from './music-player.config';
+import { MusicPlayer, PlayerStates } from './music-player.config';
 import { WebPlaybackFacade } from '@iresa/web-portal-data';
 import { SubSink } from 'subsink';
 import { filter } from 'rxjs/operators';
+import { MatSliderChange } from '@angular/material';
 
 declare var Spotify: any;
 
@@ -36,6 +37,10 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
   get currPlaying$() {
     return this.wpFacade.currPlayingTrack$;
+  }
+
+  get playing$() {
+    return this.wpFacade.playing$;
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -75,6 +80,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       this.winRef.nativeWindow.MusicPlayer || {};
     this.musicPlayerCtrl = this.winRef.nativeWindow.MusicPlayer;
     this.musicPlayerCtrl.getAuthToken = this.getAuthToken;
+    this.musicPlayerCtrl.handleStateChanges = this.handleStateChanges;
   }
 
   getAuthToken = () => {
@@ -83,16 +89,39 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     );
   };
 
-  play() {
-    this.spotifyPlayback
-      .play(this.musicPlayerCtrl.authToken, this.musicPlayerCtrl.device_id, [
-        'spotify:track:4HHMe2itoN6xeZx5NyaZks'
-      ])
-      .subscribe();
+  play() {}
+
+  handleStateChanges = (states: PlayerStates) => {
+    // paused
+    if (states.restrictions && states.restrictions.disallow_pausing_reasons) {
+      if (
+        states.restrictions.disallow_pausing_reasons.find(
+          res => res === 'already_paused'
+        )
+      ) {
+        this.wpFacade.setPlaying(false);
+      }
+    }
+    if (states.restrictions && states.restrictions.disallow_resuming_reasons) {
+      if (
+        states.restrictions.disallow_resuming_reasons.find(
+          res => res === 'not_paused'
+        )
+      ) {
+        this.wpFacade.setPlaying(true);
+      }
+    }
+  };
+
+  onVolChange(e: MatSliderChange) {
+    this.musicPlayerCtrl.musicPlayer.setVolume(e.value);
   }
 
   onSpotifyReady() {
     this.winRef.nativeWindow.onSpotifyPlayerAPIReady = () => {
+      if (window['MusicPlayer'].init) {
+        return;
+      }
       window['MusicPlayer'].getAuthToken();
       const token = window['MusicPlayer'].authToken;
       const player = new Spotify.Player({
@@ -118,7 +147,8 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
       // Playback status updates
       player.addListener('player_state_changed', state => {
-        console.log(state);
+        // console.log(state);
+        window['MusicPlayer'].handleStateChanges(state);
       });
 
       // Ready
@@ -134,6 +164,8 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
       // Connect to the player!
       player.connect();
+
+      window['MusicPlayer'].init = true;
     };
   }
 }

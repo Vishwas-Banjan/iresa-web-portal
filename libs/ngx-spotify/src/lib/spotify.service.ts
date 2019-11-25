@@ -3,8 +3,8 @@ import { SpotifyConfig } from './spotify-config';
 import { SpotifyOptions } from './spotify-options';
 import { HttpRequestOptions } from './http-request-options';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable, from, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { spotifyScopes } from './spotify-scopes';
 
 export const SpotifyConfigService = new InjectionToken<SpotifyConfig>(
@@ -122,6 +122,16 @@ export class SpotifyService {
   //#endregion
 
   //#region browse
+
+  getPlaylist(playlist: string, options?: SpotifyOptions) {
+    playlist = this.getIdFromUri(playlist);
+    return this.api({
+      method: 'get',
+      url: `/playlists/${playlist}`,
+      search: options,
+      headers: this.getHeaders()
+    });
+  }
 
   getFeaturedPlaylists(options?: SpotifyOptions) {
     return this.api({
@@ -397,7 +407,7 @@ export class SpotifyService {
     }).pipe(map(res => res.json()));
   }
 
-  getPlaylist(
+  getPlaylistByUser(
     userId: string,
     playlistId: string,
     options?: { fields: string }
@@ -410,7 +420,7 @@ export class SpotifyService {
     }).pipe(map(res => res.json()));
   }
 
-  getPlaylistTracks(
+  getPlaylistTracksByUser(
     userId: string,
     playlistId: string,
     options?: SpotifyOptions
@@ -618,13 +628,13 @@ export class SpotifyService {
 
   //#region login
 
-  authURL() {
+  authURL(state) {
     const ps = {
       client_id: this.config.clientId,
       redirect_uri: encodeURIComponent(this.config.redirectUri),
       scope: spotifyScopes.join(' ') || '',
       response_type: 'token',
-      state: ''
+      state
     };
     const params = Object.keys(ps)
       .map(param => `${param}=${ps[param]}`)

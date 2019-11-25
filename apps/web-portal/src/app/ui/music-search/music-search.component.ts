@@ -60,7 +60,8 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
     const mapFn = {
       artist: this.fetchArtistAlbums,
       album: this.fetchAlbum,
-      track: this.fetchAlbumTracks
+      track: this.fetchAlbumTracks,
+      playlist: this.fetchPlaylistTracks
     };
     if (val.type in mapFn) {
       mapFn[val.type](val);
@@ -76,5 +77,9 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
 
   fetchArtistAlbums = artist => {
     this.router.navigate(['/artist', artist.id, 'albums']);
+  };
+
+  fetchPlaylistTracks = playlist => {
+    this.router.navigate(['/playlist', playlist.id, 'tracks']);
   };
 }

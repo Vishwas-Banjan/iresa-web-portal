@@ -36,6 +36,13 @@ export function reducer(
       };
       break;
     }
+    case WebPlaybackActionTypes.SetPlaying: {
+      state = {
+        ...state,
+        playing: action.payload
+      };
+      break;
+    }
   }
   return state;
 }

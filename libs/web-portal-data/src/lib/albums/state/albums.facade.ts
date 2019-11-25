@@ -26,4 +26,8 @@ export class AlbumsFacade {
   loadAlbumTracks(data) {
     this.store.dispatch(new fromAlbumsActions.LoadAlbumTracks(data));
   }
+
+  loadPlaylistTracks(data) {
+    this.store.dispatch(new fromAlbumsActions.LoadPlaylistTracks(data));
+  }
 }

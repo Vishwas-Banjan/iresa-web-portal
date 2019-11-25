@@ -12,6 +12,11 @@ export class DashboardService {
         item.images = item.album.images;
       }
     });
-    return [...data.tracks.items, ...data.artists.items, ...data.albums.items];
+    return [
+      ...data.tracks.items,
+      ...data.artists.items,
+      ...data.albums.items,
+      ...data.playlists.items
+    ];
   }
 }
