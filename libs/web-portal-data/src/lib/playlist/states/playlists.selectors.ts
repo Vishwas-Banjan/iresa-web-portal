@@ -23,8 +23,17 @@ const getFavPlaylists = createSelector(
   }
 );
 
+const getCustPlaylists = createSelector(
+  getPlaylistsState,
+  getLoaded,
+  (state: PlaylistsState, isLoaded) => {
+    return isLoaded ? state.list.filter(pl => pl.type !== 'favorite') : [];
+  }
+);
+
 export const playlistsQuery = {
   getLoaded,
   getError,
-  getFavPlaylists
+  getFavPlaylists,
+  getCustPlaylists
 };

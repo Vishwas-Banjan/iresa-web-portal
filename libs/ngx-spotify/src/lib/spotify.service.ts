@@ -133,6 +133,16 @@ export class SpotifyService {
     });
   }
 
+  getPlaylistTracks(playlist: string, options?: SpotifyOptions) {
+    playlist = this.getIdFromUri(playlist);
+    return this.api({
+      method: 'get',
+      url: `/playlists/${playlist}/tracks`,
+      search: options,
+      headers: this.getHeaders()
+    });
+  }
+
   getFeaturedPlaylists(options?: SpotifyOptions) {
     return this.api({
       method: 'get',

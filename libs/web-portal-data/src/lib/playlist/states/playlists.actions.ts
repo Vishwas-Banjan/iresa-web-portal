@@ -5,8 +5,10 @@ export enum PlaylistsActionTypes {
   PlaylistsLoaded = '[Playlists] Playlists Loaded',
   PlaylistsLoadError = '[Playlists] Playlists Load Error',
   SavePlaylist = '[Albums] Save Playlist',
-  SavePlaylistSuccess = '[Albums] Save Playlist Success',
-  SavePlaylistError = '[Albums] Save Playlist Error'
+  SavePlaylistError = '[Albums] Save Playlist Error',
+  RefreshSongList = '[Albums] Refresh Song List',
+  RefreshSongListSuccess = '[Albums] Refresh Song List Success',
+  RefreshSongListError = '[Albums] Refresh Song List Error'
 }
 
 export class LoadPlaylists implements Action {
@@ -28,14 +30,24 @@ export class SavePlaylist implements Action {
   constructor(public payload: any) {}
 }
 
-export class SavePlaylistSuccess implements Action {
-  readonly type = PlaylistsActionTypes.SavePlaylistSuccess;
-  constructor() {}
-}
-
 export class SavePlaylistError implements Action {
   readonly type = PlaylistsActionTypes.SavePlaylistError;
   constructor(public payload: any) {}
+}
+
+export class RefreshSongList implements Action {
+  readonly type = PlaylistsActionTypes.RefreshSongList;
+  constructor() {}
+}
+
+export class RefreshSongListSuccess implements Action {
+  readonly type = PlaylistsActionTypes.RefreshSongListSuccess;
+  constructor() {}
+}
+
+export class RefreshSongListError implements Action {
+  readonly type = PlaylistsActionTypes.RefreshSongListError;
+  constructor() {}
 }
 
 export type PlaylistsAction =
@@ -43,14 +55,18 @@ export type PlaylistsAction =
   | PlaylistsLoaded
   | PlaylistsLoadError
   | SavePlaylist
-  | SavePlaylistSuccess
-  | SavePlaylistError;
+  | SavePlaylistError
+  | RefreshSongList
+  | RefreshSongListSuccess
+  | RefreshSongListError;
 
 export const fromPlaylistsActions = {
   LoadPlaylists,
   PlaylistsLoaded,
   PlaylistsLoadError,
   SavePlaylist,
-  SavePlaylistSuccess,
-  SavePlaylistError
+  SavePlaylistError,
+  RefreshSongList,
+  RefreshSongListSuccess,
+  RefreshSongListError
 };

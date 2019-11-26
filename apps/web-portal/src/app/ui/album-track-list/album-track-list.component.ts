@@ -4,6 +4,9 @@ import {
   WebPlaybackFacade,
   PlaylistsFacade
 } from '@iresa/web-portal-data';
+import { MatDialog } from '@angular/material';
+import { PlaylistDialogComponent } from './playlist-dialog/playlist-dialog.component';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'iresa-portal-album-track-list',
@@ -16,7 +19,8 @@ export class AlbumTrackListComponent implements OnInit {
   constructor(
     private albumFacade: AlbumsFacade,
     private wpFacade: WebPlaybackFacade,
-    private playlistFacade: PlaylistsFacade
+    private playlistFacade: PlaylistsFacade,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {}
@@ -25,12 +29,37 @@ export class AlbumTrackListComponent implements OnInit {
     return this.albumFacade.albumTracks$;
   }
 
+  get custPlaylists$() {
+    return this.playlistFacade.custPlaylists$;
+  }
+
   playSong(track, album) {
     const data = { ...track, images: album.images };
     this.wpFacade.setQueue([data]);
   }
 
   savePlaylist(playlist) {
-    this.playlistFacade.savePlaylist(playlist);
+    this.playlistFacade.savePlaylist({ ...playlist, type: 'favorite' });
+  }
+
+  selectPlaylist(id, track) {
+    console.log(id);
+  }
+
+  createPlaylist() {
+    this.openDialog();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(PlaylistDialogComponent, {
+      width: '250px',
+      data: { name: '' }
+    });
+
+    dialogRef.afterClosed().subscribe(name => {
+      if (name && name.trim() !== '') {
+        this.playlistFacade.savePlaylist({ name });
+      }
+    });
   }
 }

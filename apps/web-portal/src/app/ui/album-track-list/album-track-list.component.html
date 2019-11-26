@@ -23,6 +23,7 @@
       </button>
     </div>
   </div>
+
   <div class="song-list">
     <div
       *ngFor="let track of album.tracks.items"
@@ -41,20 +42,40 @@
       <div fxFlex="25" class="song-time">
         {{ track.duration_ms | songTime }}
       </div>
-      <div class="song-menu"></div>
-      <button
-        mat-icon-button
-        [matMenuTriggerFor]="menu"
-        aria-label="track_menu"
-      >
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-          <mat-icon>library_music</mat-icon>
-          <span>Add To Music Library</span>
+      <div class="song-menu">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+          aria-label="track_menu"
+        >
+          <mat-icon>more_vert</mat-icon>
         </button>
-      </mat-menu>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item [matMenuTriggerFor]="playlists">
+            <span>Add To Playlist</span>
+          </button>
+        </mat-menu>
+
+        <mat-menu #playlists="matMenu">
+          <ng-container *ngIf="(custPlaylists$ | async).length > 0">
+            <button
+              mat-menu-item
+              *ngFor="let item of custPlaylists$ | async"
+              (click)="selectPlaylist(item, track)"
+            >
+              {{ item.name }}
+            </button>
+          </ng-container>
+
+          <ng-container *ngIf="(custPlaylists$ | async).length === 0">
+            <button mat-menu-item>No Playlist</button>
+          </ng-container>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="createPlaylist()">
+            Create New Playlist
+          </button>
+        </mat-menu>
+      </div>
     </div>
   </div>
 </mat-card>

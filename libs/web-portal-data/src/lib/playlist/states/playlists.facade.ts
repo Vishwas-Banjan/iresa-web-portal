@@ -10,6 +10,7 @@ import { fromPlaylistsActions } from './playlists.actions';
 export class PlaylistsFacade {
   loaded$ = this.store.pipe(select(playlistsQuery.getLoaded));
   favPlaylists$ = this.store.pipe(select(playlistsQuery.getFavPlaylists));
+  custPlaylists$ = this.store.pipe(select(playlistsQuery.getCustPlaylists));
 
   constructor(private store: Store<PlaylistsPartialState>) {}
 
@@ -19,5 +20,9 @@ export class PlaylistsFacade {
 
   savePlaylist(data) {
     this.store.dispatch(new fromPlaylistsActions.SavePlaylist(data));
+  }
+
+  refreshSongList() {
+    this.store.dispatch(new fromPlaylistsActions.RefreshSongList());
   }
 }

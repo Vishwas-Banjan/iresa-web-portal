@@ -18,6 +18,6 @@ export class HomeComponent implements OnInit {
   }
 
   get customPlaylist$() {
-    return of([]);
+    return this.plFacade.custPlaylists$;
   }
 }

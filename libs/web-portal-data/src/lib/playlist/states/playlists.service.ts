@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { FirestoreService } from '@iresa/firestore';
+import { Observable, of, forkJoin } from 'rxjs';
+import { FirestoreService, FirestoreBuilderService } from '@iresa/firestore';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -11,32 +11,41 @@ export class PlaylistsService {
     const url = encodeURI(`documents/stations/${stationId}/playlists`);
     return this.firestore
       .get(url)
-      .pipe(map(resp => resp.documents.map(item => item.fields)));
+      .pipe(
+        map(resp =>
+          resp.documents ? resp.documents.map(item => item.fields) : []
+        )
+      );
   }
 
   savePlaylist(stationId: string, playlist: any): Observable<any> {
-    // const playlistRef = this.db
-    //   .collection('stations')
-    //   .doc(stationId)
-    //   .collection('playlists')
-    //   .doc(playlist.id);
-    // return new Observable(observer => {
-    //   playlistRef.set(this.playlistForm(playlist)).then(
-    //     data => {
-    //       observer.next(data);
-    //     },
-    //     reason => {}
-    //   );
-    // });
-    return of([]);
+    const url = encodeURI(`documents/stations/${stationId}/playlists`);
+    return this.firestore.post(url, { fields: this.playlistForm(playlist) });
+  }
+
+  setSongList(stationId: string, songList): Observable<any> {
+    const url = encodeURI(`documents/stations/${stationId}/songList`);
+    const reqs = [];
+    songList.forEach(element => {
+      reqs.push(
+        this.firestore.post(url, {
+          fields: FirestoreBuilderService.build(element)
+        })
+      );
+    });
+    return forkJoin(reqs);
   }
 
   playlistForm(playlist) {
-    const form = {};
-    form['id'] = playlist.id;
-    form['images'] = playlist.images;
-    form['name'] = playlist.name;
-    form['type'] = 'favorite';
+    let form = {};
+    const fields = ['id', 'images', 'name', 'type'];
+
+    fields.forEach(key => {
+      if (playlist[key]) {
+        form[key] = playlist[key];
+      }
+    });
+    form = FirestoreBuilderService.build(form);
     return form;
   }
 }

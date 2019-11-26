@@ -11,7 +11,10 @@ import {
   MatCardModule,
   MatIconModule,
   MatMenuModule,
-  MatButtonModule
+  MatButtonModule,
+  MatDividerModule,
+  MatDialogModule,
+  MatInputModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
@@ -19,9 +22,12 @@ import {
   LoadImageModule,
   SongTimeModule
 } from '@iresa/shared/utilities';
+import { PlaylistDialogComponent } from './playlist-dialog/playlist-dialog.component';
+import { FormsModule } from '@angular/forms';
+import { A11yModule } from '@angular/cdk/a11y';
 
 @NgModule({
-  declarations: [AlbumTrackListComponent],
+  declarations: [AlbumTrackListComponent, PlaylistDialogComponent],
   imports: [
     CommonModule,
     AlbumsDataModule,
@@ -30,10 +36,15 @@ import {
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
+    MatDividerModule,
+    MatDialogModule,
+    MatInputModule,
     FlexLayoutModule,
     LoadArtistsModule,
     LoadImageModule,
     SongTimeModule,
+    FormsModule,
+    A11yModule,
     RouterModule.forChild([
       {
         path: '',
@@ -42,6 +53,8 @@ import {
       }
     ])
   ],
-  providers: [AlbumTracksResolver]
+  providers: [AlbumTracksResolver],
+  exports: [PlaylistDialogComponent],
+  entryComponents: [PlaylistDialogComponent]
 })
 export class AlbumTrackListModule {}

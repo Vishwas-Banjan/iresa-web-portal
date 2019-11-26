@@ -2,16 +2,21 @@ import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { DataPersistence } from '@nrwl/angular';
 
-import { PlaylistsPartialState } from './playlists.reducer';
+import {
+  PlaylistsPartialState,
+  PLAYLISTS_FEATURE_KEY
+} from './playlists.reducer';
 import {
   LoadPlaylists,
   PlaylistsActionTypes,
   SavePlaylist,
-  fromPlaylistsActions
+  fromPlaylistsActions,
+  RefreshSongList
 } from './playlists.actions';
 import { AUTH_FEATURE_KEY } from '../../auth/state/auth.reducer';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { PlaylistsService } from './playlists.service';
+import { SpotifyService } from '@iresa/ngx-spotify';
 
 @Injectable()
 export class PlaylistsEffects {
@@ -39,9 +44,7 @@ export class PlaylistsEffects {
         const stationId = state[AUTH_FEATURE_KEY].selectedStationId;
         return this.playlistsService
           .savePlaylist(stationId, action.payload)
-          .pipe(
-            map((data: any) => new fromPlaylistsActions.SavePlaylistSuccess())
-          );
+          .pipe(map((data: any) => new fromPlaylistsActions.LoadPlaylists()));
       },
 
       undoAction: (action: SavePlaylist, error) => {
@@ -50,9 +53,56 @@ export class PlaylistsEffects {
     }
   );
 
+  @Effect() refreshSongList$ = this.dataPersistence.pessimisticUpdate(
+    PlaylistsActionTypes.RefreshSongList,
+    {
+      run: (action: RefreshSongList, state: PlaylistsPartialState) => {
+        const playlists = state[PLAYLISTS_FEATURE_KEY].list;
+        const playlist =
+          playlists[Math.floor(Math.random() * playlists.length)];
+        const stationId = state[AUTH_FEATURE_KEY].selectedStationId;
+        if (playlist) {
+          if (playlist.type === 'favorite') {
+            return this.spotifyService
+              .getPlaylistTracks(playlist.id, { limit: 20 })
+              .pipe(
+                switchMap(tracks => {
+                  tracks = tracks.items.map(item => {
+                    const track = item.track;
+                    return {
+                      name: item.track.name,
+                      id: track.id,
+                      uri: track.uri,
+                      images: track.album.images.slice(0, 1)
+                    };
+                  });
+                  return this.playlistsService
+                    .setSongList(stationId, tracks)
+                    .pipe(
+                      map(
+                        resp =>
+                          new fromPlaylistsActions.RefreshSongListSuccess()
+                      )
+                    );
+                })
+              );
+          }
+        }
+
+        return new fromPlaylistsActions.RefreshSongListSuccess();
+      },
+
+      onError: (action: RefreshSongList, error) => {
+        console.error('Error', error);
+        return new fromPlaylistsActions.RefreshSongListError();
+      }
+    }
+  );
+
   constructor(
     private actions$: Actions,
     private playlistsService: PlaylistsService,
+    private spotifyService: SpotifyService,
     private dataPersistence: DataPersistence<PlaylistsPartialState>
   ) {}
 }
