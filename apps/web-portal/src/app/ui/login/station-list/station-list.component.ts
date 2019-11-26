@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { AuthFacade } from '@iresa/web-portal-data';
 import { Router } from '@angular/router';
 import { SpotifyService } from '@iresa/ngx-spotify';
+import { FirestoreService } from '@iresa/firestore';
 
 @Component({
   selector: 'iresa-portal-station-list',
@@ -12,7 +13,7 @@ import { SpotifyService } from '@iresa/ngx-spotify';
 export class StationListComponent implements OnInit {
   constructor(
     private authFacade: AuthFacade,
-    private router: Router,
+    private firestore: FirestoreService,
     private spotifyService: SpotifyService
   ) {}
 
@@ -22,7 +23,8 @@ export class StationListComponent implements OnInit {
     return this.authFacade.stations$;
   }
 
-  getAuthURL(stationid) {
-    return this.spotifyService.authURL(stationid);
+  getAuthURL(stationId) {
+    const idToken = this.firestore.getIdToken();
+    return this.spotifyService.authURL(JSON.stringify({ stationId, idToken }));
   }
 }

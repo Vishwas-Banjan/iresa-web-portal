@@ -6,7 +6,7 @@ import {
   OnDestroy,
   HostListener
 } from '@angular/core';
-import { WindowRef } from '@iresa/shared/utilities';
+import { WindowRef, ScriptLoaderService } from '@iresa/shared/utilities';
 import { SpotifyService, SpotifyPlaybackService } from '@iresa/ngx-spotify';
 import { MusicPlayer, PlayerStates } from './music-player.config';
 import { WebPlaybackFacade } from '@iresa/web-portal-data';
@@ -31,7 +31,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     private winRef: WindowRef,
     private spotifyService: SpotifyService,
     private ngZone: NgZone,
-    private spotifyPlayback: SpotifyPlaybackService,
+    private slService: ScriptLoaderService,
     private wpFacade: WebPlaybackFacade
   ) {}
 
@@ -52,6 +52,17 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     this.initOutSideFn();
     this.onSpotifyReady();
     this.onQueueUpdate();
+    this.loadScript();
+  }
+
+  loadScript() {
+    this.slService
+      .load({
+        src: 'https://sdk.scdn.co/spotify-player.js',
+        name: 'spotify-player.js',
+        loaded: false
+      })
+      .subscribe();
   }
 
   onQueueUpdate() {
@@ -119,9 +130,6 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
   onSpotifyReady() {
     this.winRef.nativeWindow.onSpotifyPlayerAPIReady = () => {
-      if (window['MusicPlayer'].init) {
-        return;
-      }
       window['MusicPlayer'].getAuthToken();
       const token = window['MusicPlayer'].authToken;
       const player = new Spotify.Player({
@@ -164,8 +172,6 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
 
       // Connect to the player!
       player.connect();
-
-      window['MusicPlayer'].init = true;
     };
   }
 }
