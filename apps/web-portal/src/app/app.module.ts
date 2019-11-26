@@ -6,14 +6,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxSpotifyModule } from '@iresa/ngx-spotify';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AppRoutingModule } from './app-routing.module';
 import { DashboardModule } from './ui/dashboard/dashboard.module';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { WindowRef } from '@iresa/shared/utilities';
+import { FirestoreModule } from '@iresa/firestore';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,11 +22,13 @@ import { WindowRef } from '@iresa/shared/utilities';
     HttpClientModule,
     AppRoutingModule,
     DashboardModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
     NgxSpotifyModule.forRoot({
       clientId: environment.spotifyConfig.clientId,
       redirectUri: environment.spotifyConfig.redirectUri
+    }),
+    FirestoreModule.forRoot({
+      apiKey: environment.firebaseConfig.apiKey,
+      projectId: environment.firebaseConfig.projectId
     }),
     StoreModule.forRoot([], {
       runtimeChecks: {

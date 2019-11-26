@@ -4,7 +4,6 @@ export interface MusicPlayer {
   authToken: string;
   musicPlayer: any;
   device_id: string;
-  init: boolean;
 }
 
 export interface PlayerStates {

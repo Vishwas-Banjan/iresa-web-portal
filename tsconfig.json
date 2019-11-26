@@ -20,7 +20,8 @@
       "@iresa/shared/ui": ["libs/shared/ui/src/index.ts"],
       "@iresa/web-portal-data": ["libs/web-portal-data/src/index.ts"],
       "@iresa/shared/utilities": ["libs/shared/utilities/src/index.ts"],
-      "@iresa/web-portal/env": ["apps/web-portal/src/environments/environment"]
+      "@iresa/web-portal/env": ["apps/web-portal/src/environments/environment"],
+      "@iresa/firestore": ["libs/firestore/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

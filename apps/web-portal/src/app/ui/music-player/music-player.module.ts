@@ -8,7 +8,7 @@ import {
   MatSliderModule,
   MatButtonModule
 } from '@angular/material';
-import { LoadImageModule } from '@iresa/shared/utilities';
+import { LoadImageModule, ScriptLoaderModule } from '@iresa/shared/utilities';
 
 @NgModule({
   declarations: [MusicPlayerComponent],
@@ -19,7 +19,8 @@ import { LoadImageModule } from '@iresa/shared/utilities';
     MatSliderModule,
     MatButtonModule,
     FlexLayoutModule,
-    LoadImageModule
+    LoadImageModule,
+    ScriptLoaderModule
   ],
   exports: [MusicPlayerComponent]
 })

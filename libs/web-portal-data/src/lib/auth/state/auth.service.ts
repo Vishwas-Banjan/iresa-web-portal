@@ -1,47 +1,50 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable, of } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { take, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { FirestoreService } from '@iresa/firestore';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private firebaseAuth: AngularFireAuth,
-    public db: AngularFirestore
-  ) {}
+  constructor(private firestore: FirestoreService) {}
 
   login({ email, password }) {
-    return new Observable(observer => {
-      this.firebaseAuth.auth.signInWithEmailAndPassword(email, password).then(
-        data => {
-          observer.next(data);
-        },
-        reason => {}
-      );
-    });
+    return this.firestore.signIn(email, password).pipe(
+      map((resp: any) => {
+        this.firestore.setIdToken(resp.idToken);
+        return { user: { email: resp.email, uid: resp.localId } };
+      })
+    );
   }
 
   getStationsByUser({ email, uid }) {
-    return this.db
-      .collection('stations', ref => ref.where('uid', '==', uid))
-      .snapshotChanges()
-      .pipe(
-        take(1),
-        map((actions: any) => {
-          return actions.map(a => {
-            const data = a.payload.doc.data();
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          });
-        }),
-        map(stations => {
-          return {
-            stations,
-            user: { email, uid }
-          };
+    const query = {
+      structuredQuery: {
+        where: {
+          fieldFilter: {
+            field: { fieldPath: 'uid' },
+            op: 'EQUAL',
+            value: { stringValue: uid }
+          }
+        },
+        from: [{ collectionId: 'stations' }]
+      }
+    };
+    const url = encodeURI(`documents:runQuery`);
+
+    return this.firestore.post(url, query).pipe(
+      map(resp =>
+        resp.map(item => {
+          const arr = item.document.name.split('/');
+          const id = arr[arr.length - 1];
+          return { ...item.document.fields, id };
         })
-      );
+      ),
+      map(stations => {
+        return {
+          stations,
+          user: { email, uid }
+        };
+      })
+    );
   }
 }
