@@ -9,6 +9,7 @@ import {
   MatButtonModule
 } from '@angular/material';
 import { LoadImageModule, ScriptLoaderModule } from '@iresa/shared/utilities';
+import { PlaylistDataModule } from '@iresa/web-portal-data';
 
 @NgModule({
   declarations: [MusicPlayerComponent],
@@ -20,7 +21,8 @@ import { LoadImageModule, ScriptLoaderModule } from '@iresa/shared/utilities';
     MatButtonModule,
     FlexLayoutModule,
     LoadImageModule,
-    ScriptLoaderModule
+    ScriptLoaderModule,
+    PlaylistDataModule
   ],
   exports: [MusicPlayerComponent]
 })

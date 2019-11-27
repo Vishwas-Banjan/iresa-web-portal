@@ -9,7 +9,7 @@ import {
 import { WindowRef, ScriptLoaderService } from '@iresa/shared/utilities';
 import { SpotifyService, SpotifyPlaybackService } from '@iresa/ngx-spotify';
 import { MusicPlayer, PlayerStates } from './music-player.config';
-import { WebPlaybackFacade } from '@iresa/web-portal-data';
+import { WebPlaybackFacade, PlaylistsFacade } from '@iresa/web-portal-data';
 import { SubSink } from 'subsink';
 import { filter } from 'rxjs/operators';
 import { MatSliderChange } from '@angular/material';
@@ -32,7 +32,8 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     private spotifyService: SpotifyService,
     private ngZone: NgZone,
     private slService: ScriptLoaderService,
-    private wpFacade: WebPlaybackFacade
+    private wpFacade: WebPlaybackFacade,
+    private plFacade: PlaylistsFacade
   ) {}
 
   get currPlaying$() {
@@ -100,7 +101,9 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     );
   };
 
-  play() {}
+  play() {
+    this.plFacade.refreshSongList();
+  }
 
   handleStateChanges = (states: PlayerStates) => {
     // paused

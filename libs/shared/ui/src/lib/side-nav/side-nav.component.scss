@@ -1,9 +1,5 @@
 @import '../../../scss/variable';
 
-.sidenav-container {
-  height: calc(100vh - 64px);
-}
-
 .sidenav {
   width: auto;
 }
@@ -14,6 +10,10 @@
 
 .mat-list-base {
   padding-top: 10px;
+}
+
+.mat-sidenav-container {
+  min-height: 15rem;
 }
 
 .mat-drawer-content {

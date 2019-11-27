@@ -1,14 +1,21 @@
 <iresa-loader *ngIf="loading$ | async"></iresa-loader>
-<iresa-header *ngIf="product$ | async as product" [product]="product">
-  <iresa-portal-music-search></iresa-portal-music-search>
-</iresa-header>
-<iresa-side-nav
-  *ngIf="menuItems$ | async as menu"
-  [menuItems]="menu.menuItems"
-  [activeItem]="menu.selectedItem"
-  (menuClick)="onMenuClick($event)"
->
-  <router-outlet></router-outlet>
-</iresa-side-nav>
-
-<iresa-portal-music-player></iresa-portal-music-player>
+<div class="page">
+  <div class="page-header">
+    <iresa-header *ngIf="product$ | async as product" [product]="product">
+      <iresa-portal-music-search></iresa-portal-music-search>
+    </iresa-header>
+  </div>
+  <div #pageContent class="page-content">
+    <iresa-side-nav
+      *ngIf="menuItems$ | async as menu"
+      [menuItems]="menu.menuItems"
+      [activeItem]="menu.selectedItem"
+      (menuClick)="onMenuClick($event)"
+    >
+      <router-outlet></router-outlet>
+    </iresa-side-nav>
+  </div>
+  <div class="page-footer">
+    <iresa-portal-music-player></iresa-portal-music-player>
+  </div>
+</div>

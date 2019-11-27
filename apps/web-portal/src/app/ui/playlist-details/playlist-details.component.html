@@ -1,0 +1,7 @@
+<div *ngIf="playlist$ | async as playlist">
+  <h3 class="title">{{ playlist.name }}</h3>
+
+  <iresa-portal-playlist-tracks
+    [tracks]="playlist.tracks"
+  ></iresa-portal-playlist-tracks>
+</div>
