@@ -4,6 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'iresa-portal-playlist',
@@ -18,9 +19,11 @@ export class PlaylistComponent implements OnInit {
   @Input()
   title: string;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {}
 
-  onPlaylistClick(playlist) {}
+  onPlaylistClick(playlist) {
+    this.router.navigate(['/playlist-tracks', playlist.recordId]);
+  }
 }

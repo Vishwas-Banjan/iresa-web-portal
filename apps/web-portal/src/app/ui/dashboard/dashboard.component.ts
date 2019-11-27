@@ -1,4 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ViewChild,
+  ElementRef
+} from '@angular/core';
 import { DashboardFacade } from '@iresa/web-portal-data';
 import {
   Router,
@@ -16,6 +22,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit {
+  @ViewChild('pageContent', { static: false }) pageContent: ElementRef;
   constructor(private dbFacade: DashboardFacade, private router: Router) {}
 
   ngOnInit() {
@@ -56,6 +63,7 @@ export class DashboardComponent implements OnInit {
       routerEvent instanceof NavigationError
     ) {
       this.dbFacade.setLoading(false);
+      this.pageContent.nativeElement.scrollTo(0, 0);
     }
   }
 }

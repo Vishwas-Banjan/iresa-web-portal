@@ -1,0 +1,19 @@
+@import '../../../../../../../libs/shared/ui/scss/variable';
+
+table {
+  width: 100%;
+}
+
+button {
+  background: 0 0;
+  border: none;
+  cursor: pointer;
+}
+
+.mat-icon {
+  color: mat-color($mat-grey, 500);
+
+  &:hover {
+    color: $primary;
+  }
+}

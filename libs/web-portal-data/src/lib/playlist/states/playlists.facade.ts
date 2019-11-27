@@ -11,6 +11,7 @@ export class PlaylistsFacade {
   loaded$ = this.store.pipe(select(playlistsQuery.getLoaded));
   favPlaylists$ = this.store.pipe(select(playlistsQuery.getFavPlaylists));
   custPlaylists$ = this.store.pipe(select(playlistsQuery.getCustPlaylists));
+  tracks$ = this.store.pipe(select(playlistsQuery.getTracks));
 
   constructor(private store: Store<PlaylistsPartialState>) {}
 
@@ -28,5 +29,9 @@ export class PlaylistsFacade {
 
   addToPlaylist(data) {
     this.store.dispatch(new fromPlaylistsActions.AddToPlaylist(data));
+  }
+
+  getPlaylistTracks(data) {
+    this.store.dispatch(new fromPlaylistsActions.GetPlaylistTracks(data));
   }
 }

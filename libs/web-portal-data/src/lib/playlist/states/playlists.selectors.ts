@@ -31,9 +31,15 @@ const getCustPlaylists = createSelector(
   }
 );
 
+const getTracks = createSelector(
+  getPlaylistsState,
+  (state: PlaylistsState) => state.tracks
+);
+
 export const playlistsQuery = {
   getLoaded,
   getError,
   getFavPlaylists,
-  getCustPlaylists
+  getCustPlaylists,
+  getTracks
 };

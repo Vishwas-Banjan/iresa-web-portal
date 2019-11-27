@@ -5,7 +5,7 @@
       <iresa-portal-music-search></iresa-portal-music-search>
     </iresa-header>
   </div>
-  <div class="page-content">
+  <div #pageContent class="page-content">
     <iresa-side-nav
       *ngIf="menuItems$ | async as menu"
       [menuItems]="menu.menuItems"

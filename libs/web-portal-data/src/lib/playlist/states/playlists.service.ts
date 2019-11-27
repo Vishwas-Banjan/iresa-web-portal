@@ -2,21 +2,36 @@ import { Injectable } from '@angular/core';
 import { Observable, forkJoin } from 'rxjs';
 import { FirestoreService, FirestoreBuilderService } from '@iresa/firestore';
 import { map } from 'rxjs/operators';
+import { SpotifyService } from '@iresa/ngx-spotify';
 
 @Injectable()
 export class PlaylistsService {
-  constructor(private firestore: FirestoreService) {}
+  constructor(
+    private firestore: FirestoreService,
+    private spotifyService: SpotifyService
+  ) {}
 
   getPlaylists(stationId: string) {
-    const url = encodeURI(`documents/stations/${stationId}/playlists`);
-    return this.firestore.get(url).pipe(
+    const query = {
+      structuredQuery: {
+        select: {
+          fields: [
+            { fieldPath: 'id' },
+            { fieldPath: 'images' },
+            { fieldPath: 'name' },
+            { fieldPath: 'type' }
+          ]
+        },
+        from: [{ collectionId: 'playlists' }]
+      }
+    };
+    const url = encodeURI(`documents/stations/${stationId}:runQuery`);
+    return this.firestore.post(url, query).pipe(
       map(resp =>
-        resp.documents
-          ? resp.documents.map(item => {
-              const arr = item.name.split('/');
-              return { ...item.fields, recordId: arr[arr.length - 1] };
-            })
-          : []
+        resp.map(item => {
+          const arr = item.document.name.split('/');
+          return { ...item.document.fields, recordId: arr[arr.length - 1] };
+        })
       )
     );
   }
@@ -61,7 +76,7 @@ export class PlaylistsService {
 
   trackForm(track) {
     let form = {};
-    const fields = ['id', 'images', 'name', 'uri', 'artists'];
+    const fields = ['id', 'images', 'name', 'uri', 'artists', 'duration_ms'];
 
     track = { ...track, images: track.album.images.slice(0, 1) };
     fields.forEach(key => {
@@ -75,6 +90,46 @@ export class PlaylistsService {
     });
     form = FirestoreBuilderService.build(form);
     return form;
+  }
+
+  getPlaylistTracks(stationId, playlist) {
+    if (playlist.type === 'favorite') {
+      return this.getFavPlaylistTracks(playlist);
+    }
+    return this.getCustPlaylistTracks(stationId, playlist);
+  }
+
+  getCustPlaylistTracks(stationId, playlist) {
+    const url = encodeURI(
+      `documents/stations/${stationId}/playlists/${playlist.recordId}/tracks`
+    );
+    return this.firestore
+      .get(url)
+      .pipe(
+        map(resp =>
+          resp.documents ? resp.documents.map(doc => doc.fields) : []
+        )
+      );
+  }
+
+  getFavPlaylistTracks(playlist) {
+    return this.spotifyService
+      .getPlaylistTracks(playlist.id, { limit: 20 })
+      .pipe(
+        map(tracks => {
+          return tracks.items.map(item => {
+            const track = item.track;
+            return {
+              name: item.track.name,
+              id: track.id,
+              uri: track.uri,
+              images: track.album.images.slice(0, 1),
+              artists: this.toArtistNames(track.artists),
+              duration_ms: track.duration_ms
+            };
+          });
+        })
+      );
   }
 
   toArtistNames(artists) {

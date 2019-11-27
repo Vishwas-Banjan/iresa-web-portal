@@ -13,7 +13,9 @@ export interface PlaylistsState {
   list: any[]; // list of Playlists; analogous to a sql normalized table
   selectedId?: string | number; // which Playlists record has been selected
   loaded: boolean; // has the Playlists list been loaded
-  error?: any; // last none error (if any)
+  error?: any; // last none error (if any),
+  tracks: any;
+  tracksLoaded: boolean;
 }
 
 export interface PlaylistsPartialState {
@@ -22,7 +24,9 @@ export interface PlaylistsPartialState {
 
 export const initialState: PlaylistsState = {
   list: [],
-  loaded: false
+  loaded: false,
+  tracks: null,
+  tracksLoaded: false
 };
 
 export function reducer(
@@ -35,6 +39,21 @@ export function reducer(
         ...state,
         list: action.payload,
         loaded: true
+      };
+      break;
+    }
+    case PlaylistsActionTypes.GetPlaylistTracks: {
+      state = {
+        ...state,
+        tracksLoaded: false
+      };
+      break;
+    }
+    case PlaylistsActionTypes.GetPlaylistTracksSuccess: {
+      state = {
+        ...state,
+        tracks: action.payload,
+        tracksLoaded: true
       };
       break;
     }
