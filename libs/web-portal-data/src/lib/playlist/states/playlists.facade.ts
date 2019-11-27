@@ -25,4 +25,8 @@ export class PlaylistsFacade {
   refreshSongList() {
     this.store.dispatch(new fromPlaylistsActions.RefreshSongList());
   }
+
+  addToPlaylist(data) {
+    this.store.dispatch(new fromPlaylistsActions.AddToPlaylist(data));
+  }
 }

@@ -11,7 +11,8 @@ import {
   PlaylistsActionTypes,
   SavePlaylist,
   fromPlaylistsActions,
-  RefreshSongList
+  RefreshSongList,
+  AddToPlaylist
 } from './playlists.actions';
 import { AUTH_FEATURE_KEY } from '../../auth/state/auth.reducer';
 import { map, switchMap } from 'rxjs/operators';
@@ -73,7 +74,10 @@ export class PlaylistsEffects {
                       name: item.track.name,
                       id: track.id,
                       uri: track.uri,
-                      images: track.album.images.slice(0, 1)
+                      images: track.album.images.slice(0, 1),
+                      artists: this.playlistsService.toArtistNames(
+                        track.artists
+                      )
                     };
                   });
                   return this.playlistsService
@@ -95,6 +99,26 @@ export class PlaylistsEffects {
       onError: (action: RefreshSongList, error) => {
         console.error('Error', error);
         return new fromPlaylistsActions.RefreshSongListError();
+      }
+    }
+  );
+
+  @Effect() addToPlaylist$ = this.dataPersistence.optimisticUpdate(
+    PlaylistsActionTypes.AddToPlaylist,
+    {
+      run: (action: AddToPlaylist, state: PlaylistsPartialState) => {
+        const stationId = state[AUTH_FEATURE_KEY].selectedStationId;
+        const playlistId = action.payload.playlistId;
+        const track = action.payload.track;
+        return this.playlistsService
+          .addToPlaylist(stationId, playlistId, track)
+          .pipe(
+            map((data: any) => new fromPlaylistsActions.AddToPlaylistSuccess())
+          );
+      },
+
+      undoAction: (action: AddToPlaylist, error) => {
+        return new fromPlaylistsActions.AddToPlaylistError();
       }
     }
   );

@@ -42,8 +42,14 @@ export class AlbumTrackListComponent implements OnInit {
     this.playlistFacade.savePlaylist({ ...playlist, type: 'favorite' });
   }
 
-  selectPlaylist(id, track) {
-    console.log(id);
+  addToPlaylist(playlist, track, album) {
+    if (!track.album) {
+      track = { ...track, album: album };
+    }
+    this.playlistFacade.addToPlaylist({
+      playlistId: playlist.recordId,
+      track
+    });
   }
 
   createPlaylist() {

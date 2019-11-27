@@ -61,7 +61,7 @@
             <button
               mat-menu-item
               *ngFor="let item of custPlaylists$ | async"
-              (click)="selectPlaylist(item, track)"
+              (click)="addToPlaylist(item, track, album)"
             >
               {{ item.name }}
             </button>
