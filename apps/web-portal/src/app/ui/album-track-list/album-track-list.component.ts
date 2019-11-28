@@ -58,7 +58,8 @@ export class AlbumTrackListComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(PlaylistDialogComponent, {
-      width: '250px',
+      width: 'auto',
+      height: 'auto',
       data: { name: '' }
     });
 

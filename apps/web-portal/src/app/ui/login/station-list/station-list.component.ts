@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { AuthFacade } from '@iresa/web-portal-data';
-import { Router } from '@angular/router';
+import { StationsFacade } from '@iresa/web-portal-data';
 import { SpotifyService } from '@iresa/ngx-spotify';
 import { FirestoreService } from '@iresa/firestore';
 
@@ -12,7 +11,7 @@ import { FirestoreService } from '@iresa/firestore';
 })
 export class StationListComponent implements OnInit {
   constructor(
-    private authFacade: AuthFacade,
+    private stationFacade: StationsFacade,
     private firestore: FirestoreService,
     private spotifyService: SpotifyService
   ) {}
@@ -20,7 +19,7 @@ export class StationListComponent implements OnInit {
   ngOnInit() {}
 
   get stations$() {
-    return this.authFacade.stations$;
+    return this.stationFacade.allStations$;
   }
 
   getAuthURL(stationId) {

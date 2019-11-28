@@ -106,25 +106,30 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   }
 
   handleStateChanges = (states: PlayerStates) => {
-    // paused
-    if (states.restrictions && states.restrictions.disallow_pausing_reasons) {
-      if (
-        states.restrictions.disallow_pausing_reasons.find(
-          res => res === 'already_paused'
-        )
-      ) {
-        this.wpFacade.setPlaying(false);
+    this.ngZone.run(() => {
+      // paused
+      if (states.restrictions && states.restrictions.disallow_pausing_reasons) {
+        if (
+          states.restrictions.disallow_pausing_reasons.find(
+            res => res === 'already_paused'
+          )
+        ) {
+          this.wpFacade.setPlaying(false);
+        }
       }
-    }
-    if (states.restrictions && states.restrictions.disallow_resuming_reasons) {
       if (
-        states.restrictions.disallow_resuming_reasons.find(
-          res => res === 'not_paused'
-        )
+        states.restrictions &&
+        states.restrictions.disallow_resuming_reasons
       ) {
-        this.wpFacade.setPlaying(true);
+        if (
+          states.restrictions.disallow_resuming_reasons.find(
+            res => res === 'not_paused'
+          )
+        ) {
+          this.wpFacade.setPlaying(true);
+        }
       }
-    }
+    });
   };
 
   onVolChange(e: MatSliderChange) {

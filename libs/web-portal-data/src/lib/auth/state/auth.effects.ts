@@ -10,16 +10,15 @@ import {
   LoginError
 } from './auth.actions';
 import { AuthService } from './auth.service';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthEffects {
   @Effect() login$ = this.dataPersistence.fetch(AuthActionTypes.Login, {
     run: (action: Login, state: AuthPartialState) => {
-      return this.authService.login(action.payload).pipe(
-        switchMap((auth: any) => this.authService.getStationsByUser(auth.user)),
-        map(data => new LoginSuccess(data))
-      );
+      return this.authService
+        .login(action.payload)
+        .pipe(map(data => new LoginSuccess(data)));
     },
 
     onError: (action: Login, error) => {

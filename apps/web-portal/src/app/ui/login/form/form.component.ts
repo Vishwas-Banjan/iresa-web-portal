@@ -10,7 +10,7 @@ import { AuthFacade } from '@iresa/web-portal-data';
 import { filter, take } from 'rxjs/operators';
 
 @Component({
-  selector: 'iresa-portal-form',
+  selector: 'iresa-portal-login-form',
   templateUrl: './form.component.html',
   styleUrls: ['./form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -53,9 +53,9 @@ export class FormComponent implements OnInit {
   onLoginSuccess() {
     this.authFacade.loggedIn$
       .pipe(
-        filter(l => !!l),
+        filter(s => !!s.loggedIn),
         take(1)
       )
-      .subscribe(s => this.loginSuccess.next());
+      .subscribe(s => this.loginSuccess.next(s.user));
   }
 }

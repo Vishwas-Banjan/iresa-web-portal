@@ -25,7 +25,7 @@
     <img
       class="image"
       mat-card-image
-      [src]="item.images | loadImage"
+      [src]="item.images | loadAdvImage: item.name"
       alt="album-cover"
     />
     <mat-card-content>

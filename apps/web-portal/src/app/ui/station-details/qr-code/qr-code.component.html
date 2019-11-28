@@ -1,0 +1,11 @@
+<mat-card>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <p>
+      Scan QR code below
+    </p>
+    <qrcode [qrdata]="code" [size]="100" [level]="'M'"></qrcode>
+    <button mat-button color="primary" (click)="openDialog()">
+      Click here to zoom in
+    </button>
+  </div>
+</mat-card>

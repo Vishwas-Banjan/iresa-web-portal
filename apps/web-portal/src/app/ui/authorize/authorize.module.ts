@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { AuthorizeComponent } from './authorize.component';
 import { RouterModule } from '@angular/router';
 import { LoaderModule } from '@iresa/shared/ui';
-import { AuthDataModule } from '@iresa/web-portal-data';
+import { StationsDataModule } from '@iresa/web-portal-data';
 
 @NgModule({
   declarations: [AuthorizeComponent],
   imports: [
     CommonModule,
     LoaderModule,
-    AuthDataModule,
+    StationsDataModule,
     RouterModule.forChild([
       {
         path: '',

@@ -15,9 +15,9 @@ import {
   AddToPlaylist,
   GetPlaylistTracks
 } from './playlists.actions';
-import { AUTH_FEATURE_KEY } from '../../auth/state/auth.reducer';
 import { map, switchMap } from 'rxjs/operators';
 import { PlaylistsService } from './playlists.service';
+import { STATIONS_FEATURE_KEY } from '../../stations/state/stations.reducer';
 
 @Injectable()
 export class PlaylistsEffects {
@@ -25,7 +25,7 @@ export class PlaylistsEffects {
     PlaylistsActionTypes.LoadPlaylists,
     {
       run: (action: LoadPlaylists, state: PlaylistsPartialState) => {
-        const stationId = state[AUTH_FEATURE_KEY].selectedStationId;
+        const stationId = state[STATIONS_FEATURE_KEY].selectedId;
         return this.playlistsService
           .getPlaylists(stationId)
           .pipe(map(data => new fromPlaylistsActions.PlaylistsLoaded(data)));
@@ -42,7 +42,7 @@ export class PlaylistsEffects {
     PlaylistsActionTypes.SavePlaylist,
     {
       run: (action: SavePlaylist, state: PlaylistsPartialState) => {
-        const stationId = state[AUTH_FEATURE_KEY].selectedStationId;
+        const stationId = state[STATIONS_FEATURE_KEY].selectedId;
         return this.playlistsService
           .savePlaylist(stationId, action.payload)
           .pipe(map((data: any) => new fromPlaylistsActions.LoadPlaylists()));
@@ -61,7 +61,7 @@ export class PlaylistsEffects {
         const playlists = state[PLAYLISTS_FEATURE_KEY].list;
         const playlist =
           playlists[Math.floor(Math.random() * playlists.length)];
-        const stationId = state[AUTH_FEATURE_KEY].selectedStationId;
+        const stationId = state[STATIONS_FEATURE_KEY].selectedId;
         if (playlist) {
           return this.playlistsService
             .getPlaylistTracks(stationId, playlist)
@@ -92,7 +92,7 @@ export class PlaylistsEffects {
     PlaylistsActionTypes.AddToPlaylist,
     {
       run: (action: AddToPlaylist, state: PlaylistsPartialState) => {
-        const stationId = state[AUTH_FEATURE_KEY].selectedStationId;
+        const stationId = state[STATIONS_FEATURE_KEY].selectedId;
         const playlistId = action.payload.playlistId;
         const track = action.payload.track;
         return this.playlistsService
@@ -112,7 +112,7 @@ export class PlaylistsEffects {
     PlaylistsActionTypes.GetPlaylistTracks,
     {
       run: (action: GetPlaylistTracks, state: PlaylistsPartialState) => {
-        const stationId = state[AUTH_FEATURE_KEY].selectedStationId;
+        const stationId = state[STATIONS_FEATURE_KEY].selectedId;
         const playlist = state[PLAYLISTS_FEATURE_KEY].list.find(
           item => item.recordId === action.payload
         );

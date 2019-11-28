@@ -6,12 +6,12 @@ const getAuthState = createFeatureSelector<AuthState>(AUTH_FEATURE_KEY);
 
 const getLoggedIn = createSelector(
   getAuthState,
-  (state: AuthState) => state.loggedIn
-);
-
-const getStations = createSelector(
-  getAuthState,
-  (state: AuthState) => state.stations
+  (state: AuthState) => {
+    return {
+      loggedIn: state.loggedIn,
+      user: state.user
+    };
+  }
 );
 
 const getLoading = createSelector(
@@ -21,6 +21,5 @@ const getLoading = createSelector(
 
 export const authQuery = {
   getLoggedIn,
-  getStations,
   getLoading
 };

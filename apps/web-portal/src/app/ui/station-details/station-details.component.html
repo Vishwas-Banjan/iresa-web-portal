@@ -1,1 +1,11 @@
-<p>station-details works!</p>
+<div *ngIf="stationDetails$ | async as station">
+  <h3>Station Details</h3>
+  <div fxLayout="row" fxLayoutGap="15px">
+    <div fxFlex="65">
+      <iresa-portal-station-form [data]="station"></iresa-portal-station-form>
+    </div>
+    <div fxFlex>
+      <iresa-portal-qr-code [code]="station.secretCode"></iresa-portal-qr-code>
+    </div>
+  </div>
+</div>
