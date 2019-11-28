@@ -56,6 +56,15 @@ export class FirestoreService {
     });
   }
 
+  patch(url, body) {
+    return this.api({
+      method: 'patch',
+      url,
+      body,
+      headers: this.getHeaders()
+    });
+  }
+
   private api(requestOptions: HttpRequestOptions): Observable<any> {
     return this.http
       .request<any>(

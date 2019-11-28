@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BarcodeComponent } from './barcode.component';
+import { QRCodeComponent } from './qr-code.component';
 
 describe('BarcodeComponent', () => {
-  let component: BarcodeComponent;
-  let fixture: ComponentFixture<BarcodeComponent>;
+  let component: QRCodeComponent;
+  let fixture: ComponentFixture<QRCodeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BarcodeComponent]
+      declarations: [QRCodeComponent]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BarcodeComponent);
+    fixture = TestBed.createComponent(QRCodeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FirestoreService } from '@iresa/firestore';
+import { FirestoreService, FirestoreBuilderService } from '@iresa/firestore';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -35,5 +35,10 @@ export class StationsService {
   getStationDetails(stationId) {
     const url = encodeURI(`documents/stations/${stationId}`);
     return this.firestore.get(url).pipe(map(resp => resp.fields));
+  }
+
+  updateStation(stationId, form) {
+    const url = encodeURI(`documents/stations/${stationId}?${FirestoreBuilderService.buildPatchParams(form)}`);
+    return this.firestore.patch(url, {fields: FirestoreBuilderService.build(form)}).pipe(map(resp => resp.fields));
   }
 }

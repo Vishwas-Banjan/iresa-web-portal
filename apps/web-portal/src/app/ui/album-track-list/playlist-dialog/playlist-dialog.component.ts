@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-export interface DialogData {
+export interface DialogPlaylistData {
   name: string;
 }
 
@@ -19,7 +19,7 @@ export interface DialogData {
 export class PlaylistDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<PlaylistDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
+    @Inject(MAT_DIALOG_DATA) public data: DialogPlaylistData
   ) {}
 
   ngOnInit() {}

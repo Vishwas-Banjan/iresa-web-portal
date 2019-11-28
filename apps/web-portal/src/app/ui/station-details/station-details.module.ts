@@ -6,25 +6,32 @@ import {
   MatCardModule,
   MatFormFieldModule,
   MatInputModule,
-  MatButtonModule
+  MatButtonModule,
+  MatDialogModule
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormComponent } from './form/form.component';
-import { BarcodeComponent } from './barcode/barcode.component';
 import { StationsDataModule, StationResolver } from '@iresa/web-portal-data';
 import { ConnectFormModule } from '@iresa/shared/utilities';
+import { QRCodeModule } from 'angularx-qrcode';
+import { QRCodeDialogComponent } from './qr-code-dialog/qr-code-dialog.component';
+import { A11yModule } from '@angular/cdk/a11y';
+import { QRCodeComponent } from './qr-code/qr-code.component';
 
 @NgModule({
-  declarations: [StationDetailsComponent, FormComponent, BarcodeComponent],
+  declarations: [StationDetailsComponent, FormComponent, QRCodeComponent, QRCodeDialogComponent],
   imports: [
     CommonModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatDialogModule,
     FlexLayoutModule,
     StationsDataModule,
     ConnectFormModule,
+    QRCodeModule,
+    A11yModule,
     RouterModule.forChild([
       {
         path: '',
@@ -34,6 +41,7 @@ import { ConnectFormModule } from '@iresa/shared/utilities';
     ])
   ],
   providers: [StationResolver],
-  exports: [StationDetailsComponent]
+  exports: [StationDetailsComponent],
+  entryComponents: [QRCodeDialogComponent]
 })
 export class StationDetailsModule {}

@@ -5,6 +5,7 @@ import {
   Input
 } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { StationsFacade } from '@iresa/web-portal-data';
 
 @Component({
   selector: 'iresa-portal-station-form',
@@ -17,7 +18,7 @@ export class FormComponent implements OnInit {
   data;
 
   form: FormGroup;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private stations: StationsFacade) {
     this.buildForm();
   }
 
@@ -32,5 +33,9 @@ export class FormComponent implements OnInit {
       zipCode: [''],
       secretCode: ['']
     });
+  }
+
+  save() {
+    this.stations.updateStationDetails(this.form.value);
   }
 }

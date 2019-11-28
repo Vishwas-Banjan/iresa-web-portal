@@ -26,4 +26,8 @@ export class StationsFacade {
   loadStationDetails() {
     this.store.dispatch(new fromStationsActions.LoadStationDetails());
   }
+
+  updateStationDetails(data) {
+    this.store.dispatch(new fromStationsActions.UpdateStationDetails(data));
+  }
 }

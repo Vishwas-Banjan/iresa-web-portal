@@ -7,10 +7,11 @@ import {
   LoadStations,
   StationsActionTypes,
   LoadStationDetails,
-  fromStationsActions
+  fromStationsActions,
+  UpdateStationDetails
 } from './stations.actions';
 import { StationsService } from './stations.service';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 @Injectable()
 export class StationsEffects {
@@ -45,6 +46,23 @@ export class StationsEffects {
       onError: (action: LoadStationDetails, error) => {
         console.error('Error', error);
         return new fromStationsActions.StationDetailsLoadError();
+      }
+    }
+  );
+
+  @Effect() updateStationDetails$ = this.dataPersistence.pessimisticUpdate(
+    StationsActionTypes.UpdateStationDetails,
+    {
+      run: (action: UpdateStationDetails, state: StationsPartialState) => {
+        const id = state[STATIONS_FEATURE_KEY].selectedId;
+        return this.stationsService.updateStation(id, action.payload).pipe(
+          map(data => new fromStationsActions.LoadStationDetails())
+        )
+      },
+
+      onError: (action: UpdateStationDetails, error) => {
+        console.error('Error', error);
+        return new fromStationsActions.StationDetailsUpdateError();
       }
     }
   );
