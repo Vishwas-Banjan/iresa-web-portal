@@ -7,7 +7,11 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { SubSink } from 'subsink';
 import { SpotifyService } from '@iresa/ngx-spotify';
-import { WebPlaybackFacade, AuthFacade } from '@iresa/web-portal-data';
+import {
+  WebPlaybackFacade,
+  AuthFacade,
+  StationsFacade
+} from '@iresa/web-portal-data';
 import { FirestoreService } from '@iresa/firestore';
 
 @Component({
@@ -22,7 +26,7 @@ export class AuthorizeComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private firestore: FirestoreService,
-    private authFacase: AuthFacade,
+    private stationsFacade: StationsFacade,
     private spotifyService: SpotifyService
   ) {}
 
@@ -45,7 +49,7 @@ export class AuthorizeComponent implements OnInit, OnDestroy {
 
           this.spotifyService.setAuthToken(paramsMap);
           const state = this.parseState(paramsMap['state']);
-          this.authFacase.setSelectedStationId(state.stationId);
+          this.stationsFacade.setSelectedId(state.stationId);
           this.firestore.setIdToken(state.idToken);
           this.router.navigateByUrl('/home');
         }

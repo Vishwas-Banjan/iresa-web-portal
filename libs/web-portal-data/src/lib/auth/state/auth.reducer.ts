@@ -9,14 +9,9 @@ export const AUTH_FEATURE_KEY = 'auth';
  *  Note: replace if already defined in another module
  */
 
-/* tslint:disable:no-empty-interface */
-export interface Entity {}
-
 export interface AuthState {
   loggedIn: boolean;
   user: any;
-  stations: any[];
-  selectedStationId: string;
   loading: boolean;
 }
 
@@ -27,8 +22,6 @@ export interface AuthPartialState {
 export const initialState: AuthState = {
   loggedIn: false,
   user: null,
-  stations: [],
-  selectedStationId: null,
   loading: false
 };
 
@@ -48,16 +41,7 @@ export function reducer(
       state = {
         ...state,
         loggedIn: true,
-        user: action.payload.user,
-        stations: action.payload.stations,
-        loading: false
-      };
-      break;
-    }
-    case AuthActionTypes.SetSelectedStationId: {
-      state = {
-        ...state,
-        selectedStationId: action.payload
+        user: action.payload.user
       };
       break;
     }

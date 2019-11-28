@@ -66,6 +66,22 @@ const routes: Routes = [
             m => m.PlaylistDetailsModule
           )
       },
+      {
+        path: 'station-details',
+        pathMatch: 'full',
+        loadChildren: () =>
+          import('../station-details/station-details.module').then(
+            m => m.StationDetailsModule
+          )
+      },
+      {
+        path: 'poll-result',
+        pathMatch: 'full',
+        loadChildren: () =>
+          import('../poll-result/poll-result.module').then(
+            m => m.PollResultModule
+          )
+      },
       { path: '', redirectTo: '/home', pathMatch: 'full' }
     ]
   }

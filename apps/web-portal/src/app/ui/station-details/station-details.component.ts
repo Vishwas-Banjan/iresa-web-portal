@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { StationsFacade } from '@iresa/web-portal-data';
 
 @Component({
   selector: 'iresa-portal-station-details',
@@ -7,7 +8,11 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StationDetailsComponent implements OnInit {
-  constructor() {}
+  constructor(private stations: StationsFacade) {}
 
   ngOnInit() {}
+
+  get stationDetails$() {
+    return this.stations.stationDetails$;
+  }
 }

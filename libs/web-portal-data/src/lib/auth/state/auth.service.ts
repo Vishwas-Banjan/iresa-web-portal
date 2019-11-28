@@ -15,36 +15,4 @@ export class AuthService {
       })
     );
   }
-
-  getStationsByUser({ email, uid }) {
-    const query = {
-      structuredQuery: {
-        where: {
-          fieldFilter: {
-            field: { fieldPath: 'uid' },
-            op: 'EQUAL',
-            value: { stringValue: uid }
-          }
-        },
-        from: [{ collectionId: 'stations' }]
-      }
-    };
-    const url = encodeURI(`documents:runQuery`);
-
-    return this.firestore.post(url, query).pipe(
-      map(resp =>
-        resp.map(item => {
-          const arr = item.document.name.split('/');
-          const id = arr[arr.length - 1];
-          return { ...item.document.fields, id };
-        })
-      ),
-      map(stations => {
-        return {
-          stations,
-          user: { email, uid }
-        };
-      })
-    );
-  }
 }

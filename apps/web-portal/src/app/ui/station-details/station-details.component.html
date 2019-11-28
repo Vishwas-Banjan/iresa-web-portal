@@ -1,1 +1,11 @@
-<p>station-details works!</p>
+<h3>Station Details</h3>
+<div fxLayout="row" fxLayoutGap="15px">
+  <div fxFlex="65">
+    <iresa-portal-station-form
+      [data]="stationDetails$ | async"
+    ></iresa-portal-station-form>
+  </div>
+  <div fxFlex>
+    <iresa-portal-barcode></iresa-portal-barcode>
+  </div>
+</div>

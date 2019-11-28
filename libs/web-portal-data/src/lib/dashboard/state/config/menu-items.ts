@@ -1,6 +1,5 @@
 export const menuItems = [
   { title: 'Home', icon: 'home', value: '/home' },
-  { title: 'Music Library', icon: 'library_music' },
-  { title: 'Recent', icon: 'menu' },
-  { title: 'Station Details', icon: 'menu' }
+  { title: 'Poll', icon: 'poll', value: '/poll-result' },
+  { title: 'Station Details', icon: 'business', value: '/station-details' }
 ];
