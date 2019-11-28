@@ -7,7 +7,7 @@ import {
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 export interface DialogQrCodeData {
-  name: string;
+  code: string;
 }
 
 @Component({
