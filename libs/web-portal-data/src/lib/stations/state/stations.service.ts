@@ -38,7 +38,13 @@ export class StationsService {
   }
 
   updateStation(stationId, form) {
-    const url = encodeURI(`documents/stations/${stationId}?${FirestoreBuilderService.buildPatchParams(form)}`);
-    return this.firestore.patch(url, {fields: FirestoreBuilderService.build(form)}).pipe(map(resp => resp.fields));
+    const url = encodeURI(
+      `documents/stations/${stationId}?${FirestoreBuilderService.buildPatchParams(
+        form
+      )}`
+    );
+    return this.firestore
+      .patch(url, { fields: FirestoreBuilderService.build(form) })
+      .pipe(map(resp => resp.fields));
   }
 }

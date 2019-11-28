@@ -8,9 +8,8 @@ describe('BarcodeDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QRCodeDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [QRCodeDialogComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

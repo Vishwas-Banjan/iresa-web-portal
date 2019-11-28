@@ -1,6 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, Inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Inject
+} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
 
 export interface DialogQrCodeData {
   name: string;
@@ -13,15 +17,14 @@ export interface DialogQrCodeData {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QRCodeDialogComponent implements OnInit {
+  constructor(
+    public dialogRef: MatDialogRef<QRCodeDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogQrCodeData
+  ) {}
 
-  constructor(public dialogRef: MatDialogRef<QRCodeDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogQrCodeData) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }

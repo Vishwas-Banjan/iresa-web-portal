@@ -19,7 +19,12 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { QRCodeComponent } from './qr-code/qr-code.component';
 
 @NgModule({
-  declarations: [StationDetailsComponent, FormComponent, QRCodeComponent, QRCodeDialogComponent],
+  declarations: [
+    StationDetailsComponent,
+    FormComponent,
+    QRCodeComponent,
+    QRCodeDialogComponent
+  ],
   imports: [
     CommonModule,
     MatCardModule,

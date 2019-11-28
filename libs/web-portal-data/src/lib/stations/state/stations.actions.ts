@@ -9,7 +9,7 @@ export enum StationsActionTypes {
   StationDetailsLoaded = '[Stations] Station Details Loaded',
   StationDetailsLoadError = '[Stations] Station Details Load Error',
   UpdateStationDetails = '[Stations] Update Station Details',
-  StationDetailsUpdateError = '[Stations] Station Details Update Error',
+  StationDetailsUpdateError = '[Stations] Station Details Update Error'
 }
 
 export class LoadStations implements Action {

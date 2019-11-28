@@ -55,9 +55,9 @@ export class StationsEffects {
     {
       run: (action: UpdateStationDetails, state: StationsPartialState) => {
         const id = state[STATIONS_FEATURE_KEY].selectedId;
-        return this.stationsService.updateStation(id, action.payload).pipe(
-          map(data => new fromStationsActions.LoadStationDetails())
-        )
+        return this.stationsService
+          .updateStation(id, action.payload)
+          .pipe(map(data => new fromStationsActions.LoadStationDetails()));
       },
 
       onError: (action: UpdateStationDetails, error) => {

@@ -55,7 +55,7 @@ export class FirestoreBuilderService {
     const form = [];
     Object.keys(obj).forEach(key => {
       form.push(`updateMask.fieldPaths=${key}`);
-    })
+    });
     return form.join('&');
   }
 }

@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input
+} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { QRCodeDialogComponent } from '../qr-code-dialog/qr-code-dialog.component';
 
@@ -9,9 +14,9 @@ import { QRCodeDialogComponent } from '../qr-code-dialog/qr-code-dialog.componen
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QRCodeComponent implements OnInit {
-  @Input() 
+  @Input()
   code;
-  
+
   constructor(public dialog: MatDialog) {}
 
   ngOnInit() {}
