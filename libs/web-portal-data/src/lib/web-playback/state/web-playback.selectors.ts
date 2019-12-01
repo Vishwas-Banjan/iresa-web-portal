@@ -37,10 +37,16 @@ const getEndOfQueue = createSelector(
     state.queue.length > 0 && state.position >= state.queue.length
 );
 
+const getVol = createSelector(
+  getWebPlaybackState,
+  (state: WebPlaybackState) => state.vol
+);
+
 export const webPlaybackQuery = {
   getLoggedIn,
   getQueue,
   getPlaying,
   getCurrTrack,
-  getEndOfQueue
+  getEndOfQueue,
+  getVol
 };

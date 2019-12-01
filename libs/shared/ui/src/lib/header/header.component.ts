@@ -2,7 +2,9 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
-  Input
+  Input,
+  Output,
+  EventEmitter
 } from '@angular/core';
 
 @Component({
@@ -15,9 +17,14 @@ export class HeaderComponent implements OnInit {
   @Input()
   product;
 
+  @Output()
+  logout = new EventEmitter<null>();
+
   constructor() {}
 
   ngOnInit() {}
 
-  logout() {}
+  onLogout() {
+    this.logout.next();
+  }
 }

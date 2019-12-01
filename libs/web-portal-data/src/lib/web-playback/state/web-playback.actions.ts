@@ -13,7 +13,9 @@ export enum WebPlaybackActionTypes {
   RefreshQueueError = '[WebPlayback] Refresh Queue Error',
   UpdateRemoteQueue = '[WebPlayback] Update Remote Queue',
   UpdateRemoteQueueSuccess = '[WebPlayback] Update Remote Queue Success',
-  UpdateRemoteQueueError = '[WebPlayback] Update Remote Queue Error'
+  UpdateRemoteQueueError = '[WebPlayback] Update Remote Queue Error',
+  SetVol = '[WebPlayback] Set Vol',
+  ToggleMute = '[WebPlayback] Toggle Mute'
 }
 
 export class SetQueue implements Action {
@@ -81,6 +83,16 @@ export class UpdateRemoteQueueError implements Action {
   constructor() {}
 }
 
+export class SetVol implements Action {
+  readonly type = WebPlaybackActionTypes.SetVol;
+  constructor(public payload: any) {}
+}
+
+export class ToggleMute implements Action {
+  readonly type = WebPlaybackActionTypes.ToggleMute;
+  constructor() {}
+}
+
 export type WebPlaybackAction =
   | SetQueue
   | Play
@@ -94,7 +106,9 @@ export type WebPlaybackAction =
   | RefreshQueueError
   | UpdateRemoteQueue
   | UpdateRemoteQueueSuccess
-  | UpdateRemoteQueueError;
+  | UpdateRemoteQueueError
+  | SetVol
+  | ToggleMute;
 
 export const fromWebPlaybackActions = {
   SetQueue,
@@ -109,5 +123,7 @@ export const fromWebPlaybackActions = {
   RefreshQueueError,
   UpdateRemoteQueue,
   UpdateRemoteQueueSuccess,
-  UpdateRemoteQueueError
+  UpdateRemoteQueueError,
+  SetVol,
+  ToggleMute
 };

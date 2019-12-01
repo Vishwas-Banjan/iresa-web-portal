@@ -5,7 +5,7 @@ import {
   ViewChild,
   ElementRef
 } from '@angular/core';
-import { DashboardFacade } from '@iresa/web-portal-data';
+import { DashboardFacade, AuthFacade } from '@iresa/web-portal-data';
 import {
   Router,
   Event,
@@ -14,6 +14,7 @@ import {
   NavigationCancel,
   NavigationError
 } from '@angular/router';
+import { SpotifyService } from '@iresa/ngx-spotify';
 
 @Component({
   selector: 'iresa-portal-dashboard',
@@ -23,7 +24,12 @@ import {
 })
 export class DashboardComponent implements OnInit {
   @ViewChild('pageContent', { static: false }) pageContent: ElementRef;
-  constructor(private dbFacade: DashboardFacade, private router: Router) {}
+  constructor(
+    private dbFacade: DashboardFacade,
+    private auth: AuthFacade,
+    private router: Router,
+    private spotify: SpotifyService
+  ) {}
 
   ngOnInit() {
     this.handleRouterEvent();
@@ -65,5 +71,10 @@ export class DashboardComponent implements OnInit {
       this.dbFacade.setLoading(false);
       this.pageContent.nativeElement.scrollTo(0, 0);
     }
+  }
+
+  logout() {
+    this.spotify.invalidAuthToken();
+    this.auth.logout();
   }
 }

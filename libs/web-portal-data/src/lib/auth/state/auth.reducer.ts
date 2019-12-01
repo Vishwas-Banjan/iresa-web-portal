@@ -41,7 +41,16 @@ export function reducer(
       state = {
         ...state,
         loggedIn: true,
-        user: action.payload.user
+        user: action.payload.user,
+        loading: false
+      };
+      break;
+    }
+    case AuthActionTypes.LogoutSuccess: {
+      state = {
+        ...state,
+        loggedIn: false,
+        user: null
       };
       break;
     }

@@ -1,1 +1,27 @@
-<p>poll-result works!</p>
+<h3 class="title">Poll Results</h3>
+<table mat-table [dataSource]="dataSource$ | async" class="mat-elevation-z8">
+  <!-- Name Column -->
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+
+  <!-- Artists Column -->
+  <ng-container matColumnDef="artists">
+    <th mat-header-cell *matHeaderCellDef>Artists</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.artists | loadArtistGroup }}
+    </td>
+  </ng-container>
+
+  <!-- Vote Count Column -->
+  <ng-container matColumnDef="upvoteCount">
+    <th mat-header-cell *matHeaderCellDef>Votes</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.upvoteCount }}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

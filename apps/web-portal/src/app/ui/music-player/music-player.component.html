@@ -1,5 +1,6 @@
 <mat-card fxLayout="row" fxLayoutAlign="space-between center">
   <div
+    fxFlex="22"
     fxLayout="row"
     fxLayoutAlign="start center"
     fxLayoutGap="20px"
@@ -13,7 +14,13 @@
         [title]="curr?.name"
       />
     </div>
-    <div class="song-name">{{ (currPlaying$ | async)?.name }}</div>
+    <div
+      class="song-name"
+      [matTooltip]="(currPlaying$ | async)?.name"
+      [matTooltipPosition]="'above'"
+    >
+      {{ (currPlaying$ | async)?.name }}
+    </div>
   </div>
 
   <div class="player-controls" fxLayout="row" fxLayoutAlign="start center">
@@ -49,8 +56,19 @@
     fxLayoutAlign="start center"
   >
     <div class="player-volume">
-      <button mat-icon-button>
-        <mat-icon class="mat-primary" aria-label="Volume">volume_up</mat-icon>
+      <button mat-icon-button (click)="toggleMute()">
+        <mat-icon
+          *ngIf="(vol$ | async) === 0"
+          class="mat-primary"
+          aria-label="Volume"
+          >volume_mute</mat-icon
+        >
+        <mat-icon
+          *ngIf="(vol$ | async) > 0"
+          class="mat-primary"
+          aria-label="Volume"
+          >volume_up</mat-icon
+        >
       </button>
     </div>
     <div class="player-volume-control">
@@ -58,8 +76,8 @@
         min="0"
         max="1"
         step="0.2"
-        value="1"
-        (change)="onVolChange($event)"
+        [value]="vol$ | async"
+        (change)="onSliderChange($event)"
       ></mat-slider>
     </div>
   </div>

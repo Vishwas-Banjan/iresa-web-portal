@@ -1,4 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  OnDestroy
+} from '@angular/core';
+import { PollFacade } from '@iresa/web-portal-data';
+import { timer } from 'rxjs';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'iresa-portal-poll-result',
@@ -6,8 +14,26 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: ['./poll-result.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PollResultComponent implements OnInit {
-  constructor() {}
+export class PollResultComponent implements OnInit, OnDestroy {
+  constructor(private poll: PollFacade) {}
 
-  ngOnInit() {}
+  displayedColumns: string[] = ['name', 'artists', 'upvoteCount'];
+
+  subs = new SubSink();
+
+  ngOnInit() {
+    this.polling();
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
+
+  polling() {
+    this.subs.add(timer(0, 20000).subscribe(t => this.poll.loadAll()));
+  }
+
+  get dataSource$() {
+    return this.poll.all$;
+  }
 }
