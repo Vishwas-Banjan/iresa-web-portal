@@ -9,6 +9,7 @@ import { MatTabGroup } from '@angular/material';
 import { FormGroup } from '@angular/forms';
 import { StationsFacade } from '@iresa/web-portal-data';
 import { take, filter } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'iresa-portal-login',
@@ -18,9 +19,8 @@ import { take, filter } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit {
-  @ViewChild('tabs', { static: false }) tabGroup: MatTabGroup;
-
   userForm: FormGroup;
+  selectedIdx$ = new BehaviorSubject<number>(0);
   constructor(private stationsFacade: StationsFacade) {}
 
   ngOnInit() {
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
         filter(s => !!s),
         take(1)
       )
-      .subscribe(s => (this.tabGroup.selectedIndex = 1));
+      .subscribe(s => this.selectedIdx$.next(1));
   }
 
   onLoginSuccess(user) {

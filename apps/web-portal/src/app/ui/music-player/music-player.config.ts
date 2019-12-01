@@ -7,8 +7,5 @@ export interface MusicPlayer {
 }
 
 export interface PlayerStates {
-  restrictions?: {
-    disallow_pausing_reasons?: string[];
-    disallow_resuming_reasons?: string[];
-  };
+  paused: boolean;
 }

@@ -56,6 +56,14 @@ export class FirestoreService {
     });
   }
 
+  delete(url) {
+    return this.api({
+      method: 'delete',
+      url,
+      headers: this.getHeaders()
+    });
+  }
+
   patch(url, body) {
     return this.api({
       method: 'patch',

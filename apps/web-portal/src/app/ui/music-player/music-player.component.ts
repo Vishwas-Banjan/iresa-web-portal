@@ -7,12 +7,13 @@ import {
   HostListener
 } from '@angular/core';
 import { WindowRef, ScriptLoaderService } from '@iresa/shared/utilities';
-import { SpotifyService, SpotifyPlaybackService } from '@iresa/ngx-spotify';
+import { SpotifyService } from '@iresa/ngx-spotify';
 import { MusicPlayer, PlayerStates } from './music-player.config';
 import { WebPlaybackFacade, PlaylistsFacade } from '@iresa/web-portal-data';
 import { SubSink } from 'subsink';
-import { filter } from 'rxjs/operators';
+import { filter, skip } from 'rxjs/operators';
 import { MatSliderChange } from '@angular/material';
+import { BehaviorSubject } from 'rxjs';
 
 declare var Spotify: any;
 
@@ -26,6 +27,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   private musicPlayerCtrl: MusicPlayer;
 
   subs = new SubSink();
+  manTogglePlay = false;
 
   constructor(
     private winRef: WindowRef,
@@ -40,7 +42,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     return this.wpFacade.currPlayingTrack$;
   }
 
-  get playing$() {
+  get playingState$() {
     return this.wpFacade.playing$;
   }
 
@@ -54,6 +56,41 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     this.onSpotifyReady();
     this.onQueueUpdate();
     this.loadScript();
+    this.onCurrTrack();
+    this.onEndOfQueue();
+    this.onPauseResume();
+  }
+
+  onPauseResume() {
+    this.subs.add(
+      this.playingState$
+        .pipe(filter(s => !s && !this.manTogglePlay), skip(1))
+        .subscribe(track => {
+          this.wpFacade.next();
+        })
+    );
+  }
+
+  onEndOfQueue() {
+    this.subs.add(
+      this.wpFacade.endOfQueue$.pipe(filter(s => !!s)).subscribe(track => {
+        this.wpFacade.refreshQueue();
+      })
+    );
+  }
+
+  onCurrTrack() {
+    this.subs.add(
+      this.wpFacade.currPlayingTrack$
+        .pipe(filter(t => !!t))
+        .subscribe(track => {
+          const authToken = this.musicPlayerCtrl.authToken;
+          const device_id = this.musicPlayerCtrl.device_id;
+          const URIs = [track.uri];
+          this.wpFacade.play({ authToken, device_id, URIs });
+          this.wpFacade.updateRemoteQueue(track);
+        })
+    );
   }
 
   loadScript() {
@@ -69,10 +106,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   onQueueUpdate() {
     this.subs.add(
       this.wpFacade.queue$.pipe(filter(q => q.length > 0)).subscribe(q => {
-        const authToken = this.musicPlayerCtrl.authToken;
-        const device_id = this.musicPlayerCtrl.device_id;
-        const URIs = q.map(item => item.uri);
-        this.wpFacade.play({ authToken, device_id, URIs });
+        this.plFacade.refreshSongList();
       })
     );
   }
@@ -101,39 +135,29 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     );
   };
 
-  play() {
-    this.plFacade.refreshSongList();
-  }
-
   handleStateChanges = (states: PlayerStates) => {
     this.ngZone.run(() => {
-      // paused
-      if (states.restrictions && states.restrictions.disallow_pausing_reasons) {
-        if (
-          states.restrictions.disallow_pausing_reasons.find(
-            res => res === 'already_paused'
-          )
-        ) {
-          this.wpFacade.setPlaying(false);
-        }
-      }
-      if (
-        states.restrictions &&
-        states.restrictions.disallow_resuming_reasons
-      ) {
-        if (
-          states.restrictions.disallow_resuming_reasons.find(
-            res => res === 'not_paused'
-          )
-        ) {
-          this.wpFacade.setPlaying(true);
-        }
+      if (states.paused !== undefined) {
+        this.wpFacade.setPlaying(!states.paused);
       }
     });
   };
 
   onVolChange(e: MatSliderChange) {
     this.musicPlayerCtrl.musicPlayer.setVolume(e.value);
+  }
+
+  togglePlay() {
+    this.manTogglePlay = !this.manTogglePlay;
+    this.musicPlayerCtrl.musicPlayer.togglePlay();
+  }
+
+  prev() {
+    this.wpFacade.prev();
+  }
+
+  next() {
+    this.wpFacade.next();
   }
 
   onSpotifyReady() {

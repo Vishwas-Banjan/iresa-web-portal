@@ -3,7 +3,7 @@
 <div class="login-container">
   <mat-card class="login-card">
     <mat-card-content>
-      <mat-tab-group #tabs class="hidden-tabs">
+      <mat-tab-group [selectedIndex]="selectedIdx$ | async" class="hidden-tabs">
         <mat-tab label="First">
           <iresa-portal-login-form
             (loginSuccess)="onLoginSuccess($event)"
