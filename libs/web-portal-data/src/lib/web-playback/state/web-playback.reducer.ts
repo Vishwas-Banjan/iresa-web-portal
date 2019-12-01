@@ -43,6 +43,20 @@ export function reducer(
       };
       break;
     }
+    case WebPlaybackActionTypes.Next: {
+      state = {
+        ...state,
+        position: state.position + 1
+      };
+      break;
+    }
+    case WebPlaybackActionTypes.Prev: {
+      state = {
+        ...state,
+        position: state.position > 0 ? state.position - 1 : state.position
+      };
+      break;
+    }
   }
   return state;
 }

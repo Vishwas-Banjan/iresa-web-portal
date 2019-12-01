@@ -20,8 +20,10 @@ export class LoadAdvImagePipe implements PipeTransform {
   }
 
   getRandomImageUrl(val) {
-    const keywords = val.split(/(\s+)/).filter(w => w.trim().length > 0);
-    keywords.unshift('music');
+    const keywords = val
+      .toLowerCase()
+      .split(/(\s+)/)
+      .filter(w => w.trim().length > 0);
     return `https://source.unsplash.com/150x150/?${keywords.join(',')}`;
   }
 }

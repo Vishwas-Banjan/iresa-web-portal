@@ -17,21 +17,25 @@
   </div>
 
   <div class="player-controls" fxLayout="row" fxLayoutAlign="start center">
-    <button mat-icon-button>
+    <button mat-icon-button (click)="prev()">
       <mat-icon color="accent" role="img">fast_rewind</mat-icon>
     </button>
     <button
       class="player-button mat-primary"
       mat-mini-fab
       color="primary"
-      (click)="play()"
+      (click)="togglePlay()"
     >
-      <mat-icon *ngIf="(playing$ | async) === false" aria-label="Resume / Play"
+      <mat-icon
+        *ngIf="(playingState$ | async) === false"
+        aria-label="Resume / Play"
         >play_arrow</mat-icon
       >
-      <mat-icon *ngIf="playing$ | async" aria-label="Pause">pause</mat-icon>
+      <mat-icon *ngIf="playingState$ | async" aria-label="Pause"
+        >pause</mat-icon
+      >
     </button>
-    <button mat-icon-button>
+    <button mat-icon-button (click)="next()">
       <mat-icon aria-label="Next" color="accent" aria-hidden="true"
         >fast_forward</mat-icon
       >

@@ -8,10 +8,9 @@ import { fromWebPlaybackActions } from './web-playback.actions';
 @Injectable()
 export class WebPlaybackFacade {
   queue$ = this.store.pipe(select(webPlaybackQuery.getQueue));
-  playing$ = this.store.pipe(select(webPlaybackQuery.getPLaying));
-  currPlayingTrack$ = this.store.pipe(
-    select(webPlaybackQuery.getCurrPlayingTrack)
-  );
+  playing$ = this.store.pipe(select(webPlaybackQuery.getPlaying));
+  endOfQueue$ = this.store.pipe(select(webPlaybackQuery.getEndOfQueue));
+  currPlayingTrack$ = this.store.pipe(select(webPlaybackQuery.getCurrTrack));
 
   constructor(private store: Store<WebPlaybackPartialState>) {}
 
@@ -25,5 +24,21 @@ export class WebPlaybackFacade {
 
   setPlaying(val) {
     this.store.dispatch(new fromWebPlaybackActions.SetPlaying(val));
+  }
+
+  next() {
+    this.store.dispatch(new fromWebPlaybackActions.Next());
+  }
+
+  prev() {
+    this.store.dispatch(new fromWebPlaybackActions.Prev());
+  }
+
+  refreshQueue() {
+    this.store.dispatch(new fromWebPlaybackActions.RefreshQueue());
+  }
+
+  updateRemoteQueue(data) {
+    this.store.dispatch(new fromWebPlaybackActions.UpdateRemoteQueue(data));
   }
 }

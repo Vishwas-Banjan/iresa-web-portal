@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, forkJoin } from 'rxjs';
+import { Observable, forkJoin, of } from 'rxjs';
 import { FirestoreService, FirestoreBuilderService } from '@iresa/firestore';
-import { map } from 'rxjs/operators';
+import { map, switchMap, delay } from 'rxjs/operators';
 import { SpotifyService } from '@iresa/ngx-spotify';
 
 @Injectable()
@@ -48,6 +48,41 @@ export class PlaylistsService {
     return this.firestore.post(url, { fields: this.trackForm(track) });
   }
 
+  removeAllSongList(stationId) {
+    return this.getSongList(stationId).pipe(
+      switchMap(list => this.deleteSongList(stationId, list))
+    );
+  }
+
+  deleteSongList(stationId, list) {
+    const arr = [];
+    if (list.length > 0) {
+      list.forEach(item => {
+        const url = encodeURI(
+          `documents/stations/${stationId}/songList/${item.recordId}`
+        );
+        arr.push(this.firestore.delete(url));
+      });
+
+      return forkJoin(arr);
+    }
+    return of([]);
+  }
+
+  getSongList(stationId: string): Observable<any> {
+    const url = encodeURI(`documents/stations/${stationId}/songList`);
+    return this.firestore.get(url).pipe(
+      map(resp =>
+        resp.documents
+          ? resp.documents.map(item => {
+              const arr = item.name.split('/');
+              return { ...item.fields, recordId: arr[arr.length - 1] };
+            })
+          : []
+      )
+    );
+  }
+
   setSongList(stationId: string, songList): Observable<any> {
     const url = encodeURI(`documents/stations/${stationId}/songList`);
     const reqs = [];
@@ -58,7 +93,7 @@ export class PlaylistsService {
         })
       );
     });
-    return forkJoin(reqs);
+    return forkJoin(reqs).pipe(delay(1000));
   }
 
   playlistForm(playlist) {
