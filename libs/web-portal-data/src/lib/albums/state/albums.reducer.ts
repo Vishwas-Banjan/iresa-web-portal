@@ -41,7 +41,8 @@ export function reducer(
     case AlbumsActionTypes.LoadAlbums: {
       state = {
         ...state,
-        loaded: false
+        loaded: false,
+        list: []
       };
       break;
     }
@@ -56,7 +57,8 @@ export function reducer(
     case AlbumsActionTypes.LoadAlbum: {
       state = {
         ...state,
-        loaded: false
+        loaded: false,
+        list: []
       };
       break;
     }
@@ -72,6 +74,7 @@ export function reducer(
       state = {
         ...state,
         tracksLoaded: false,
+        trackList: null
       };
       break;
     }
@@ -91,13 +94,6 @@ export function reducer(
         trackList: action.payload.album,
         tracksLoaded: true,
         trackPos: action.payload.trackPos ? action.payload.trackPos : -1
-      };
-      break;
-    }
-    case AlbumsActionTypes.LoadAlbumTracks: {
-      state = {
-        ...state,
-        tracksLoaded: false
       };
       break;
     }

@@ -54,6 +54,13 @@ export class PlaylistsService {
     );
   }
 
+  deleteTrackList(stationId, playlistId, trackId) {
+    const url = encodeURI(
+      `documents/stations/${stationId}/playlists/${playlistId}/tracks/${trackId}`
+    );
+    return this.firestore.delete(url);
+  }
+
   deleteSongList(stationId, list) {
     const arr = [];
     if (list.length > 0) {
@@ -138,13 +145,16 @@ export class PlaylistsService {
     const url = encodeURI(
       `documents/stations/${stationId}/playlists/${playlist.recordId}/tracks`
     );
-    return this.firestore
-      .get(url)
-      .pipe(
-        map(resp =>
-          resp.documents ? resp.documents.map(doc => doc.fields) : []
-        )
-      );
+    return this.firestore.get(url).pipe(
+      map(resp =>
+        resp.documents
+          ? resp.documents.map(item => {
+              const arr = item.name.split('/');
+              return { ...item.fields, recordId: arr[arr.length - 1] };
+            })
+          : []
+      )
+    );
   }
 
   getFavPlaylistTracks(playlist) {

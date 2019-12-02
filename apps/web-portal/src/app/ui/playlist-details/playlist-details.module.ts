@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { PlaylistTracksResolver } from '@iresa/web-portal-data';
 import { PlaylistTracksComponent } from './playlist-tracks/playlist-tracks.component';
 import { LoadArtistsModule, SongTimeModule } from '@iresa/shared/utilities';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [PlaylistDetailsComponent, PlaylistTracksComponent],
@@ -15,6 +16,7 @@ import { LoadArtistsModule, SongTimeModule } from '@iresa/shared/utilities';
     MatTableModule,
     LoadArtistsModule,
     SongTimeModule,
+    FlexLayoutModule,
     RouterModule.forChild([
       {
         path: '',

@@ -6,7 +6,7 @@ import {
 } from '@iresa/web-portal-data';
 import { MatDialog } from '@angular/material';
 import { PlaylistDialogComponent } from './playlist-dialog/playlist-dialog.component';
-import { map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'iresa-portal-album-track-list',
@@ -16,12 +16,16 @@ import { map } from 'rxjs/operators';
 })
 export class AlbumTrackListComponent implements OnInit {
   showSavePlaylist: boolean;
+  selectedIdx: number;
   constructor(
     private albumFacade: AlbumsFacade,
     private wpFacade: WebPlaybackFacade,
     private playlistFacade: PlaylistsFacade,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    private route: ActivatedRoute
+  ) {
+    this.selectedIdx = +this.route.snapshot.params['trackPos'] - 1;
+  }
 
   ngOnInit() {}
 

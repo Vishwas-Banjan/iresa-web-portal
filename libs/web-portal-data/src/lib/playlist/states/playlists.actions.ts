@@ -14,7 +14,9 @@ export enum PlaylistsActionTypes {
   AddToPlaylistError = '[Albums] Add To Playlist Error',
   GetPlaylistTracks = '[Albums] Get Playlist Tracks',
   GetPlaylistTracksSuccess = '[Albums] Get Playlist Tracks Success',
-  GetPlaylistTracksError = '[Albums] Get Playlist Tracks Error'
+  GetPlaylistTracksError = '[Albums] Get Playlist Tracks Error',
+  DeletePlaylistTrack = '[Albums] Delete Playlist Track',
+  DeletePlaylistTrackError = '[Albums] Delete Playlist Track Error'
 }
 
 export class LoadPlaylists implements Action {
@@ -86,6 +88,16 @@ export class GetPlaylistTracksError implements Action {
   constructor() {}
 }
 
+export class DeletePlaylistTrack implements Action {
+  readonly type = PlaylistsActionTypes.DeletePlaylistTrack;
+  constructor(public payload: any) {}
+}
+
+export class DeletePlaylistTrackError implements Action {
+  readonly type = PlaylistsActionTypes.DeletePlaylistTrackError;
+  constructor() {}
+}
+
 export type PlaylistsAction =
   | LoadPlaylists
   | PlaylistsLoaded
@@ -100,7 +112,9 @@ export type PlaylistsAction =
   | AddToPlaylistError
   | GetPlaylistTracks
   | GetPlaylistTracksSuccess
-  | GetPlaylistTracksError;
+  | GetPlaylistTracksError
+  | DeletePlaylistTrack
+  | DeletePlaylistTrackError;
 
 export const fromPlaylistsActions = {
   LoadPlaylists,
@@ -116,5 +130,7 @@ export const fromPlaylistsActions = {
   AddToPlaylistError,
   GetPlaylistTracks,
   GetPlaylistTracksSuccess,
-  GetPlaylistTracksError
+  GetPlaylistTracksError,
+  DeletePlaylistTrack,
+  DeletePlaylistTrackError
 };
