@@ -159,7 +159,7 @@ export class PlaylistsService {
 
   getFavPlaylistTracks(playlist) {
     return this.spotifyService
-      .getPlaylistTracks(playlist.id, { limit: 20 })
+      .getPlaylistTracks(playlist.id, { limit: 10 })
       .pipe(
         map(tracks => {
           return tracks.items.map(item => {

@@ -12,6 +12,7 @@ export class WebPlaybackFacade {
   endOfQueue$ = this.store.pipe(select(webPlaybackQuery.getEndOfQueue));
   currPlayingTrack$ = this.store.pipe(select(webPlaybackQuery.getCurrTrack));
   vol$ = this.store.pipe(select(webPlaybackQuery.getVol));
+  position$ = this.store.pipe(select(webPlaybackQuery.getPosition));
 
   constructor(private store: Store<WebPlaybackPartialState>) {}
 

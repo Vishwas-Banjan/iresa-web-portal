@@ -57,18 +57,14 @@
   >
     <div class="player-volume">
       <button mat-icon-button (click)="toggleMute()">
-        <mat-icon
-          *ngIf="(vol$ | async) === 0"
-          class="mat-primary"
-          aria-label="Volume"
-          >volume_mute</mat-icon
+        <mat-icon class="mat-primary" aria-label="Volume" (click)="openQueue()"
+          >queue_music</mat-icon
         >
-        <mat-icon
-          *ngIf="(vol$ | async) > 0"
-          class="mat-primary"
-          aria-label="Volume"
-          >volume_up</mat-icon
-        >
+      </button>
+      <button mat-icon-button (click)="toggleMute()">
+        <mat-icon class="mat-primary" aria-label="Volume">{{
+          vol$ | async | volClass
+        }}</mat-icon>
       </button>
     </div>
     <div class="player-volume-control">

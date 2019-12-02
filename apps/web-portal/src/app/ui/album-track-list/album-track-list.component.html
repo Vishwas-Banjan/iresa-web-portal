@@ -30,7 +30,9 @@
       fxLayout="row"
       fxLayoutAlign="start center"
       class="song-item"
-      [ngClass]="{ highlight: selectedIdx === i }"
+      [ngClass]="{
+        highlight: selectedIdx === i && album.tracks.items.length > 1
+      }"
     >
       <div class="play-song">
         <button (click)="playSong(track, album)">

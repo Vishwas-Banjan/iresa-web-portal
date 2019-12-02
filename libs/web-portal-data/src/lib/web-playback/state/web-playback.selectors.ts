@@ -42,11 +42,17 @@ const getVol = createSelector(
   (state: WebPlaybackState) => state.vol
 );
 
+const getPosition = createSelector(
+  getWebPlaybackState,
+  (state: WebPlaybackState) => state.position
+);
+
 export const webPlaybackQuery = {
   getLoggedIn,
   getQueue,
   getPlaying,
   getCurrTrack,
   getEndOfQueue,
-  getVol
+  getVol,
+  getPosition
 };
