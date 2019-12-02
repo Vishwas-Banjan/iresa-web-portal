@@ -1,12 +1,18 @@
 <form class="search-form" matAutocompleteOrigin #origin="matAutocompleteOrigin">
-  <input
-    type="text"
-    placeholder="Search tracks, arists or albums.."
-    matInput
-    [formControl]="searchInput"
-    [matAutocomplete]="auto"
-    [matAutocompleteConnectedTo]="origin"
-  />
+  <div class="text-input-container">
+    <div class="search-icon-container">
+      <img class="search-icon" src="/assets/search-icon.png" />
+    </div>
+    <input
+      class="text-input"
+      type="text"
+      placeholder="Search tracks, arists or albums.."
+      matInput
+      [formControl]="searchInput"
+      [matAutocomplete]="auto"
+      [matAutocompleteConnectedTo]="origin"
+    />
+  </div>
 
   <mat-autocomplete
     #auto="matAutocomplete"

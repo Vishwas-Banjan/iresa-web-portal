@@ -58,6 +58,16 @@ export function reducer(
       };
       break;
     }
+    case PlaylistsActionTypes.DeletePlaylistTrackSuccess: {
+      state = {
+        ...state,
+        tracks: {
+          ...state.tracks,
+          tracks: state.tracks.tracks.filter(t => t.recordId !== action.payload)
+        }
+      };
+      break;
+    }
   }
   return state;
 }

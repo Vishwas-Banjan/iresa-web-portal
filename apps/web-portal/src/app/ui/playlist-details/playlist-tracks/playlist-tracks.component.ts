@@ -26,9 +26,6 @@ export class PlaylistTracksComponent implements OnInit {
       this._tracks = value.tracks;
       this.loadDataSource(value.tracks);
     }
-    if (value.type !== 'favorite') {
-      this.displayActionCol();
-    }
   }
 
   displayedColumns: string[] = ['select', 'name', 'artists', 'duration_ms'];
@@ -37,7 +34,11 @@ export class PlaylistTracksComponent implements OnInit {
   _dataSource = new BehaviorSubject<any[]>([]);
   _playlist: { tracks: any[]; type: string; recordId: string };
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this._playlist.type !== 'favorite') {
+      this.displayActionCol();
+    }
+  }
 
   get dataSource$() {
     return this._dataSource.asObservable();

@@ -68,6 +68,12 @@ const routes: Routes = [
           )
       },
       {
+        path: 'queue',
+        pathMatch: 'full',
+        loadChildren: () =>
+          import('../queue/queue.module').then(m => m.QueueModule)
+      },
+      {
         path: 'station-details',
         pathMatch: 'full',
         loadChildren: () =>

@@ -9,11 +9,16 @@ import {
 import { WindowRef, ScriptLoaderService } from '@iresa/shared/utilities';
 import { SpotifyService } from '@iresa/ngx-spotify';
 import { MusicPlayer, PlayerStates } from './music-player.config';
-import { WebPlaybackFacade, PlaylistsFacade } from '@iresa/web-portal-data';
+import {
+  WebPlaybackFacade,
+  PlaylistsFacade,
+  DashboardFacade
+} from '@iresa/web-portal-data';
 import { SubSink } from 'subsink';
 import { filter, skip } from 'rxjs/operators';
 import { MatSliderChange } from '@angular/material';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 declare var Spotify: any;
 
@@ -35,7 +40,9 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     private ngZone: NgZone,
     private slService: ScriptLoaderService,
     private wpFacade: WebPlaybackFacade,
-    private plFacade: PlaylistsFacade
+    private plFacade: PlaylistsFacade,
+    private router: Router,
+    private dbFacade: DashboardFacade
   ) {}
 
   get currPlaying$() {
@@ -125,6 +132,11 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
         this.plFacade.refreshSongList();
       })
     );
+  }
+
+  openQueue() {
+    this.dbFacade.setSelectedMenuItems('/queue');
+    this.router.navigateByUrl('/queue');
   }
 
   ngOnDestroy() {

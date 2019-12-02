@@ -11,9 +11,10 @@ import {
 } from '@angular/material';
 import { LoadImageModule, ScriptLoaderModule } from '@iresa/shared/utilities';
 import { PlaylistDataModule } from '@iresa/web-portal-data';
+import { VolClassPipe } from './vol-class.pipe';
 
 @NgModule({
-  declarations: [MusicPlayerComponent],
+  declarations: [MusicPlayerComponent, VolClassPipe],
   imports: [
     CommonModule,
     MatCardModule,

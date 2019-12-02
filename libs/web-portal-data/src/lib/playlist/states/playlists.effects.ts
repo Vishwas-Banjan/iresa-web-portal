@@ -67,7 +67,7 @@ export class PlaylistsEffects {
           .pipe(
             map(
               (data: any) =>
-                new fromPlaylistsActions.GetPlaylistTracks(playlistId)
+                new fromPlaylistsActions.DeletePlaylistTrackSuccess(trackId)
             )
           );
       },
