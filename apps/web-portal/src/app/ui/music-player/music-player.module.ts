@@ -6,7 +6,8 @@ import {
   MatIconModule,
   MatCardModule,
   MatSliderModule,
-  MatButtonModule
+  MatButtonModule,
+  MatTooltipModule
 } from '@angular/material';
 import { LoadImageModule, ScriptLoaderModule } from '@iresa/shared/utilities';
 import { PlaylistDataModule } from '@iresa/web-portal-data';
@@ -22,7 +23,8 @@ import { PlaylistDataModule } from '@iresa/web-portal-data';
     FlexLayoutModule,
     LoadImageModule,
     ScriptLoaderModule,
-    PlaylistDataModule
+    PlaylistDataModule,
+    MatTooltipModule
   ],
   exports: [MusicPlayerComponent]
 })

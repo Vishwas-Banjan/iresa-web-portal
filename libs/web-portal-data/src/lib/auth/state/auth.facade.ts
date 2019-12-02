@@ -16,4 +16,8 @@ export class AuthFacade {
   login({ email, password }) {
     this.store.dispatch(new fromAuthActions.Login({ email, password }));
   }
+
+  logout() {
+    this.store.dispatch(new fromAuthActions.Logout());
+  }
 }

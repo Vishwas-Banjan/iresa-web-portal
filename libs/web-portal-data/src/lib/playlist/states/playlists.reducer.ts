@@ -45,7 +45,8 @@ export function reducer(
     case PlaylistsActionTypes.GetPlaylistTracks: {
       state = {
         ...state,
-        tracksLoaded: false
+        tracksLoaded: false,
+        tracks: null
       };
       break;
     }

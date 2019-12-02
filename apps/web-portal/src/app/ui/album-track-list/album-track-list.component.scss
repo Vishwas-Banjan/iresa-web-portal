@@ -3,6 +3,7 @@
 .mat-card {
   width: 80vw;
 }
+
 .header {
   .header-image > img {
     border-radius: 100%;
@@ -24,7 +25,21 @@
 
 .song-list {
   margin-top: 10px;
+
   .song-item {
+    &.highlight {
+      background-color: mat-color($mat-indigo, 200) !important;
+      color: white !important;
+
+      .mat-icon {
+        color: white !important;
+
+        &:hover {
+          color: $primary !important;
+        }
+      }
+    }
+
     button {
       background: 0 0;
       border: none;

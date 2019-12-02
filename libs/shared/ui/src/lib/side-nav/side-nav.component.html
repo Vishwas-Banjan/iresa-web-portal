@@ -14,7 +14,9 @@
         (click)="onMenuClick(menu); (false)"
         *ngFor="let menu of menuItems"
       >
-        <mat-icon>{{ menu.icon }}</mat-icon>
+        <mat-icon [matTooltip]="menu.title" [matTooltipPosition]="'right'">{{
+          menu.icon
+        }}</mat-icon>
       </a>
     </mat-nav-list>
   </mat-sidenav>

@@ -46,6 +46,10 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     return this.wpFacade.playing$;
   }
 
+  get vol$() {
+    return this.wpFacade.vol$;
+  }
+
   @HostListener('window:beforeunload', ['$event'])
   beforeunloadHandler(event) {
     this.ngOnDestroy();
@@ -59,12 +63,24 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     this.onCurrTrack();
     this.onEndOfQueue();
     this.onPauseResume();
+    this.onVolChange();
+  }
+
+  onVolChange() {
+    this.subs.add(
+      this.vol$
+        .pipe(skip(1))
+        .subscribe(val => this.musicPlayerCtrl.musicPlayer.setVolume(val))
+    );
   }
 
   onPauseResume() {
     this.subs.add(
       this.playingState$
-        .pipe(filter(s => !s && !this.manTogglePlay), skip(1))
+        .pipe(
+          filter(s => !s && !this.manTogglePlay),
+          skip(1)
+        )
         .subscribe(track => {
           this.wpFacade.next();
         })
@@ -135,6 +151,10 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     );
   };
 
+  toggleMute() {
+    this.wpFacade.toggleMute();
+  }
+
   handleStateChanges = (states: PlayerStates) => {
     this.ngZone.run(() => {
       if (states.paused !== undefined) {
@@ -143,8 +163,8 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     });
   };
 
-  onVolChange(e: MatSliderChange) {
-    this.musicPlayerCtrl.musicPlayer.setVolume(e.value);
+  onSliderChange(e: MatSliderChange) {
+    this.wpFacade.setVol(e.value);
   }
 
   togglePlay() {

@@ -10,6 +10,9 @@ export interface WebPlaybackState {
   playing: boolean;
   queue: any[];
   position: number;
+  vol: number;
+  lastVol: number;
+  muted: boolean;
 }
 
 export interface WebPlaybackPartialState {
@@ -20,7 +23,10 @@ export const initialState: WebPlaybackState = {
   loggedIn: false,
   playing: false,
   queue: [],
-  position: 0
+  position: 0,
+  vol: 1,
+  lastVol: 1,
+  muted: false
 };
 
 export function reducer(
@@ -54,6 +60,22 @@ export function reducer(
       state = {
         ...state,
         position: state.position > 0 ? state.position - 1 : state.position
+      };
+      break;
+    }
+    case WebPlaybackActionTypes.SetVol: {
+      state = {
+        ...state,
+        vol: action.payload
+      };
+      break;
+    }
+    case WebPlaybackActionTypes.ToggleMute: {
+      state = {
+        ...state,
+        vol: state.muted ? state.lastVol : 0,
+        lastVol: !state.muted ? state.vol : state.lastVol,
+        muted: !state.muted
       };
       break;
     }

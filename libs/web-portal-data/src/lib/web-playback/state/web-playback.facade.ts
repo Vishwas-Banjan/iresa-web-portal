@@ -11,6 +11,7 @@ export class WebPlaybackFacade {
   playing$ = this.store.pipe(select(webPlaybackQuery.getPlaying));
   endOfQueue$ = this.store.pipe(select(webPlaybackQuery.getEndOfQueue));
   currPlayingTrack$ = this.store.pipe(select(webPlaybackQuery.getCurrTrack));
+  vol$ = this.store.pipe(select(webPlaybackQuery.getVol));
 
   constructor(private store: Store<WebPlaybackPartialState>) {}
 
@@ -40,5 +41,13 @@ export class WebPlaybackFacade {
 
   updateRemoteQueue(data) {
     this.store.dispatch(new fromWebPlaybackActions.UpdateRemoteQueue(data));
+  }
+
+  toggleMute() {
+    this.store.dispatch(new fromWebPlaybackActions.ToggleMute());
+  }
+
+  setVol(data) {
+    this.store.dispatch(new fromWebPlaybackActions.SetVol(data));
   }
 }

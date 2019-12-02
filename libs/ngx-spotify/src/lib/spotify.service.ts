@@ -662,6 +662,10 @@ export class SpotifyService {
       this.config.authToken = authorizationMap.access_token;
     }
   }
+
+  invalidAuthToken() {
+    this.config.authToken = null;
+  }
   //#endregion
 
   //#region utils

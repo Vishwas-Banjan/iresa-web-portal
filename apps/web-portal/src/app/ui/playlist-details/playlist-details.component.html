@@ -1,7 +1,10 @@
 <div *ngIf="playlist$ | async as playlist">
-  <h3 class="title">{{ playlist.name }}</h3>
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h3 class="title">{{ playlist.name }}</h3>
+    <small>Total Tracks: {{ playlist.tracks.length }}</small>
+  </div>
 
   <iresa-portal-playlist-tracks
-    [tracks]="playlist.tracks"
+    [playlist]="playlist"
   ></iresa-portal-playlist-tracks>
 </div>

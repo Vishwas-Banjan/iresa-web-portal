@@ -13,7 +13,8 @@ import {
   fromPlaylistsActions,
   RefreshSongList,
   AddToPlaylist,
-  GetPlaylistTracks
+  GetPlaylistTracks,
+  DeletePlaylistTrack
 } from './playlists.actions';
 import { map, switchMap, tap } from 'rxjs/operators';
 import { PlaylistsService } from './playlists.service';
@@ -50,6 +51,29 @@ export class PlaylistsEffects {
 
       undoAction: (action: SavePlaylist, error) => {
         return new fromPlaylistsActions.SavePlaylistError(error);
+      }
+    }
+  );
+
+  @Effect() deletePlaylistTrack$ = this.dataPersistence.pessimisticUpdate(
+    PlaylistsActionTypes.DeletePlaylistTrack,
+    {
+      run: (action: DeletePlaylistTrack, state: PlaylistsPartialState) => {
+        const stationId = state[STATIONS_FEATURE_KEY].selectedId;
+        const playlistId = action.payload.playlistId;
+        const trackId = action.payload.trackId;
+        return this.playlistsService
+          .deleteTrackList(stationId, playlistId, trackId)
+          .pipe(
+            map(
+              (data: any) =>
+                new fromPlaylistsActions.GetPlaylistTracks(playlistId)
+            )
+          );
+      },
+
+      onError: (action: DeletePlaylistTrack, error) => {
+        return new fromPlaylistsActions.DeletePlaylistTrackError();
       }
     }
   );

@@ -34,4 +34,8 @@ export class PlaylistsFacade {
   getPlaylistTracks(data) {
     this.store.dispatch(new fromPlaylistsActions.GetPlaylistTracks(data));
   }
+
+  deletePlaylistTrack(data) {
+    this.store.dispatch(new fromPlaylistsActions.DeletePlaylistTrack(data));
+  }
 }

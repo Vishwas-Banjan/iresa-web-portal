@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input
 } from '@angular/core';
-import { WebPlaybackFacade } from '@iresa/web-portal-data';
+import { WebPlaybackFacade, PlaylistsFacade } from '@iresa/web-portal-data';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -14,27 +14,50 @@ import { BehaviorSubject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlaylistTracksComponent implements OnInit {
-  constructor(private wpFacade: WebPlaybackFacade) {}
+  constructor(
+    private wpFacade: WebPlaybackFacade,
+    private playlistService: PlaylistsFacade
+  ) {}
 
   @Input()
-  set tracks(value) {
-    if (value && value.length > 0) {
-      this._tracks = value;
-      this.loadDataSource(value);
+  set playlist(value) {
+    this._playlist = value;
+    if (value && value.tracks.length > 0) {
+      this._tracks = value.tracks;
+      this.loadDataSource(value.tracks);
+    }
+    if (value.type !== 'favorite') {
+      this.displayActionCol();
     }
   }
 
   displayedColumns: string[] = ['select', 'name', 'artists', 'duration_ms'];
+  showActionCol = false;
   _tracks: any[];
   _dataSource = new BehaviorSubject<any[]>([]);
+  _playlist: { tracks: any[]; type: string; recordId: string };
+
   ngOnInit() {}
 
   get dataSource$() {
     return this._dataSource.asObservable();
   }
+
+  displayActionCol() {
+    this.showActionCol = true;
+    this.displayedColumns.push('action');
+  }
+
   playSong(index) {
     const track = this._tracks[index];
     this.wpFacade.setQueue([track]);
+  }
+
+  delete(index) {
+    this.playlistService.deletePlaylistTrack({
+      playlistId: this._playlist.recordId,
+      trackId: this._tracks[index].recordId
+    });
   }
 
   loadDataSource(value) {

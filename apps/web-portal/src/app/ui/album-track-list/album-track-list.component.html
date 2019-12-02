@@ -26,10 +26,11 @@
 
   <div class="song-list">
     <div
-      *ngFor="let track of album.tracks.items"
+      *ngFor="let track of album.tracks.items; let i = index"
       fxLayout="row"
       fxLayoutAlign="start center"
       class="song-item"
+      [ngClass]="{ highlight: selectedIdx === i }"
     >
       <div class="play-song">
         <button (click)="playSong(track, album)">

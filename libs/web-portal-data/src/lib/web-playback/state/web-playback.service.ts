@@ -11,7 +11,10 @@ export class WebPlaybackService {
     const query = {
       structuredQuery: {
         limit: 5,
-        from: [{ collectionId: 'songList' }]
+        from: [{ collectionId: 'songList' }],
+        orderBy: [
+          { field: { fieldPath: 'upvoteCount' }, direction: 'DESCENDING' }
+        ]
       }
     };
     const url = encodeURI(`documents/stations/${stationId}:runQuery`);

@@ -1,7 +1,11 @@
 <iresa-loader *ngIf="loading$ | async"></iresa-loader>
 <div class="page">
   <div class="page-header">
-    <iresa-header *ngIf="product$ | async as product" [product]="product">
+    <iresa-header
+      *ngIf="product$ | async as product"
+      [product]="product"
+      (logout)="logout()"
+    >
       <iresa-portal-music-search></iresa-portal-music-search>
     </iresa-header>
   </div>

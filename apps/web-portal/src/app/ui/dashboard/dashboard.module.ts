@@ -5,7 +5,8 @@ import { SideNavModule, HeaderModule, LoaderModule } from '@iresa/shared/ui';
 import {
   DashboardDataModule,
   WebPlaybackDataModule,
-  AuthGuardServiceGuard
+  AuthGuardServiceGuard,
+  AuthDataModule
 } from '@iresa/web-portal-data';
 import { MusicSearchModule } from '../music-search/music-search.module';
 import { RouterModule, Routes } from '@angular/router';
@@ -98,6 +99,7 @@ const routes: Routes = [
     MusicPlayerModule,
     WebPlaybackDataModule,
     LoaderModule,
+    AuthDataModule,
     RouterModule.forChild(routes)
   ],
   providers: [AuthGuardServiceGuard]
