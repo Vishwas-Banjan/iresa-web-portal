@@ -1,4 +1,4 @@
-<iresa-loader [hidden]="!(loading$ | async)"></iresa-loader>
+<iresa-loader [hidden]="(loading$ | async) === false"></iresa-loader>
 <div class="page">
   <div class="page-header">
     <iresa-header
