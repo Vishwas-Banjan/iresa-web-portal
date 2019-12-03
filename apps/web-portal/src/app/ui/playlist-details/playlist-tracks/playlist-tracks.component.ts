@@ -22,7 +22,7 @@ export class PlaylistTracksComponent implements OnInit {
   @Input()
   set playlist(value) {
     this._playlist = value;
-    if (value && value.tracks.length > 0) {
+    if (value) {
       this._tracks = value.tracks;
       this.loadDataSource(value.tracks);
     }
@@ -62,15 +62,19 @@ export class PlaylistTracksComponent implements OnInit {
   }
 
   loadDataSource(value) {
-    const ds = value.map(item => {
-      const data = {};
-      this.displayedColumns.forEach(col => {
-        if (item[col]) {
-          data[col] = item[col];
-        }
+    if (value.length > 0) {
+      const ds = value.map(item => {
+        const data = {};
+        this.displayedColumns.forEach(col => {
+          if (item[col]) {
+            data[col] = item[col];
+          }
+        });
+        return data;
       });
-      return data;
-    });
-    this._dataSource.next(ds);
+      this._dataSource.next(ds);
+    } else {
+      this._dataSource.next([]);
+    }
   }
 }

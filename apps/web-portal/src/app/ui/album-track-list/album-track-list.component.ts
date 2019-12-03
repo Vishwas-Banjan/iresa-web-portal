@@ -6,7 +6,8 @@ import {
 } from '@iresa/web-portal-data';
 import { MatDialog } from '@angular/material';
 import { PlaylistDialogComponent } from './playlist-dialog/playlist-dialog.component';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'iresa-portal-album-track-list',
@@ -23,11 +24,17 @@ export class AlbumTrackListComponent implements OnInit {
     private playlistFacade: PlaylistsFacade,
     public dialog: MatDialog,
     private route: ActivatedRoute
-  ) {
-    this.selectedIdx = +this.route.snapshot.params['trackPos'] - 1;
+  ) {}
+
+  ngOnInit() {
+    this.onRouteChange();
   }
 
-  ngOnInit() {}
+  onRouteChange() {
+    this.route.paramMap.subscribe(params => {
+      this.selectedIdx = +this.route.snapshot.params['trackPos'] - 1;
+    });
+  }
 
   get albumTracks$() {
     return this.albumFacade.albumTracks$;

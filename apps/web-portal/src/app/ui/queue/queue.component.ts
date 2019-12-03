@@ -26,14 +26,17 @@ export class QueueComponent implements OnInit {
   }
 
   loadDataSource(list) {
-    return list.map(item => {
-      const data = {};
-      this.displayedColumns.forEach(col => {
-        if (item[col]) {
-          data[col] = item[col];
-        }
+    if (list.length > 0) {
+      return list.map(item => {
+        const data = {};
+        this.displayedColumns.forEach(col => {
+          if (item[col]) {
+            data[col] = item[col];
+          }
+        });
+        return data;
       });
-      return data;
-    });
+    }
+    return [];
   }
 }
