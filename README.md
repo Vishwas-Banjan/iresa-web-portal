@@ -1,5 +1,7 @@
 # Iresa Web Portal [![Build Status](https://travis-ci.com/Vishwas-Banjan/iresa-web-portal.svg?branch=master)](https://travis-ci.com/Vishwas-Banjan/iresa-web-portal)
 
+Demo link: https://iresa-musicapp.firebaseapp.com/
+
 Iresa offers a nice, convenient solution to help business owners customize their music’s playlist by allowing their own customers to vote for their favorite songs to play during their visits.
 
 Iresa Web Portal is one of the two components of Iresa's Playlist Management. This component is a web application that allows admin users to control and manage their music playlists at specific stations. This app also integrates Spotify API and Spotify Web Playback to search and play music directly on the web pages.
