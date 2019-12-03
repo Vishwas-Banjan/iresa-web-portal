@@ -146,6 +146,13 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   }
 
   disconnectPlayer() {
+    this.musicPlayerCtrl.musicPlayer.removeListener('initialization_error');
+    this.musicPlayerCtrl.musicPlayer.removeListener('authentication_error');
+    this.musicPlayerCtrl.musicPlayer.removeListener('account_error');
+    this.musicPlayerCtrl.musicPlayer.removeListener('playback_error');
+    this.musicPlayerCtrl.musicPlayer.removeListener('player_state_changed');
+    this.musicPlayerCtrl.musicPlayer.removeListener('ready');
+    this.musicPlayerCtrl.musicPlayer.removeListener('not_ready');
     this.musicPlayerCtrl.musicPlayer.disconnect();
   }
 

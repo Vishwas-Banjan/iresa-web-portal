@@ -8,7 +8,10 @@
     fxLayout="row"
     fxLayoutAlign="space-between center"
   >
-    <div>{{ station.name }}</div>
+    <div fxLayout="column" fxLayoutAlign="start start">
+      <h4>{{ station.name }}</h4>
+      <small>{{ station.address }}, {{ station.city }}</small>
+    </div>
     <div>
       <a mat-flat-button href="{{ getAuthURL(station.id) }}">
         <img
