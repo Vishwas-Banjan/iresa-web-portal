@@ -55,26 +55,34 @@
     fxLayout="row"
     fxLayoutAlign="start center"
   >
-    <div class="player-volume">
-      <button mat-icon-button (click)="toggleMute()">
-        <mat-icon class="mat-primary" aria-label="Volume" (click)="openQueue()"
-          >queue_music</mat-icon
-        >
-      </button>
-      <button mat-icon-button (click)="toggleMute()">
-        <mat-icon class="mat-primary" aria-label="Volume">{{
-          vol$ | async | volClass
-        }}</mat-icon>
-      </button>
-    </div>
-    <div class="player-volume-control">
-      <mat-slider
-        min="0"
-        max="1"
-        step="0.2"
-        [value]="vol$ | async"
-        (change)="onSliderChange($event)"
-      ></mat-slider>
-    </div>
+    <a
+      class="player-volume"
+      [routerLink]="['/queue']"
+      [routerLinkActive]="'link-active'"
+      (click)="openQueue()"
+    >
+      <mat-icon
+        aria-label="Queue"
+        [matTooltip]="'Queue'"
+        [matTooltipPosition]="'above'"
+        >queue_music</mat-icon
+      >
+    </a>
+    <button mat-icon-button (click)="toggleMute()">
+      <mat-icon
+        class="mat-primary"
+        [matTooltip]="(vol$ | async) === 0 ? 'Unmute' : 'Mute'"
+        [matTooltipPosition]="'above'"
+        aria-label="Volume"
+        >{{ vol$ | async | volClass }}</mat-icon
+      >
+    </button>
+    <mat-slider
+      min="0"
+      max="1"
+      step="0.2"
+      [value]="vol$ | async"
+      (change)="onSliderChange($event)"
+    ></mat-slider>
   </div>
 </mat-card>
