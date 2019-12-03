@@ -12,6 +12,7 @@ import {
 import { LoadImageModule, ScriptLoaderModule } from '@iresa/shared/utilities';
 import { PlaylistDataModule } from '@iresa/web-portal-data';
 import { VolClassPipe } from './vol-class.pipe';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [MusicPlayerComponent, VolClassPipe],
@@ -25,7 +26,8 @@ import { VolClassPipe } from './vol-class.pipe';
     LoadImageModule,
     ScriptLoaderModule,
     PlaylistDataModule,
-    MatTooltipModule
+    MatTooltipModule,
+    RouterModule
   ],
   exports: [MusicPlayerComponent]
 })

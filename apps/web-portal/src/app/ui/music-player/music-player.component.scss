@@ -18,3 +18,10 @@ button {
     border-radius: 2px;
   }
 }
+
+.player-volume {
+  color: mat-color($mat-grey, 500);
+  &.link-active {
+    color: $primary;
+  }
+}
