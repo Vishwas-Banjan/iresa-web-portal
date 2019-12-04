@@ -51,7 +51,7 @@ export class RefreshSongList implements Action {
 
 export class RefreshSongListSuccess implements Action {
   readonly type = PlaylistsActionTypes.RefreshSongListSuccess;
-  constructor() {}
+  constructor(public payload: any) {}
 }
 
 export class RefreshSongListError implements Action {

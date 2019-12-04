@@ -12,6 +12,7 @@ export const PLAYLISTS_FEATURE_KEY = 'playlists';
 export interface PlaylistsState {
   list: any[]; // list of Playlists; analogous to a sql normalized table
   selectedId?: string | number; // which Playlists record has been selected
+  prevIdx: number;
   loaded: boolean; // has the Playlists list been loaded
   error?: any; // last none error (if any),
   tracks: any;
@@ -24,6 +25,7 @@ export interface PlaylistsPartialState {
 
 export const initialState: PlaylistsState = {
   list: [],
+  prevIdx: -1,
   loaded: false,
   tracks: null,
   tracksLoaded: false
@@ -65,6 +67,13 @@ export function reducer(
           ...state.tracks,
           tracks: state.tracks.tracks.filter(t => t.recordId !== action.payload)
         }
+      };
+      break;
+    }
+    case PlaylistsActionTypes.RefreshSongListSuccess: {
+      state = {
+        ...state,
+        prevIdx: action.payload ? action.payload.prevIdx : state.prevIdx
       };
       break;
     }

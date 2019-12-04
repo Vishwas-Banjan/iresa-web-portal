@@ -83,8 +83,11 @@ export class PlaylistsEffects {
     {
       run: (action: RefreshSongList, state: PlaylistsPartialState) => {
         const playlists = state[PLAYLISTS_FEATURE_KEY].list;
-        const playlist =
-          playlists[Math.floor(Math.random() * playlists.length)];
+        const idx = this.getPlaylistIdx(
+          state[PLAYLISTS_FEATURE_KEY].prevIdx,
+          playlists.length
+        );
+        const playlist = playlists[idx];
         const stationId = state[STATIONS_FEATURE_KEY].selectedId;
         if (playlist) {
           return this.playlistsService.removeAllSongList(stationId).pipe(
@@ -95,13 +98,18 @@ export class PlaylistsEffects {
               this.playlistsService
                 .setSongList(stationId, tracks)
                 .pipe(
-                  map(resp => new fromPlaylistsActions.RefreshSongListSuccess())
+                  map(
+                    resp =>
+                      new fromPlaylistsActions.RefreshSongListSuccess({
+                        prevIdx: idx
+                      })
+                  )
                 )
             )
           );
         }
 
-        return new fromPlaylistsActions.RefreshSongListSuccess();
+        return new fromPlaylistsActions.RefreshSongListSuccess(null);
       },
 
       onError: (action: RefreshSongList, error) => {
@@ -158,6 +166,14 @@ export class PlaylistsEffects {
       }
     }
   );
+
+  getPlaylistIdx(prev, length) {
+    const idx = Math.floor(Math.random() * length);
+    if (idx === prev) {
+      return this.getPlaylistIdx(prev, length);
+    }
+    return idx;
+  }
 
   constructor(
     private actions$: Actions,
